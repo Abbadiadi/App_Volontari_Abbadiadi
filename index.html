@@ -26,13 +26,13 @@
             margin: 0;
             background-color: var(--colore-sfondo-pagina);
             color: #333;
-            padding-bottom: 120px; /* Spazio per la barra di navigazione inferiore */
+            padding-bottom: 120px;
         }
         h1, h2, h3, h4, .nav-button span, #login-button {
             font-family: var(--font-primario);
         }
 
-        /* 3. Schermata di Login (invariata) */
+        /* 3. Schermata di Login */
         #login-screen .app-header {
             background-color: var(--colore-principale); color: var(--colore-testo-header); padding: 20px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
@@ -61,10 +61,7 @@
             display: flex; align-items: center; justify-content: center;
         }
         .app-header-main h1 { 
-            margin: 0; 
-            font-size: 24px; /* Titolo più grande */
-            font-weight: 700; /* Titolo in grassetto */
-            flex-grow: 1; 
+            margin: 0; font-size: 24px; font-weight: 700; flex-grow: 1; 
         }
         .container { padding: 20px; }
         .view { display: none; }
@@ -77,74 +74,51 @@
         .icon-button {
             background: transparent; border: 1px solid rgba(255, 255, 255, 0.5); color: white;
             width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: background-color 0.2s ease;
+            justify-content: center; cursor: pointer;
         }
-        .icon-button:hover { background-color: rgba(255, 255, 255, 0.15); }
-        .icon-button svg { width: 22px; height: 22px; }
-
-        .bottom-nav { /* Stile invariato */ }
-        .nav-button { /* Stile invariato */ }
-
-        /* 5. Card dei Turni (NUOVO STILE) */
+        
+        .bottom-nav {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px;
+            background-color: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); backdrop-filter: blur(10px); z-index: 100;
+        }
+        .nav-button {
+            background-color: transparent; border: none; display: flex; flex-direction: column;
+            align-items: center; padding: 5px 10px; border-radius: 15px; color: var(--colore-grigio-testo);
+            cursor: pointer;
+        }
+        .nav-button.active { color: var(--colore-principale); }
+        .nav-button svg { width: 24px; height: 24px; margin-bottom: 2px; }
+        .nav-button span { font-size: 12px; font-weight: 700; }
+        
+        /* 5. Card dei Turni */
         .turno-card {
-            background-color: var(--colore-card);
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            overflow: hidden; /* Nasconde il contenuto che esce */
+            background-color: var(--colore-card); border-radius: 16px;
+            margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease; overflow: hidden;
         }
         .turno-card-header {
-            padding: 15px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--colore-testo-header);
-            background-color: var(--colore-grigio-testo); /* Colore di default */
+            padding: 15px 20px; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
+            color: var(--colore-testo-header); background-color: var(--colore-grigio-testo);
         }
-        .turno-card-header-content {
-            flex-grow: 1;
-        }
-        .turno-card-header h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .turno-card-header .turno-orario-corto {
-            margin: 4px 0 0 0;
-            font-size: 14px;
-            font-family: var(--font-secondario);
-        }
-        .expand-arrow {
-            transition: transform 0.3s ease-in-out;
-        }
-        .turno-card.is-open .expand-arrow {
-            transform: rotate(180deg);
-        }
+        .turno-card-header h3 { margin: 0; font-size: 18px; }
+        .turno-card-header .turno-orario-corto { margin: 4px 0 0 0; font-size: 14px; }
+        .expand-arrow { transition: transform 0.3s ease-in-out; }
+        .turno-card.is-open .expand-arrow { transform: rotate(180deg); }
         .turno-card-body {
-            max-height: 0; /* Nascosto di default */
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.4s ease-in-out;
-            padding: 0 20px;
+            max-height: 0; opacity: 0; overflow: hidden;
+            transition: all 0.4s ease-in-out; padding: 0 20px;
         }
         .turno-card.is-open .turno-card-body {
-            max-height: 500px; /* Altezza massima per l'animazione */
-            opacity: 1;
-            padding: 20px;
-            border-top: 1px solid #eee;
+            max-height: 500px; opacity: 1; padding: 20px; border-top: 1px solid #eee;
         }
         .turno-card-body p { margin: 0 0 10px 0; }
-        .turno-card-body .turno-luogo { font-style: italic; color: #555; }
-        
-        /* Colori per categoria */
         .turno-card.categoria-accoglienza .turno-card-header { background-color: #17a2b8; }
         .turno-card.categoria-sport .turno-card-header { background-color: #fd7e14; }
         .turno-card.categoria-cerimonia .turno-card-header { background-color: #ffc107; }
         .turno-card.categoria-maratonina .turno-card-header { background-color: #28a745; }
         .turno-card.categoria-staffette .turno-card-header { background-color: #dc3545; }
-        
         .turno-card.passato { opacity: 0.6; }
         .turno-card.passato .turno-card-header h3,
         .turno-card.passato .turno-orario-corto {
@@ -159,9 +133,10 @@
         }
 
         .hidden { display: none !important; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .loading-spinner {
             border: 5px solid #f3f3f3; border-top: 5px solid var(--colore-principale);
-            border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 50px auto;
+            border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto;
         }
     </style>
 </head>
@@ -177,7 +152,6 @@
                 <h2>Accesso volontari</h2>
                 <input type="email" id="email-input" placeholder="Inserisci la tua email">
                 <button id="login-button">Accedi</button>
-                <p id="error-message" class="error-message"></p>
             </div>
         </div>
     </div>
@@ -214,14 +188,28 @@
         </main>
         
         <nav class="bottom-nav">
-            <!-- Barra di navigazione invariata -->
+            <button id="nav-turni" class="nav-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>Turni</span>
+            </button>
+            <button id="nav-programma" class="nav-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <span>Programma</span>
+            </button>
+            <button id="nav-chat" class="nav-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span>Chat</span>
+            </button>
+            <button id="nav-planimetria" class="nav-button">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"></path><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                <span>Mappa</span>
+            </button>
         </nav>
     </div>
 
     <div id="loading-spinner" class="loading-spinner hidden"></div>
 
     <script>
-        // VERSIONE ALL-IN-ONE CON CARD ESPANDIBILI
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybYx198GPXQULopHqBHtjbtIRRMVqfltw-KGGD3JJnw9235XPyUJQwTcT5IPDImddChw/exec"; 
 
         const loginScreen = document.getElementById('login-screen');
@@ -233,7 +221,7 @@
         const logoutButton = document.getElementById('logout-button');
         const mainTitle = document.getElementById('main-title');
         
-        let currentUserData = null; // Salva i dati dell'utente per l'app
+        let currentUserData = null;
 
         function logout() {
             localStorage.removeItem('userEmail');
@@ -243,16 +231,14 @@
         async function caricaDati(email) {
             loadingSpinner.classList.remove('hidden');
             loginScreen.style.display = 'none';
-            mainApp.style.display = 'none';
-            
             try {
                 const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}`);
                 const data = await response.json();
                 if (data.error) throw new Error(data.error);
                 
-                currentUserData = data; // Salva i dati per usarli in altre schermate
-                loginScreen.style.display = 'none';
+                currentUserData = data;
                 mainApp.style.display = 'block';
+                showView('view-turni');
                 mostraTurni(data);
                 impostaProfilo(data);
 
@@ -272,12 +258,26 @@
                 turniList.innerHTML = '<p style="text-align: center;">Nessun turno assegnato.</p>';
                 return;
             }
-            // ... (logica ordinamento turni invariata)
+            
+            const now = new Date();
+            const parseDateTime = (dateStr, timeStr) => {
+                const dateParts = dateStr.split('/');
+                const timeParts = timeStr.split(':');
+                return new Date(parseInt(dateParts[2]), parseInt(dateParts[1]) - 1, parseInt(dateParts[0]), parseInt(timeParts[0]), parseInt(timeParts[1]));
+            };
 
             turniPersonali.forEach(turno => {
                 const card = document.createElement('div');
                 card.className = 'turno-card';
-                // ... (logica classi passato/attuale/categoria invariata)
+                
+                const fine = parseDateTime(turno['Data Inizio'], turno['Ora Fine']);
+                if (now > fine) {
+                    card.classList.add('passato');
+                }
+
+                if (turno.Categoria) {
+                    card.classList.add('categoria-' + turno.Categoria.trim().toLowerCase());
+                }
 
                 card.innerHTML = `
                     <div class="turno-card-header">
@@ -290,18 +290,13 @@
                         </div>
                     </div>
                     <div class="turno-card-body">
-                        <p class="turno-data"><strong>Data:</strong> ${turno['Data Inizio']}</p>
-                        <p class="turno-orario-completo"><strong>Orario:</strong> ${turno['Ora Inizio']} - ${turno['Ora Fine']}</p>
-                        <p class="turno-luogo"><strong>Luogo:</strong> 📍 ${turno.Luogo}</p>
+                        <p><strong>Data:</strong> ${turno['Data Inizio']}</p>
+                        <p><strong>Orario:</strong> ${turno['Ora Inizio']} - ${turno['Ora Fine']}</p>
+                        <p><strong>Luogo:</strong> 📍 ${turno.Luogo}</p>
                         <p><strong>Descrizione:</strong></p>
                         <p>${turno.Descrizione}</p>
                     </div>`;
                 turniList.appendChild(card);
-
-                // Aggiunge l'evento di click direttamente sulla card-header
-                card.querySelector('.turno-card-header').addEventListener('click', () => {
-                    card.classList.toggle('is-open');
-                });
             });
         }
 
@@ -321,6 +316,11 @@
                 'view-profilo': 'Profilo',
             };
             mainTitle.textContent = titles[viewId] || 'Volontari';
+            
+            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+            if(document.getElementById(`nav-${viewId.split('-')[1]}`)) {
+                 document.getElementById(`nav-${viewId.split('-')[1]}`).classList.add('active');
+            }
         }
 
         // Event Listeners
@@ -328,14 +328,27 @@
         document.getElementById('nav-profilo').addEventListener('click', () => showView('view-profilo'));
         document.getElementById('nav-notifiche').addEventListener('click', () => showView('view-notifiche'));
         logoutButton.addEventListener('click', logout);
+        
         loginButton.addEventListener('click', () => {
             const email = emailInput.value.trim();
             if (email) { localStorage.setItem('userEmail', email); caricaDati(email); }
         });
+        
         emailInput.addEventListener('keyup', e => { if (e.key === 'Enter') loginButton.click(); });
+        
+        turniList.addEventListener('click', e => {
+            const header = e.target.closest('.turno-card-header');
+            if (header) {
+                header.parentElement.classList.toggle('is-open');
+            }
+        });
+        
         document.addEventListener('DOMContentLoaded', () => {
             const savedEmail = localStorage.getItem('userEmail');
-            if (savedEmail) { loginScreen.style.display = 'none'; caricaDati(savedEmail); }
+            if (savedEmail) { 
+                loginScreen.style.display = 'none'; 
+                caricaDati(savedEmail); 
+            }
         });
 
     </script>
