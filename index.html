@@ -69,7 +69,6 @@
         
         .top-right-nav { 
             position: absolute; top: 50%; right: 15px; transform: translateY(-50%); 
-            display: flex; align-items: center; gap: 8px; 
         }
         .icon-button {
             background: transparent; border: 1px solid rgba(255, 255, 255, 0.5); color: white;
@@ -77,6 +76,7 @@
             justify-content: center; cursor: pointer;
         }
         
+        /* 5. Barra di Navigazione Inferiore */
         .bottom-nav {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px;
             background-color: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 50px;
@@ -91,7 +91,7 @@
         .nav-button svg { width: 24px; height: 24px; margin-bottom: 2px; }
         .nav-button span { font-size: 12px; font-weight: 700; }
         
-        /* 5. Card dei Turni */
+        /* 6. Card dei Turni */
         .turno-card {
             background-color: var(--colore-card); border-radius: 16px;
             margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -113,7 +113,7 @@
         .turno-card.is-open .turno-card-body {
             max-height: 500px; opacity: 1; padding: 20px; border-top: 1px solid #eee;
         }
-        .turno-card-body p { margin: 0 0 10px 0; }
+        .turno-card-body p { margin: 0 0 10px 0; font-family: var(--font-secondario); }
         .turno-card.categoria-accoglienza .turno-card-header { background-color: #17a2b8; }
         .turno-card.categoria-sport .turno-card-header { background-color: #fd7e14; }
         .turno-card.categoria-cerimonia .turno-card-header { background-color: #ffc107; }
@@ -123,13 +123,6 @@
         .turno-card.passato .turno-card-header h3,
         .turno-card.passato .turno-orario-corto {
             text-decoration: line-through;
-        }
-
-        /* 6. Altre Viste */
-        .profilo-card { text-align: center; }
-        .logout-button-profilo {
-            background-color: #e74c3c; color: white; padding: 12px 25px; border: none;
-            border-radius: 50px; font-size: 16px; cursor: pointer; margin-top: 30px;
         }
 
         .hidden { display: none !important; }
@@ -144,7 +137,7 @@
 
     <div id="login-screen">
         <header class="app-header">
-            <img src="logo.png" alt="Logo Evento" class="logo">
+            <img src="logo.png" onerror="this.style.display='none'" alt="Logo Evento" class="logo">
             <h1>Volontari Abbadiadi 2025</h1>
         </header>
         <div class="login-container">
@@ -160,35 +153,32 @@
         <header class="app-header-main">
             <h1 id="main-title">I Miei Turni</h1>
             <div class="top-right-nav">
-                <button id="nav-notifiche" class="icon-button" title="Notifiche">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                </button>
-                <button id="nav-profilo" class="icon-button" title="Profilo">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <button id="logout-button" class="icon-button" title="Esci">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 </button>
             </div>
         </header>
 
         <main class="container">
-            <div id="view-turni" class="view">
+            <div id="view-turni" class="view active">
                 <div id="turni-list"></div>
             </div>
-            <div id="view-notifiche" class="view hidden">
-                <h2>Notifiche</h2><p>Qui verranno mostrate le comunicazioni importanti.</p>
+            <div id="view-programma" class="view">
+                <h2>Programma della Giornata</h2>
+                <p>Contenuto del programma in arrivo...</p>
             </div>
-            <div id="view-profilo" class="view hidden">
-                <h2>Il Mio Profilo</h2>
-                <div class="profilo-card">
-                    <h3 id="profilo-nome"></h3>
-                    <p id="profilo-email"></p>
-                    <p id="profilo-ruolo"></p>
-                    <button id="logout-button" class="logout-button-profilo">Esci</button>
-                </div>
+            <div id="view-chat" class="view">
+                 <h2>Chat</h2>
+                <p>Contenuto della chat in arrivo...</p>
+            </div>
+            <div id="view-planimetria" class="view">
+                <h2>Mappa</h2>
+                <p>Contenuto della mappa in arrivo...</p>
             </div>
         </main>
         
         <nav class="bottom-nav">
-            <button id="nav-turni" class="nav-button">
+            <button id="nav-turni" class="nav-button active">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 <span>Turni</span>
             </button>
@@ -221,8 +211,6 @@
         const logoutButton = document.getElementById('logout-button');
         const mainTitle = document.getElementById('main-title');
         
-        let currentUserData = null;
-
         function logout() {
             localStorage.removeItem('userEmail');
             location.reload();
@@ -236,11 +224,9 @@
                 const data = await response.json();
                 if (data.error) throw new Error(data.error);
                 
-                currentUserData = data;
-                mainApp.style.display = 'block';
+                mainApp.classList.remove('hidden');
                 showView('view-turni');
                 mostraTurni(data);
-                impostaProfilo(data);
 
             } catch (error) {
                 alert("Si è verificato un errore: " + error.message);
@@ -251,7 +237,6 @@
         }
 
         function mostraTurni(data) {
-            showView('view-turni');
             turniList.innerHTML = '';
             const turniPersonali = data.turni || [];
             if (turniPersonali.length === 0) {
@@ -276,7 +261,7 @@
                 }
 
                 if (turno.Categoria) {
-                    card.classList.add('categoria-' + turno.Categoria.trim().toLowerCase());
+                    card.classList.add('categoria-' + turno.Categoria.trim().toLowerCase().replace(/\s+/g,'-'));
                 }
 
                 card.innerHTML = `
@@ -299,35 +284,39 @@
                 turniList.appendChild(card);
             });
         }
-
-        function impostaProfilo(data) {
-            document.getElementById('profilo-nome').textContent = data.user.nome;
-            document.getElementById('profilo-email').textContent = localStorage.getItem('userEmail');
-            document.getElementById('profilo-ruolo').textContent = `Ruolo: ${data.user.ruolo}`;
-        }
-
+        
         function showView(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(viewId).classList.remove('hidden');
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const viewElement = document.getElementById(viewId);
+            if(viewElement) {
+                viewElement.classList.add('active');
+            }
 
             const titles = {
                 'view-turni': 'I Miei Turni',
-                'view-notifiche': 'Notifiche',
-                'view-profilo': 'Profilo',
+                'view-programma': 'Programma',
+                'view-chat': 'Chat',
+                'view-planimetria': 'Mappa',
             };
             mainTitle.textContent = titles[viewId] || 'Volontari';
             
             document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-            if(document.getElementById(`nav-${viewId.split('-')[1]}`)) {
-                 document.getElementById(`nav-${viewId.split('-')[1]}`).classList.add('active');
+            const buttonId = `nav-${viewId.split('-')[1]}`;
+            const activeButton = document.getElementById(buttonId);
+            if(activeButton) {
+                 activeButton.classList.add('active');
             }
         }
-
+        
         // Event Listeners
-        document.getElementById('nav-turni').addEventListener('click', () => showView('view-turni'));
-        document.getElementById('nav-profilo').addEventListener('click', () => showView('view-profilo'));
-        document.getElementById('nav-notifiche').addEventListener('click', () => showView('view-notifiche'));
         logoutButton.addEventListener('click', logout);
+        
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const viewName = button.id.split('-')[1];
+                showView(`view-${viewName}`);
+            });
+        });
         
         loginButton.addEventListener('click', () => {
             const email = emailInput.value.trim();
