@@ -11,6 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Lato:wght@400;700&display=swap');
         
         :root {
+            /* Tema Chiaro (Light Mode) */
             --colore-principale: #002734; --colore-accento: #17a2b8; --colore-pulsante: #cda434;
             --colore-sfondo-pagina: #f4f6f8; --colore-card: #ffffff; --colore-testo: #333;
             --colore-testo-header: #ffffff; --colore-grigio-testo: #6c757d; --colore-bordo-default: #dee2e6;
@@ -18,6 +19,7 @@
             --colore-errore: #c0392b;
         }
         body.dark-mode {
+            /* Tema Scuro (Dark Mode) */
             --colore-principale: #0a3d4e; --colore-accento: #17a2b8; --colore-pulsante: #cda434;
             --colore-sfondo-pagina: #001f2b; --colore-card: #003344; --colore-testo: #eaf4f8;
             --colore-testo-header: #ffffff; --colore-grigio-testo: #9fbdc9; --colore-bordo-default: #1a4c5e;
@@ -144,11 +146,11 @@
             <div id="view-admin" class="view">
                 <h2>Pannello di Controllo</h2>
                 <div class="admin-section">
-                    <h3><span>Tutti i Volontari</span><button id="btn-add-volunteer" class="admin-action-button">+ Aggiungi</button></h3>
+                    <h3><span>Volontari</span><button id="btn-add-volunteer" class="admin-action-button">+ Aggiungi</button></h3>
                     <div id="admin-volontari-list" class="admin-list"></div>
                 </div>
                 <div class="admin-section">
-                    <h3><span>Tutti i Turni</span><button id="btn-crea-turno" class="admin-action-button">+ Crea Turno</button></h3>
+                    <h3><span>Turni</span><button id="btn-crea-turno" class="admin-action-button">+ Crea Turno</button></h3>
                     <div id="admin-turni-accordion"></div>
                 </div>
             </div>
@@ -167,7 +169,7 @@
     <div id="modal-edit-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Volontario</h2><form id="form-edit-volunteer" class="modal-form"><input type="hidden" name="original_email"><input type="email" name="email" placeholder="Email" required><input type="text" name="nome" placeholder="Nome" required><input type="text" name="cognome" placeholder="Cognome" required><input type="tel" name="telefono" placeholder="Telefono"><select name="ruolo" required><option value="Volontario">Volontario</option><option value="Responsabile">Responsabile</option><option value="Admin">Admin</option></select><div style="display:flex; gap:10px;"><button type="submit">Salva Modifiche</button><button type="button" class="btn-remove" id="btn-remove-volunteer-from-modal">Rimuovi</button></div></form></div></div>
     <div id="modal-crea-turno" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Crea Nuovo Turno</h2><form id="form-crea-turno" class="modal-form"><input type="text" name="id_turno" placeholder="ID Turno (es. ACC-05)" required><input type="text" name="categoria" placeholder="Categoria" required><input type="text" name="nome_turno" placeholder="Nome Turno" required><textarea name="descrizione" placeholder="Descrizione" rows="2"></textarea><input type="text" name="luogo" placeholder="Luogo" required><input type="text" name="data_inizio" placeholder="Data (GG/MM/AAAA)" required><input type="text" name="ora_inizio" placeholder="Ora Inizio (HH:MM)" required><input type="text" name="ora_fine" placeholder="Ora Fine (HH:MM)" required><button type="submit">Salva Turno</button></form></div></div>
     <div id="modal-edit-shift" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Turno</h2><form id="form-edit-shift" class="modal-form"><input type="hidden" name="original_id_turno"><input type="text" name="id_turno" placeholder="ID Turno" required><input type="text" name="categoria" placeholder="Categoria" required><input type="text" name="nome_turno" placeholder="Nome Turno" required><textarea name="descrizione" placeholder="Descrizione" rows="2"></textarea><input type="text" name="luogo" placeholder="Luogo" required><input type="text" name="data_inizio" placeholder="Data" required><input type="text" name="ora_inizio" placeholder="Ora Inizio" required><input type="text" name="ora_fine" placeholder="Ora Fine" required><div style="display:flex; gap:10px;"><button type="submit">Salva Modifiche</button><button type="button" class="btn-remove" id="btn-remove-shift-from-modal">Rimuovi Turno</button></div></form></div></div>
-    <div id="modal-assegna-volontario" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Gestisci Volontari</h2><p><strong>Turno:</strong> <span id="assegna-nome-turno"></span></p><div id="gestisci-assegnati-list" class="admin-list" style="margin-bottom: 15px;"></div><form id="form-assegna-volontario" class="modal-form" style="border-top: 1px solid var(--colore-bordo-default); padding-top: 15px;"><input type="hidden" id="assegna-id-turno" name="id_turno"><label for="select-volontari">Assegna nuovi volontari:</label><select id="select-volontari" name="emails" required multiple size="5"></select><button type="submit">Assegna Selezionati</button></form></div></div>
+    <div id="modal-assegna-volontario" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Gestisci Volontari</h2><p><strong>Turno:</strong> <span id="assegna-nome-turno"></span></p><form id="form-assegna-volontario" class="modal-form"><input type="hidden" id="assegna-id-turno" name="id_turno"><label for="select-volontari">Scegli volontari da assegnare (ctrl/cmd + click per selezione multipla):</label><select id="select-volontari" name="emails" required multiple size="5"></select><button type="submit">Assegna Selezionati</button></form><hr><div id="gestisci-assegnati-list"></div></div></div>
     <div id="modal-view-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2 id="view-volunteer-title"></h2><div id="view-volunteer-turni" class="admin-list"></div></div></div>
     <div id="modal-confirm" class="modal-overlay"><div class="modal-content" style="text-align: center;"><h3 id="confirm-title"></h3><p id="confirm-message"></p><div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;"><button id="btn-confirm-cancel" class="admin-action-button">Annulla</button><button id="btn-confirm-yes" class="btn-remove">Conferma</button></div></div></div>
 
@@ -270,7 +272,7 @@
             function mostraPannelloAdmin(data) {
                 refs.adminVolontariList.innerHTML = '';
                 const tuttiIVolontari = data.tuttiIVolontari || [];
-                tuttiIVolontari.sort((a,b) => a.Cognome.localeCompare(b.Cognome));
+                tuttiIVolontari.sort((a, b) => a.Cognome.localeCompare(b.Cognome));
                 tuttiIVolontari.forEach(v => { const item = document.createElement('div'); item.className = 'list-item'; item.innerHTML = `<div class="list-item-header"><h4>${v.Cognome} ${v.Nome}</h4></div><div class="list-item-body"><p>${v.Email} - Ruolo: ${v.Ruolo}</p><p>Tel: ${v.Telefono || 'N/D'}</p></div><div class="list-item-actions"><button class="admin-action-button btn-edit" data-email="${v.Email}">Modifica</button><button class="admin-action-button btn-view" data-email="${v.Email}" data-nome="${v.Nome} ${v.Cognome}">Turni</button></div>`; refs.adminVolontariList.appendChild(item); });
                 const turniByCategory = (data.tuttiITurni || []).reduce((acc, t) => { (acc[t.Categoria || 'Senza Categoria'] = acc[t.Categoria || 'Senza Categoria'] || []).push(t); return acc; }, {});
                 refs.adminTurniAccordion.innerHTML = '';
@@ -341,28 +343,25 @@
                 form.querySelector('[name="ora_fine"]').value = turno['Ora Fine'];
                 openModal(refs.modalEditShift);
             }
+
             function openManageVolunteersModal(idTurno, nomeTurno) {
-                refs.formAssegnaVolontario.querySelector('#assegna-id-turno').value = idTurno;
-                refs.formAssegnaVolontario.querySelector('#assegna-nome-turno').textContent = nomeTurno;
+                document.getElementById('assegna-id-turno').value = idTurno;
+                document.getElementById('assegna-nome-turno').textContent = nomeTurno;
                 const select = document.getElementById('select-volontari');
                 select.innerHTML = '';
-                const volontariAssegnati = (currentUserData.tutteLeAssegnazioni || []).filter(a => a.ID_Turno === idTurno).map(a => a.Email_Volontario);
-                (currentUserData.tuttiIVolontari || []).forEach(v => {
-                    if (!volontariAssegnati.includes(v.Email)) {
-                        const option = document.createElement('option');
-                        option.value = v.Email;
-                        option.textContent = `${v.Nome} ${v.Cognome}`;
-                        select.appendChild(option);
-                    }
+                currentUserData.tuttiIVolontari.forEach(v => {
+                    const option = document.createElement('option');
+                    option.value = v.Email;
+                    option.textContent = `${v.Nome} ${v.Cognome}`;
+                    select.appendChild(option);
                 });
                 openModal(refs.modalAssegnaVolontario);
             }
-            
-            function validateForm(form) { let isValid = true; form.querySelectorAll('[required]').forEach(input => { input.classList.remove('invalid'); if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; } }); if (!isValid) alert('Compila tutti i campi obbligatori.'); return isValid; }
 
             // EVENT LISTENERS
             document.body.addEventListener('click', e => {
-                const target = e.target; const closest = (selector) => target.closest(selector);
+                const target = e.target;
+                const closest = (selector) => target.closest(selector);
                 if(closest('#btn-notifiche')) openModal(refs.modalNotifiche);
                 if(closest('#btn-profilo')) openModal(refs.modalProfilo);
                 if(closest('.modal-close-button')) closeModal(closest('.modal-overlay'));
