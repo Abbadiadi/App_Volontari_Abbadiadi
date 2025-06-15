@@ -11,7 +11,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Lato:wght@400;700&display=swap');
         
         :root {
-            /* Tema Chiaro (Light Mode) */
             --colore-principale: #002734; --colore-accento: #17a2b8; --colore-pulsante: #cda434;
             --colore-sfondo-pagina: #f4f6f8; --colore-card: #ffffff; --colore-testo: #333;
             --colore-testo-header: #ffffff; --colore-grigio-testo: #6c757d; --colore-bordo-default: #dee2e6;
@@ -19,7 +18,6 @@
             --colore-errore: #c0392b;
         }
         body.dark-mode {
-            /* Tema Scuro (Dark Mode) */
             --colore-principale: #0a3d4e; --colore-accento: #17a2b8; --colore-pulsante: #cda434;
             --colore-sfondo-pagina: #001f2b; --colore-card: #003344; --colore-testo: #eaf4f8;
             --colore-testo-header: #ffffff; --colore-grigio-testo: #9fbdc9; --colore-bordo-default: #1a4c5e;
@@ -105,6 +103,7 @@
         .modal-form { display: flex; flex-direction: column; gap: 15px; }
         .modal-form label { font-weight: 700; font-size: 14px; color: var(--colore-grigio-testo); text-align: left; }
         .modal-form input, .modal-form select, .modal-form textarea { width: 100%; padding: 12px; border: 1px solid var(--colore-bordo-default); border-radius: 8px; font-size: 16px; background-color: var(--colore-sfondo-pagina); color: var(--colore-testo); box-sizing: border-box; }
+        .modal-form input.invalid { border-color: var(--colore-errore) !important; }
         .modal-form button { background-color: var(--colore-pulsante); color: #111; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
         .list-item-actions { display: flex; gap: 5px; flex-shrink: 0; }
         .list-item-actions .admin-action-button { font-size: 12px; padding: 5px 10px; }
@@ -165,12 +164,12 @@
     <div id="modal-notifiche" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Notifiche</h2><p>Contenuto in arrivo...</p></div></div>
     <div id="modal-profilo" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Il Mio Profilo</h2><div class="profilo-card"><h3 id="profilo-nome"></h3><p id="profilo-email"></p><p id="profilo-ruolo"></p><div class="theme-switch-wrapper"><span>Modalità Scura</span><label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" /><div class="slider round"></div></label></div><button id="logout-button" class="logout-button-profilo">Esci</button></div></div></div>
     <div id="modal-add-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Aggiungi Volontario</h2><form id="form-add-volunteer" class="modal-form"><input type="email" name="email" placeholder="Email" required><input type="text" name="nome" placeholder="Nome" required><input type="text" name="cognome" placeholder="Cognome" required><input type="tel" name="telefono" placeholder="Telefono"><select name="ruolo" required><option value="Volontario">Volontario</option><option value="Responsabile">Responsabile</option><option value="Admin">Admin</option></select><button type="submit">Aggiungi</button></form></div></div>
-    <div id="modal-edit-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Volontario</h2><form id="form-edit-volunteer" class="modal-form"><input type="hidden" name="original_email"><input type="email" name="email" placeholder="Email" required><input type="text" name="nome" placeholder="Nome" required><input type="text" name="cognome" placeholder="Cognome" required><input type="tel" name="telefono" placeholder="Telefono"><select name="ruolo" required><option value="Volontario">Volontario</option><option value="Responsabile">Responsabile</option><option value="Admin">Admin</option></select><button type="submit">Salva Modifiche</button></form></div></div>
+    <div id="modal-edit-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Volontario</h2><form id="form-edit-volunteer" class="modal-form"><input type="hidden" name="original_email"><input type="email" name="email" placeholder="Email" required><input type="text" name="nome" placeholder="Nome" required><input type="text" name="cognome" placeholder="Cognome" required><input type="tel" name="telefono" placeholder="Telefono"><select name="ruolo" required><option value="Volontario">Volontario</option><option value="Responsabile">Responsabile</option><option value="Admin">Admin</option></select><div style="display:flex; gap:10px;"><button type="submit">Salva Modifiche</button><button type="button" class="btn-remove" id="btn-remove-volunteer-from-modal">Rimuovi</button></div></form></div></div>
     <div id="modal-crea-turno" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Crea Nuovo Turno</h2><form id="form-crea-turno" class="modal-form"><input type="text" name="id_turno" placeholder="ID Turno (es. ACC-05)" required><input type="text" name="categoria" placeholder="Categoria" required><input type="text" name="nome_turno" placeholder="Nome Turno" required><textarea name="descrizione" placeholder="Descrizione" rows="2"></textarea><input type="text" name="luogo" placeholder="Luogo" required><input type="text" name="data_inizio" placeholder="Data (GG/MM/AAAA)" required><input type="text" name="ora_inizio" placeholder="Ora Inizio (HH:MM)" required><input type="text" name="ora_fine" placeholder="Ora Fine (HH:MM)" required><button type="submit">Salva Turno</button></form></div></div>
-    <div id="modal-edit-shift" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Turno</h2><form id="form-edit-shift" class="modal-form"><input type="hidden" name="original_id_turno"><input type="text" name="id_turno" placeholder="ID Turno" required><input type="text" name="categoria" placeholder="Categoria" required><input type="text" name="nome_turno" placeholder="Nome Turno" required><textarea name="descrizione" placeholder="Descrizione" rows="2"></textarea><input type="text" name="luogo" placeholder="Luogo" required><input type="text" name="data_inizio" placeholder="Data" required><input type="text" name="ora_inizio" placeholder="Ora Inizio" required><input type="text" name="ora_fine" placeholder="Ora Fine" required><button type="submit">Salva Modifiche</button></form></div></div>
-    <div id="modal-assegna-volontario" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Assegna Volontari</h2><p><strong>Turno:</strong> <span id="assegna-nome-turno"></span></p><form id="form-assegna-volontario" class="modal-form"><input type="hidden" id="assegna-id-turno" name="id_turno"><label for="select-volontari">Scegli volontari (ctrl/cmd + click per selezione multipla):</label><select id="select-volontari" name="emails" required multiple size="8"></select><button type="submit">Conferma</button></form></div></div>
+    <div id="modal-edit-shift" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Modifica Turno</h2><form id="form-edit-shift" class="modal-form"><input type="hidden" name="original_id_turno"><input type="text" name="id_turno" placeholder="ID Turno" required><input type="text" name="categoria" placeholder="Categoria" required><input type="text" name="nome_turno" placeholder="Nome Turno" required><textarea name="descrizione" placeholder="Descrizione" rows="2"></textarea><input type="text" name="luogo" placeholder="Luogo" required><input type="text" name="data_inizio" placeholder="Data" required><input type="text" name="ora_inizio" placeholder="Ora Inizio" required><input type="text" name="ora_fine" placeholder="Ora Fine" required><div style="display:flex; gap:10px;"><button type="submit">Salva Modifiche</button><button type="button" class="btn-remove" id="btn-remove-shift-from-modal">Rimuovi Turno</button></div></form></div></div>
+    <div id="modal-assegna-volontario" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2>Gestisci Volontari</h2><p><strong>Turno:</strong> <span id="assegna-nome-turno"></span></p><div id="gestisci-assegnati-list" class="admin-list" style="margin-bottom: 15px;"></div><form id="form-assegna-volontario" class="modal-form" style="border-top: 1px solid var(--colore-bordo-default); padding-top: 15px;"><input type="hidden" id="assegna-id-turno" name="id_turno"><label for="select-volontari">Assegna nuovi volontari:</label><select id="select-volontari" name="emails" required multiple size="5"></select><button type="submit">Assegna Selezionati</button></form></div></div>
     <div id="modal-view-volunteer" class="modal-overlay"><div class="modal-content"><button class="modal-close-button">&times;</button><h2 id="view-volunteer-title"></h2><div id="view-volunteer-turni" class="admin-list"></div></div></div>
-    <div id="modal-confirm" class="modal-overlay"><div class="modal-content" style="text-align: center;"><h3 id="confirm-title">Sei sicuro?</h3><p id="confirm-message"></p><div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;"><button id="btn-confirm-cancel" class="admin-action-button" style="background-color: var(--colore-grigio-testo);">Annulla</button><button id="btn-confirm-yes" class="btn-remove">Conferma</button></div></div></div>
+    <div id="modal-confirm" class="modal-overlay"><div class="modal-content" style="text-align: center;"><h3 id="confirm-title"></h3><p id="confirm-message"></p><div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;"><button id="btn-confirm-cancel" class="admin-action-button">Annulla</button><button id="btn-confirm-yes" class="btn-remove">Conferma</button></div></div></div>
 
     <div id="loading-spinner" class="loading-spinner hidden"></div>
 
@@ -271,7 +270,8 @@
             function mostraPannelloAdmin(data) {
                 refs.adminVolontariList.innerHTML = '';
                 const tuttiIVolontari = data.tuttiIVolontari || [];
-                tuttiIVolontari.forEach(v => { const item = document.createElement('div'); item.className = 'list-item'; item.innerHTML = `<div class="list-item-header"><h4>${v.Nome} ${v.Cognome}</h4></div><div class="list-item-body"><p>${v.Email} - Ruolo: ${v.Ruolo}</p><p>Tel: ${v.Telefono || 'N/D'}</p></div><div class="list-item-actions"><button class="admin-action-button btn-edit" data-email="${v.Email}">Modifica</button><button class="admin-action-button btn-view" data-email="${v.Email}" data-nome="${v.Nome} ${v.Cognome}">Vedi Turni</button><button class="admin-action-button btn-remove" data-email="${v.Email}">Rimuovi</button></div>`; refs.adminVolontariList.appendChild(item); });
+                tuttiIVolontari.sort((a,b) => a.Cognome.localeCompare(b.Cognome));
+                tuttiIVolontari.forEach(v => { const item = document.createElement('div'); item.className = 'list-item'; item.innerHTML = `<div class="list-item-header"><h4>${v.Cognome} ${v.Nome}</h4></div><div class="list-item-body"><p>${v.Email} - Ruolo: ${v.Ruolo}</p><p>Tel: ${v.Telefono || 'N/D'}</p></div><div class="list-item-actions"><button class="admin-action-button btn-edit" data-email="${v.Email}">Modifica</button><button class="admin-action-button btn-view" data-email="${v.Email}" data-nome="${v.Nome} ${v.Cognome}">Turni</button></div>`; refs.adminVolontariList.appendChild(item); });
                 const turniByCategory = (data.tuttiITurni || []).reduce((acc, t) => { (acc[t.Categoria || 'Senza Categoria'] = acc[t.Categoria || 'Senza Categoria'] || []).push(t); return acc; }, {});
                 refs.adminTurniAccordion.innerHTML = '';
                 for (const category in turniByCategory) {
@@ -281,15 +281,12 @@
                     const content = document.createElement('div'); content.className = 'category-content admin-list';
                     turniByCategory[category].forEach(turno => {
                         const item = document.createElement('div'); item.className = 'list-item';
-                        item.innerHTML = `<div><h4>${turno['Nome Turno']}</h4><p>${turno['Data Inizio']} | ${turno['Ora Inizio']}-${turno['Ora Fine']}</p></div><div class="list-item-actions"><button class="admin-action-button btn-edit" data-id-turno="${turno.ID_Turno}">Modifica</button><button class="admin-action-button btn-assegna" data-id-turno="${turno.ID_Turno}" data-nome-turno="${turno['Nome Turno']}">Assegna</button><button class="admin-action-button btn-remove btn-remove-shift" data-id-turno="${turno.ID_Turno}">Rimuovi</button></div>`;
+                        item.innerHTML = `<div><h4>${turno['Nome Turno']}</h4><p>${turno['Data Inizio']} | ${turno['Ora Inizio']}-${turno['Ora Fine']}</p></div><div class="list-item-actions"><button class="admin-action-button btn-edit" data-id-turno="${turno.ID_Turno}">Modifica</button><button class="admin-action-button btn-manage-volunteers" data-id-turno="${turno.ID_Turno}" data-nome-turno="${turno['Nome Turno']}">Gestisci</button></div>`;
                         content.appendChild(item);
                     });
                     group.appendChild(header); group.appendChild(content);
                     refs.adminTurniAccordion.appendChild(group);
                 }
-                const selectVolontari = document.getElementById('select-volontari');
-                selectVolontari.innerHTML = '';
-                tuttiIVolontari.forEach(v => { const option = document.createElement('option'); option.value = v.Email; option.textContent = `${v.Nome} ${v.Cognome}`; selectVolontari.appendChild(option); });
             }
 
             function mostraTurniDelVolontario(email, nome) {
@@ -344,11 +341,28 @@
                 form.querySelector('[name="ora_fine"]').value = turno['Ora Fine'];
                 openModal(refs.modalEditShift);
             }
+            function openManageVolunteersModal(idTurno, nomeTurno) {
+                refs.formAssegnaVolontario.querySelector('#assegna-id-turno').value = idTurno;
+                refs.formAssegnaVolontario.querySelector('#assegna-nome-turno').textContent = nomeTurno;
+                const select = document.getElementById('select-volontari');
+                select.innerHTML = '';
+                const volontariAssegnati = (currentUserData.tutteLeAssegnazioni || []).filter(a => a.ID_Turno === idTurno).map(a => a.Email_Volontario);
+                (currentUserData.tuttiIVolontari || []).forEach(v => {
+                    if (!volontariAssegnati.includes(v.Email)) {
+                        const option = document.createElement('option');
+                        option.value = v.Email;
+                        option.textContent = `${v.Nome} ${v.Cognome}`;
+                        select.appendChild(option);
+                    }
+                });
+                openModal(refs.modalAssegnaVolontario);
+            }
+            
+            function validateForm(form) { let isValid = true; form.querySelectorAll('[required]').forEach(input => { input.classList.remove('invalid'); if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; } }); if (!isValid) alert('Compila tutti i campi obbligatori.'); return isValid; }
 
             // EVENT LISTENERS
             document.body.addEventListener('click', e => {
-                const target = e.target;
-                const closest = (selector) => target.closest(selector);
+                const target = e.target; const closest = (selector) => target.closest(selector);
                 if(closest('#btn-notifiche')) openModal(refs.modalNotifiche);
                 if(closest('#btn-profilo')) openModal(refs.modalProfilo);
                 if(closest('.modal-close-button')) closeModal(closest('.modal-overlay'));
@@ -357,14 +371,14 @@
                 if(closest('#login-button')) { const email = refs.emailInput.value.trim(); if(email) { localStorage.setItem('userEmail', email); caricaDati(email); } }
                 if(closest('.turno-card-header')) closest('.turno-card').classList.toggle('is-open');
                 if(closest('.list-item-header')) closest('.list-item').classList.toggle('is-open');
-                if(closest('#btn-crea-turno')) openModal(refs.modalCreaTurno);
-                if(closest('#btn-add-volunteer')) openModal(refs.modalAddVolunteer);
-                if(closest('.btn-assegna')) { const btn = closest('.btn-assegna'); document.getElementById('assegna-id-turno').value = btn.dataset.idTurno; document.getElementById('assegna-nome-turno').textContent = btn.dataset.nomeTurno; openModal(refs.modalAssegnaVolontario); }
+                if(closest('#btn-crea-turno')) { refs.formCreaTurno.reset(); openModal(refs.modalCreaTurno); }
+                if(closest('#btn-add-volunteer')) { refs.formAddVolunteer.reset(); openModal(refs.modalAddVolunteer); }
+                if(closest('.btn-manage-volunteers')) { openManageVolunteersModal(closest('.btn-manage-volunteers').dataset.idTurno, closest('.btn-manage-volunteers').dataset.nomeTurno); }
                 if(closest('.btn-view')) mostraTurniDelVolontario(closest('.btn-view').dataset.email, closest('.btn-view').dataset.nome);
                 if(closest('.btn-edit[data-email]')) openEditVolunteerModal(closest('.btn-edit').dataset.email);
                 if(closest('.btn-edit[data-id-turno]')) openEditShiftModal(closest('.btn-edit').dataset.idTurno);
-                if(closest('.btn-remove[data-email]')) { const email = closest('.btn-remove').dataset.email; showConfirmModal(`Rimuovere il volontario ${email}?`, 'Conferma Eliminazione', () => postData('remove_volunteer', { email_volontario: email })); }
-                if(closest('.btn-remove-shift')) { const idTurno = closest('.btn-remove-shift').dataset.idTurno; showConfirmModal(`Rimuovere il turno ${idTurno}?`, 'Conferma Eliminazione', () => postData('remove_shift', { id_turno: idTurno })); }
+                if(closest('#btn-remove-volunteer-from-modal')) { const email = refs.formEditVolunteer.querySelector('[name=original_email]').value; showConfirmModal(`Rimuovere il volontario ${email}?`, 'Conferma Eliminazione', () => postData('remove_volunteer', { email_volontario: email })); }
+                if(closest('#btn-remove-shift-from-modal')) { const idTurno = refs.formEditShift.querySelector('[name=original_id_turno]').value; showConfirmModal(`Rimuovere il turno ${idTurno}?`, 'Conferma Eliminazione', () => postData('remove_shift', { id_turno: idTurno })); }
                 if(closest('.btn-unassign')) { const { email, idTurno } = closest('.btn-unassign').dataset; showConfirmModal(`Rimuovere questa assegnazione?`, 'Conferma Rimozione', () => postData('unassign_volunteer', { email_volontario: email, id_turno: idTurno })); }
                 if(closest('#btn-confirm-yes')) { if(actionToConfirm) actionToConfirm(); closeModal(refs.modalConfirm); }
                 if(closest('#btn-confirm-cancel')) closeModal(refs.modalConfirm);
@@ -374,11 +388,11 @@
             refs.emailInput.addEventListener('keyup', e => { if (e.key === 'Enter') { e.preventDefault(); refs.loginButton.click(); } });
             refs.themeToggle.addEventListener('change', () => { setTheme(refs.themeToggle.checked ? 'dark' : 'light'); });
             document.querySelectorAll('.nav-button').forEach(button => { button.addEventListener('click', () => { const viewName = button.id.split('-')[1]; showView(`view-${viewName}`); }); });
-            refs.formCreaTurno.addEventListener('submit', (e) => { e.preventDefault(); const formData = Object.fromEntries(new FormData(e.target)); postData('create_shift', formData); });
-            refs.formAssegnaVolontario.addEventListener('submit', (e) => { e.preventDefault(); const selectedEmails = Array.from(e.target.querySelector('select[name="emails"]').selectedOptions).map(opt => opt.value); if (selectedEmails.length === 0) { alert("Per favore, seleziona almeno un volontario."); return; } const idTurno = e.target.querySelector('input[name="id_turno"]').value; postData('assign_volunteer', { emails: selectedEmails, id_turno: idTurno }); });
-            refs.formAddVolunteer.addEventListener('submit', e => { e.preventDefault(); const formData = Object.fromEntries(new FormData(e.target)); postData('add_volunteer', formData); });
-            refs.formEditVolunteer.addEventListener('submit', e => { e.preventDefault(); const formData = Object.fromEntries(new FormData(e.target)); postData('edit_volunteer', formData); });
-            refs.formEditShift.addEventListener('submit', e => { e.preventDefault(); const formData = Object.fromEntries(new FormData(e.target)); postData('edit_shift', formData); });
+            refs.formCreaTurno.addEventListener('submit', (e) => { e.preventDefault(); if(!validateForm(e.target)) return; const formData = Object.fromEntries(new FormData(e.target)); postData('create_shift', formData); });
+            refs.formAssegnaVolontario.addEventListener('submit', (e) => { e.preventDefault(); const selectedEmails = Array.from(e.target.querySelector('#select-volontari').selectedOptions).map(opt => opt.value); if (selectedEmails.length === 0) { alert("Per favore, seleziona almeno un volontario."); return; } const idTurno = e.target.querySelector('input[name="id_turno"]').value; postData('assign_volunteer', { emails: selectedEmails, id_turno: idTurno }); });
+            refs.formAddVolunteer.addEventListener('submit', e => { e.preventDefault(); if(!validateForm(e.target)) return; const formData = Object.fromEntries(new FormData(e.target)); postData('add_volunteer', formData); });
+            refs.formEditVolunteer.addEventListener('submit', e => { e.preventDefault(); if(!validateForm(e.target)) return; const formData = Object.fromEntries(new FormData(e.target)); postData('edit_volunteer', formData); });
+            refs.formEditShift.addEventListener('submit', e => { e.preventDefault(); if(!validateForm(e.target)) return; const formData = Object.fromEntries(new FormData(e.target)); postData('edit_shift', formData); });
             
             // CARICAMENTO INIZIALE
             const savedTheme = localStorage.getItem('theme') || 'dark';
