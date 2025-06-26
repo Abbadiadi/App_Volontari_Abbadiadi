@@ -34,6 +34,19 @@
             --success-color: #2ecc71;
             --disabled-color: #5f7a85;
             --ongoing-color: var(--success-color);
+            --general-event-color: #8854d0; /* Viola per eventi generali */
+
+            /* Colori Sport */
+            --sport-velocita: #f39c12;
+            --sport-maratonina: #3498db;
+            --sport-staffetta: #2ecc71;
+            --sport-tiro-al-bersaglio---nerf: #e74c3c;
+            --sport-lancio-del-vortex: #9b59b6;
+            --sport-kan-jam-frisbee: #1abc9c;
+            --sport-salto-in-lungo: #e67e22;
+            --sport-calci-di-rigore: #27ae60;
+            --sport-bocce-curling: #34495e;
+            --sport-tiri-liberi-basket: #d35400;
         }
 
         body.light-theme {
@@ -46,10 +59,6 @@
             --secondary-accent-color: #17a2b8;
             --border-color: #dee2e6;
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --danger-color: #c0392b;
-            --success-color: #27ae60;
-            --disabled-color: #bdc3c7;
-            --ongoing-color: var(--success-color);
         }
         
         @keyframes pulse {
@@ -228,13 +237,8 @@
             margin-bottom: 1rem;
             overflow: hidden;
             box-shadow: 0 5px 20px var(--shadow-color);
-            border-left: 5px solid var(--secondary-accent-color);
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
-        }
-
-        .shift-card.past-shift {
-            opacity: 0.6;
-            border-left-color: var(--disabled-color);
         }
         
         .shift-header {
@@ -243,16 +247,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
         }
 
         .shift-header h3 {
             font-size: 1.1rem;
+            color: white;
         }
 
         .shift-header .time-info {
             font-size: 0.9rem;
             font-weight: bold;
-            color: var(--text-color);
+            color: white;
         }
 
         .shift-details {
@@ -264,7 +270,6 @@
         .shift-details.expanded {
             max-height: 500px;
             padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border-color);
         }
         .shift-details p {
             margin-bottom: 0.5rem;
@@ -272,6 +277,9 @@
         .shift-details p strong {
             color: var(--secondary-accent-color);
             margin-right: 0.5rem;
+        }
+        .shift-card.past {
+            opacity: 0.6;
         }
 
         /* Modali */
@@ -438,10 +446,10 @@
         
         /* Lista Volontari */
         .volunteer-item {
-            background: var(--bg-color);
+            background: var(--card-bg-color);
             border-radius: 16px;
             margin-bottom: 0.5rem;
-            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--secondary-accent-color);
         }
         .volunteer-summary {
             padding: 0.8rem 1.2rem;
@@ -491,11 +499,11 @@
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 1rem;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
+            background: var(--card-bg-color);
+            border-left: 5px solid var(--primary-accent-color);
         }
         .accordion-header {
-            background: var(--card-bg-color);
+            background-color: transparent;
             padding: 1rem 1.5rem;
             cursor: pointer;
             display: flex;
@@ -506,6 +514,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-out;
+            border-top: 1px solid var(--border-color);
         }
         .accordion-body.show {
             max-height: 1500px;
@@ -517,10 +526,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
         }
-        .shift-admin-item:last-child {
-            border-bottom: none;
+        .shift-admin-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
         }
         .shift-admin-info h4 {
             font-family: var(--font-family-body);
@@ -541,8 +549,18 @@
         }
         
         /* Programma Gare */
+        #race-program-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            #race-program-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
         .race-program-section {
-            margin-bottom: 2.5rem;
+            margin-bottom: 1rem;
         }
         .race-program-section h3 {
             border-bottom: 2px solid var(--secondary-accent-color);
@@ -555,22 +573,58 @@
         .race-event-card {
             background-color: var(--card-bg-color);
             border-radius: 16px;
-            padding: 1rem 1.5rem;
             margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             box-shadow: 0 5px 20px var(--shadow-color);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border-left: 5px solid transparent;
+            overflow: hidden;
         }
         .race-event-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px var(--shadow-color);
         }
-        .race-event-card.ongoing {
-            border-left-color: var(--ongoing-color);
+
+        .race-event-header {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+        .race-event-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .race-event-header h4 {
+            color: white;
+            flex-grow: 1;
+        }
+        
+        .type-generale .race-event-header { background-color: var(--general-event-color); }
+        .sport-velocita .race-event-header { background-color: var(--sport-velocita); }
+        .sport-maratonina .race-event-header { background-color: var(--sport-maratonina); }
+        .sport-staffetta .race-event-header { background-color: var(--sport-staffetta); }
+        .sport-tiro-al-bersaglio---nerf .race-event-header { background-color: var(--sport-tiro-al-bersaglio-nerf); }
+        .sport-lancio-del-vortex .race-event-header { background-color: var(--sport-lancio-del-vortex); }
+        .sport-kan-jam-frisbee .race-event-header { background-color: var(--sport-kan-jam-frisbee); }
+        .sport-salto-in-lungo .race-event-header { background-color: var(--sport-salto-in-lungo); }
+        .sport-calci-di-rigore .race-event-header { background-color: var(--sport-calci-di-rigore); }
+        .sport-bocce-curling .race-event-header { background-color: var(--sport-bocce-curling); }
+        .sport-tiri-liberi-basket .race-event-header { background-color: var(--sport-tiri-liberi-basket); }
+        
+        .race-event-card.ongoing .race-event-header {
+            background-color: var(--ongoing-color);
             animation: pulse 2s infinite;
+        }
+        
+        .race-event-body {
+            padding: 1rem 1.5rem;
+        }
+        
+        .race-event-body-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .race-event-card.past {
             opacity: 0.6;
@@ -595,11 +649,28 @@
             border-radius: 20px;
             color: #fff;
             margin-left: 0.5rem;
+            vertical-align: middle;
         }
         .level-generale { background-color: #6c757d; }
         .level-mini { background-color: #17a2b8; }
         .level-junior { background-color: #fd7e14; }
         .level-senior { background-color: #dc3545; }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--ongoing-color);
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
 
         /* Notifiche Toast */
         #toast-container {
@@ -741,7 +812,8 @@
             assignments: [],
             shiftCategories: [],
             raceEvents: [],
-            currentView: 'my-shifts'
+            currentView: 'my-shifts',
+            progressInterval: null
         };
 
         // Elementi DOM principali
@@ -757,6 +829,19 @@
         const profileBtn = document.getElementById('profile-btn');
         const modalContainer = document.getElementById('modal-container');
         const toastContainer = document.getElementById('toast-container');
+        
+        const SPORT_DETAILS = {
+            'Velocità': { logoUrl: 'https://placehold.co/40x40/f39c12/ffffff?text=V', colorClass: 'sport-velocita' },
+            'Maratonina': { logoUrl: 'https://placehold.co/40x40/3498db/ffffff?text=M', colorClass: 'sport-maratonina' },
+            'Staffetta': { logoUrl: 'https://placehold.co/40x40/2ecc71/ffffff?text=S', colorClass: 'sport-staffetta' },
+            'Tiro al bersaglio - Nerf': { logoUrl: 'https://placehold.co/40x40/e74c3c/ffffff?text=T', colorClass: 'sport-tiro-al-bersaglio---nerf' },
+            'Lancio del vortex': { logoUrl: 'https://placehold.co/40x40/9b59b6/ffffff?text=L', colorClass: 'sport-lancio-del-vortex' },
+            'Kan-jam frisbee': { logoUrl: 'https://placehold.co/40x40/1abc9c/ffffff?text=K', colorClass: 'sport-kan-jam-frisbee' },
+            'Salto in lungo': { logoUrl: 'https://placehold.co/40x40/e67e22/ffffff?text=S', colorClass: 'sport-salto-in-lungo' },
+            'Calci di rigore': { logoUrl: 'https://placehold.co/40x40/27ae60/ffffff?text=C', colorClass: 'sport-calci-di-rigore' },
+            'Bocce curling': { logoUrl: 'https://placehold.co/40x40/34495e/ffffff?text=B', colorClass: 'sport-bocce-curling' },
+            'Tiri liberi basket': { logoUrl: 'https://placehold.co/40x40/d35400/ffffff?text=B', colorClass: 'sport-tiri-liberi-basket' }
+        };
 
 
         // ====================================================================
@@ -847,6 +932,52 @@
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.classList.toggle('light-theme', savedTheme === 'light');
         }
+
+        /**
+         * Converte una stringa in un nome di classe CSS valido.
+         * @param {string} text - Il testo da convertire.
+         * @returns {string} - Il nome della classe CSS.
+         */
+        function toCssClass(text) {
+            if (!text) return '';
+            return text.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+        }
+        
+        /**
+         * Calcola la progressione di un evento/turno in percentuale.
+         * @param {string} dateStr - La data in formato "GG/MM/AAAA".
+         * @param {string} startTimeStr - L'ora di inizio in formato "HH:MM".
+         * @param {string} endTimeStr - L'ora di fine in formato "HH:MM".
+         * @returns {number} - La percentuale di completamento.
+         */
+        function calculateProgress(dateStr, startTimeStr, endTimeStr) {
+            const now = new Date();
+            const start = new Date(`${dateStr.split('/').reverse().join('-')}T${startTimeStr}`);
+            const end = new Date(`${dateStr.split('/').reverse().join('-')}T${endTimeStr}`);
+
+            if (now < start || now > end) return 0;
+            
+            const totalDuration = end.getTime() - start.getTime();
+            if (totalDuration === 0) return 100;
+
+            const elapsedTime = now.getTime() - start.getTime();
+            
+            return Math.min(100, (elapsedTime / totalDuration) * 100);
+        }
+        
+        /**
+         * Aggiorna tutte le barre di progresso visibili.
+         */
+        function updateProgressBars() {
+            document.querySelectorAll('.progress-bar-container[data-start-time]').forEach(container => {
+                const date = container.dataset.date;
+                const startTime = container.dataset.startTime;
+                const endTime = container.dataset.endTime;
+                const progress = calculateProgress(date, startTime, endTime);
+                container.querySelector('.progress-bar').style.width = `${progress}%`;
+            });
+        }
+
 
         // ====================================================================
         // FUNZIONI DI AUTENTICAZIONE E SESSIONE
@@ -941,6 +1072,7 @@
         function handleLogout() {
             localStorage.removeItem('userEmail');
             AppState.currentUser = null;
+            if(AppState.progressInterval) clearInterval(AppState.progressInterval);
             window.location.reload(); // Il modo più semplice per resettare lo stato
         }
 
@@ -966,6 +1098,10 @@
             setupEventListeners();
             startRealtimeListeners();
             switchView(AppState.currentView);
+            
+            // Avvia l'aggiornamento delle progress bar
+            if(AppState.progressInterval) clearInterval(AppState.progressInterval);
+            AppState.progressInterval = setInterval(updateProgressBars, 60000); // Ogni minuto
         }
         
         /**
@@ -1034,6 +1170,7 @@
                     renderAdminPanel();
                     break;
             }
+            updateProgressBars();
         }
         
         /**
@@ -1102,11 +1239,22 @@
 
             contentArea.innerHTML = myShifts.map(shift => {
                 const now = new Date();
-                const shiftEnd = new Date(shift.data_inizio.split('/').reverse().join('-') + 'T' + shift.ora_fine);
+                const shiftStart = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_inizio}`);
+                const shiftEnd = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_fine}`);
                 const isPast = shiftEnd < now;
+                const isOngoing = now >= shiftStart && now <= shiftEnd;
+                
+                let progressBarHtml = '';
+                if(isOngoing){
+                    const progress = calculateProgress(shift.data_inizio, shift.ora_inizio, shift.ora_fine);
+                    progressBarHtml = `
+                        <div class="progress-bar-container" data-date="${shift.data_inizio}" data-start-time="${shift.ora_inizio}" data-end-time="${shift.ora_fine}">
+                           <div class="progress-bar" style="width: ${progress}%;"></div>
+                        </div>`;
+                }
 
                 return `
-                    <div class="shift-card ${isPast ? 'past-shift' : ''}">
+                    <div class="shift-card ${isPast ? 'past' : ''} ${isOngoing ? 'ongoing' : ''}">
                         <div class="shift-header">
                             <div>
                                 <h3>${shift.nome_turno}</h3>
@@ -1117,6 +1265,7 @@
                         <div class="shift-details">
                             <p><strong>Descrizione:</strong> ${shift.descrizione}</p>
                             <p><strong>Luogo:</strong> ${shift.luogo}</p>
+                            ${progressBarHtml}
                             <div style="margin-top: 1rem;">
                                 <button class="btn btn-secondary view-colleagues-btn" data-shift-id="${shift.id_turno}">
                                     <i class='bx bx-group'></i> Vedi Colleghi
@@ -1164,36 +1313,64 @@
 
             const renderEventList = (eventList) => {
                 if(eventList.length === 0) return '<p>Nessun evento in questa categoria.</p>';
-                return eventList.sort((a,b) => new Date(`${a.date.split('/').reverse().join('-')}T${a.startTime}`) - new Date(`${b.date.split('/').reverse().join('-')}T${b.startTime}`)).map(event => `
-                    <div class="race-event-card ${events.ongoing.includes(event) ? 'ongoing' : ''} ${events.past.includes(event) ? 'past' : ''}">
-                        <div class="race-event-info">
-                            <h4>${event.eventName} <span class="level-tag level-${event.level?.split(' ')[0].toLowerCase() || 'generale'}">${event.level || 'Generale'}</span></h4>
-                            <p class="event-time">${event.startTime} - ${event.endTime}</p>
-                            <p>${event.location}</p>
+                return eventList.sort((a,b) => new Date(`${a.date.split('/').reverse().join('-')}T${a.startTime}`) - new Date(`${b.date.split('/').reverse().join('-')}T${b.startTime}`)).map(event => {
+                    let typeClass = `type-${event.tipologia?.toLowerCase() || 'generale'}`;
+                    let logoHtml = `<img src="https://placehold.co/40x40/8854d0/ffffff?text=E" alt="Evento Generale">`;
+                    
+                    if(event.tipologia === 'Sport') {
+                        const sportKey = toCssClass(event.eventName);
+                        typeClass = `sport-${sportKey}`;
+                        const sportDetail = SPORT_DETAILS[event.eventName];
+                        logoHtml = sportDetail ? `<img src="${sportDetail.logoUrl}" alt="${event.eventName}">` : `<i class='bx bx-trophy'></i>`;
+                    }
+
+                    let progressBarHtml = '';
+                    const isOngoing = events.ongoing.includes(event);
+                    if(isOngoing){
+                        const progress = calculateProgress(event.date, event.startTime, event.endTime);
+                        progressBarHtml = `
+                         <div class="progress-bar-container" data-date="${event.date}" data-start-time="${event.startTime}" data-end-time="${event.endTime}">
+                           <div class="progress-bar" style="width: ${progress}%;"></div>
+                         </div>`;
+                    }
+
+                    return `<div class="race-event-card ${isOngoing ? 'ongoing' : ''} ${events.past.includes(event) ? 'past' : ''}">
+                        <div class="race-event-header ${typeClass}">
+                           ${logoHtml}
+                           <h4>${event.eventName} <span class="level-tag level-${event.level?.split(' ')[0].toLowerCase() || 'generale'}">${event.level || 'Generale'}</span></h4>
                         </div>
-                        ${isAdmin ? `
-                        <div class="race-event-actions">
-                            <button class="btn btn-primary edit-race-event-btn" data-id="${event.id}"><i class='bx bx-edit'></i></button>
-                            <button class="btn btn-danger delete-race-event-btn" data-id="${event.id}"><i class='bx bx-trash'></i></button>
+                        <div class="race-event-body">
+                           <div class="race-event-body-top">
+                               <div class="race-event-info">
+                                  <p class="event-time">${event.startTime} - ${event.endTime}</p>
+                                  <p>${event.location}</p>
+                               </div>
+                               ${isAdmin ? `
+                               <div class="race-event-actions">
+                                   <button class="btn btn-primary edit-race-event-btn" data-id="${event.id}"><i class='bx bx-edit'></i></button>
+                                   <button class="btn btn-danger delete-race-event-btn" data-id="${event.id}"><i class='bx bx-trash'></i></button>
+                               </div>
+                               ` : ''}
+                           </div>
+                           ${progressBarHtml ? `<div style="padding-top: 1rem;">${progressBarHtml}</div>` : ''}
                         </div>
-                        ` : ''}
-                    </div>
-                `).join('');
+                    </div>`
+                }).join('');
             };
 
             contentArea.innerHTML = `
                 ${adminButtonHtml}
                 <div class="race-program-section">
                     <h3><i class='bx bx-play-circle' style="color: var(--ongoing-color);"></i>In Corso</h3>
-                    ${renderEventList(events.ongoing)}
+                    <div id="race-program-container-ongoing">${renderEventList(events.ongoing)}</div>
                 </div>
                 <div class="race-program-section">
                     <h3><i class='bx bx-time-five' ></i>Prossimi Eventi</h3>
-                    ${renderEventList(events.upcoming)}
+                     <div id="race-program-container-upcoming">${renderEventList(events.upcoming)}</div>
                 </div>
                 <div class="race-program-section">
                     <h3><i class='bx bx-check-double'></i>Conclusi</h3>
-                    ${renderEventList(events.past)}
+                     <div id="race-program-container-past">${renderEventList(events.past)}</div>
                 </div>
             `;
             
@@ -1671,7 +1848,7 @@
              const shiftToDelete = AppState.shifts.find(s => s.id === shiftId);
              if (!shiftToDelete) return;
             
-             if (!confirm(`Sei sicuro di voler rimuovere il turno "${shiftToDelete.nome_turno}"? Verranno rimosse anche tutte le assegnazioni.`)) return;
+             if (!confirm(`Sei sicuro di voler rimuovere il turno "${shiftToDelete.nome_turno}"? Verranno rimosse anche tutte le sue assegnazioni.`)) return;
 
             toggleLoader(true);
             try {
@@ -1819,11 +1996,7 @@
                 return `<option value="${level}" ${selected ? 'selected' : ''}>${level}</option>`
             }).join('');
             
-            const sportOptions = [
-                '10 velocità', 'Maratonina', 'Staffetta', 'Tiro al bersaglio - Nerf',
-                'Lancio del vortex', 'Kan-jam frisbee', 'Salto in lungo', 'Calci di rigore',
-                'Bocce curling', 'Tiri liberi basket'
-            ].map(sport => {
+            const sportOptions = Object.keys(SPORT_DETAILS).map(sport => {
                 const selected = isEditing && event.tipologia === 'Sport' && event.eventName === sport;
                 return `<option value="${sport}" ${selected ? 'selected' : ''}>${sport}</option>`;
             }).join('');
@@ -1840,14 +2013,14 @@
                         </select>
                     </div>
                     
-                    <div id="eventNameSportContainer" class="form-group ${isEditing && event.tipologia === 'Sport' ? '' : 'hidden'}">
+                    <div id="eventNameSportContainer" class="form-group ${!isEditing || event.tipologia !== 'Sport' ? 'hidden' : ''}">
                         <label for="eventNameSport">Nome Sport</label>
                         <select id="eventNameSport">
                             ${sportOptions}
                         </select>
                     </div>
 
-                    <div id="eventNameGeneralContainer" class="form-group ${isEditing && event.tipologia === 'Generale' ? '' : 'hidden'}">
+                    <div id="eventNameGeneralContainer" class="form-group ${!isEditing || event.tipologia !== 'Generale' ? 'hidden' : ''}">
                         <label for="eventNameGeneral">Nome Evento</label>
                         <input type="text" id="eventNameGeneral" value="${isEditing && event.tipologia === 'Generale' ? event.eventName : ''}">
                     </div>
