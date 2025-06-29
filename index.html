@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -125,6 +126,10 @@
             box-shadow: 0 4px 15px var(--shadow-color);
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        header.app-header.hidden {
+            transform: translateY(-100%);
         }
         
         header.app-header h1 {
@@ -192,6 +197,98 @@
         }
 
         /*------------------------------------*\
+          #DASHBOARD
+        \*------------------------------------*/
+        #dashboard-view {
+            padding-top: 1rem;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .dashboard-header .welcome-text h2 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        .dashboard-header .welcome-text p {
+            opacity: 0.8;
+            margin-top: 0.25rem;
+        }
+        .dashboard-profile-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .dashboard-profile-icon:hover {
+            color: var(--primary-accent-color);
+        }
+        
+        .summary-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .summary-card {
+            background: var(--card-bg-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        .summary-card .icon-wrapper {
+            font-size: 2rem;
+            padding: 0.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .summary-card .card-content .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: var(--font-family-headings);
+        }
+        .summary-card .card-content .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .dashboard-section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-family-headings);
+            border-bottom: 2px solid var(--primary-accent-color);
+            padding-bottom: 0.5rem;
+        }
+        .compact-event-card {
+            background-color: var(--card-bg-color);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .compact-event-card.ongoing {
+            animation: pulse-border 2s infinite;
+        }
+        .compact-event-header {
+            padding: 0.75rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+        .compact-event-header i { font-size: 1.5rem; }
+        .compact-event-header h4 { color: white; flex-grow: 1; font-size: 1.1rem; }
+        .compact-event-body {
+            padding: 0.8rem 1.2rem;
+        }
+
+        /*------------------------------------*\
           #COMPONENTI
         \*------------------------------------*/
 
@@ -245,14 +342,14 @@
         }
 
         .card-sidebar {
-            padding: 0.6rem 0.4rem;
+            padding: 0.8rem 0.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-width: 75px;
+            min-width: 80px;
             text-align: center;
-            margin-right: 0.6rem;
+            margin-right: 0.8rem;
         }
         .card-sidebar .time-label {
             font-size: 0.7rem;
@@ -275,7 +372,7 @@
         }
 
         .card-main-content {
-            padding: 0.6rem 1rem;
+            padding: 0.8rem 1.2rem;
             position: relative;
         }
         
@@ -786,15 +883,19 @@
             <header class="app-header">
                 <h1 id="header-title">I Miei Turni</h1>
                 <div class="header-icons">
-                    <i class='bx bx-user' id="profile-btn"></i>
-                    </div>
+                    <i class='bx bx-user' id="profile-btn-header"></i>
+                </div>
             </header>
 
             <main id="content-area">
-                </main>
+                <!-- Le viste verranno renderizzate qui -->
+            </main>
 
             <nav class="bottom-nav">
-                <button class="nav-button active" data-view="my-shifts">
+                 <button class="nav-button active" data-view="dashboard">
+                    <i class='bx bxs-home'></i>
+                </button>
+                <button class="nav-button" data-view="my-shifts">
                     <i class='bx bx-calendar'></i>
                 </button>
                 <button class="nav-button" data-view="race-program">
@@ -865,7 +966,7 @@
             assignments: [],
             shiftCategories: [],
             raceEvents: [],
-            currentView: 'my-shifts',
+            currentView: 'dashboard', // Vista di default
             progressInterval: null
         };
 
@@ -876,10 +977,11 @@
         const emailInput = document.getElementById('email-input');
         const loginError = document.getElementById('login-error');
         const contentArea = document.getElementById('content-area');
+        const appHeader = document.querySelector('.app-header');
         const headerTitle = document.getElementById('header-title');
         const navButtons = document.querySelectorAll('.nav-button');
         const adminNavButton = document.getElementById('admin-nav-button');
-        const profileBtn = document.getElementById('profile-btn');
+        const profileBtnHeader = document.getElementById('profile-btn-header');
         const modalContainer = document.getElementById('modal-container');
         const toastContainer = document.getElementById('toast-container');
         
@@ -1008,7 +1110,8 @@
             const start = new Date(`${dateStr.split('/').reverse().join('-')}T${startTimeStr}`);
             const end = new Date(`${dateStr.split('/').reverse().join('-')}T${endTimeStr}`);
 
-            if (now < start || now > end) return 0;
+            if (now < start) return 0;
+            if (now > end) return 100;
             
             const totalDuration = end.getTime() - start.getTime();
             if (totalDuration === 0) return 100;
@@ -1150,7 +1253,7 @@
             updateUIBasedOnRole();
             setupEventListeners();
             startRealtimeListeners();
-            switchView(AppState.currentView);
+            switchView(AppState.currentView); // Switch alla vista di default (dashboard)
             
             // Avvia l'aggiornamento delle progress bar
             if(AppState.progressInterval) clearInterval(AppState.progressInterval);
@@ -1177,8 +1280,9 @@
                 });
             });
 
-            // Gestione profilo
-            profileBtn.addEventListener('click', showProfileModal);
+            // Gestione profilo (sia da header che da dashboard)
+            profileBtnHeader.addEventListener('click', showProfileModal);
+            // Il listener per il profilo della dashboard è aggiunto dinamicamente in renderDashboard
 
             // Delegazione eventi per l'area contenuti
             contentArea.addEventListener('click', e => {
@@ -1207,8 +1311,16 @@
             navButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === viewName);
             });
+            
+            // Gestione header
+            appHeader.classList.toggle('hidden', viewName === 'dashboard');
 
+            // Render della vista
+            contentArea.innerHTML = ''; // Pulisce l'area
             switch (viewName) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
                 case 'my-shifts':
                     headerTitle.textContent = "I Miei Turni";
                     renderMyShifts();
@@ -1233,17 +1345,24 @@
                 AppState.volunteers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 AppState.volunteers.sort((a,b) => a.cognome.localeCompare(b.cognome));
                 if (AppState.currentView === 'admin-panel') renderAdminPanel();
+                if (AppState.currentView === 'dashboard') renderDashboard();
             });
 
             onSnapshot(shiftsCol, (snapshot) => {
                 AppState.shifts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                if (AppState.currentView === 'my-shifts') renderMyShifts();
+                if (AppState.currentView === 'my-shifts' || AppState.currentView === 'dashboard') {
+                    if(AppState.currentView === 'my-shifts') renderMyShifts();
+                    if(AppState.currentView === 'dashboard') renderDashboard();
+                }
                 if (AppState.currentView === 'admin-panel') renderAdminPanel();
             });
 
             onSnapshot(assignmentsCol, (snapshot) => {
                 AppState.assignments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                if (AppState.currentView === 'my-shifts') renderMyShifts();
+                if (AppState.currentView === 'my-shifts' || AppState.currentView === 'dashboard') {
+                    if(AppState.currentView === 'my-shifts') renderMyShifts();
+                    if(AppState.currentView === 'dashboard') renderDashboard();
+                }
                 if (AppState.currentView === 'admin-panel') renderAdminPanel();
             });
             
@@ -1259,8 +1378,9 @@
 
             onSnapshot(raceEventsCol, (snapshot) => {
                 AppState.raceEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                if(AppState.currentView === 'race-program') {
-                    renderRaceProgram();
+                if(AppState.currentView === 'race-program' || AppState.currentView === 'dashboard') {
+                    if(AppState.currentView === 'race-program') renderRaceProgram();
+                    if(AppState.currentView === 'dashboard') renderDashboard();
                 }
             });
         }
@@ -1279,6 +1399,101 @@
                 hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
             }
             return categoryColors[Math.abs(hash) % categoryColors.length];
+        }
+
+        /**
+         * Renderizza la Dashboard.
+         */
+        function renderDashboard() {
+            // 1. Dati per le card
+            // Countdown
+            const targetDate = new Date('2026-06-02T00:00:00');
+            const now = new Date();
+            const diffTime = targetDate - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            // Turni completati
+            const userAssignments = AppState.assignments.filter(a => a.email_volontario === AppState.currentUser.email);
+            const myShiftIds = new Set(userAssignments.map(a => a.id_turno));
+            const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id_turno));
+            const completedShifts = myShifts.filter(s => {
+                const shiftEnd = new Date(`${s.data_inizio.split('/').reverse().join('-')}T${s.ora_fine}`);
+                return shiftEnd < now;
+            }).length;
+
+            // Prossimo evento generale
+            const nextGeneralEvent = AppState.raceEvents
+                .filter(e => e.tipologia === 'Generale' && new Date(`${e.date.split('/').reverse().join('-')}T${e.startTime}`) > now)
+                .sort((a, b) => new Date(`${a.date.split('/').reverse().join('-')}T${a.startTime}`) - new Date(`${b.date.split('/').reverse().join('-')}T${b.startTime}`))[0];
+
+            // 2. Dati per i prossimi turni
+            const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+            const upcomingShifts = myShifts.filter(s => {
+                const shiftStart = new Date(`${s.data_inizio.split('/').reverse().join('-')}T${s.ora_inizio}`);
+                const shiftEnd = new Date(`${s.data_inizio.split('/').reverse().join('-')}T${s.ora_fine}`);
+                return shiftEnd > now && shiftStart < oneHourFromNow; // In corso o inizia entro un'ora
+            }).sort((a, b) => new Date(`${a.data_inizio.split('/').reverse().join('-')}T${a.ora_inizio}`) - new Date(`${b.data_inizio.split('/').reverse().join('-')}T${b.ora_inizio}`));
+
+            // 3. Dati per eventi in corso
+            const ongoingEvents = AppState.raceEvents.filter(event => {
+                const startDate = new Date(`${event.date.split('/').reverse().join('-')}T${event.startTime}`);
+                const endDate = new Date(`${event.date.split('/').reverse().join('-')}T${event.endTime}`);
+                return now >= startDate && now <= endDate;
+            });
+            
+            contentArea.innerHTML = `
+                <div id="dashboard-view">
+                    <div class="dashboard-header">
+                        <div class="welcome-text">
+                            <h2>Ciao, ${AppState.currentUser.nome}!</h2>
+                            <p>Ecco un riepilogo delle tue attività.</p>
+                        </div>
+                        <i class='bx bx-user-circle dashboard-profile-icon' id="profile-btn-dashboard"></i>
+                    </div>
+
+                    <div class="summary-card-grid">
+                        <div class="summary-card">
+                            <div class="icon-wrapper" style="background-color: rgba(205, 164, 52, 0.2); color: var(--primary-accent-color);"><i class='bx bx-calendar-event'></i></div>
+                            <div class="card-content">
+                                <div class="value">${diffDays > 0 ? diffDays : '0'} giorni</div>
+                                <div class="label">alle Abbadiadi 2026</div>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="icon-wrapper" style="background-color: rgba(46, 204, 113, 0.2); color: var(--success-color);"><i class='bx bx-check-circle'></i></div>
+                            <div class="card-content">
+                                <div class="value">${completedShifts} / ${myShifts.length}</div>
+                                <div class="label">Turni completati</div>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="icon-wrapper" style="background-color: rgba(136, 84, 208, 0.2); color: var(--general-event-color);"><i class='bx bx-bell'></i></div>
+                            <div class="card-content">
+                                <div class="value">${nextGeneralEvent ? nextGeneralEvent.eventName : 'Nessuno'}</div>
+                                <div class="label">Prossimo evento</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${upcomingShifts.length > 0 ? `
+                    <div class="dashboard-section">
+                        <h3 class="dashboard-section-title">I miei prossimi turni</h3>
+                        <div id="upcoming-shifts-list">
+                            ${upcomingShifts.map(shift => renderShiftCard(shift)).join('')}
+                        </div>
+                    </div>` : ''}
+
+                    ${ongoingEvents.length > 0 ? `
+                    <div class="dashboard-section">
+                        <h3 class="dashboard-section-title">Eventi in corso</h3>
+                        <div id="ongoing-events-list">
+                            ${ongoingEvents.map(event => renderCompactEventCard(event)).join('')}
+                        </div>
+                    </div>` : ''}
+                </div>
+            `;
+
+            document.getElementById('profile-btn-dashboard').addEventListener('click', showProfileModal);
         }
 
         /**
@@ -1301,60 +1516,67 @@
                 return;
             }
 
-            contentArea.innerHTML = myShifts.map(shift => {
-                const now = new Date();
-                const shiftStart = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_inizio}`);
-                const shiftEnd = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_fine}`);
-                const isPast = shiftEnd < now;
-                const isOngoing = now >= shiftStart && now <= shiftEnd;
-                
-                let progressBarHtml = '';
-                if(isOngoing){
-                    const progress = calculateProgress(shift.data_inizio, shift.ora_inizio, shift.ora_fine);
-                    progressBarHtml = `
-                        <div class="progress-bar-container" data-date="${shift.data_inizio}" data-start-time="${shift.ora_inizio}" data-end-time="${shift.ora_fine}">
-                           <div class="progress-bar" style="width: ${progress}%;"></div>
-                        </div>`;
-                }
-                const mainColor = getCategoryColor(shift.categoria);
+            contentArea.innerHTML = myShifts.map(shift => renderShiftCard(shift)).join('');
+        }
+        
+        /**
+         * Crea l'HTML per una singola card di un turno.
+         * @param {object} shift - L'oggetto del turno.
+         * @returns {string} L'HTML della card.
+         */
+        function renderShiftCard(shift) {
+            const now = new Date();
+            const shiftStart = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_inizio}`);
+            const shiftEnd = new Date(`${shift.data_inizio.split('/').reverse().join('-')}T${shift.ora_fine}`);
+            const isPast = shiftEnd < now;
+            const isOngoing = now >= shiftStart && now <= shiftEnd;
+            
+            let progressBarHtml = '';
+            if(isOngoing){
+                const progress = calculateProgress(shift.data_inizio, shift.ora_inizio, shift.ora_fine);
+                progressBarHtml = `
+                    <div class="progress-bar-container" data-date="${shift.data_inizio}" data-start-time="${shift.ora_inizio}" data-end-time="${shift.ora_fine}">
+                       <div class="progress-bar" style="width: ${progress}%;"></div>
+                    </div>`;
+            }
+            const mainColor = getCategoryColor(shift.categoria);
 
-                return `
-                    <div class="shift-card ${isPast ? 'past' : ''} ${isOngoing ? 'ongoing' : ''}">
-                        <div class="shift-card-inner">
-                            <div class="card-sidebar">
-                                <div>
-                                    <div class="time-label">Inizio</div>
-                                    <div class="time-value">${shift.ora_inizio}</div>
-                                </div>
-                                <div style="margin-top: 1rem;">
-                                    <div class="time-label">Fine</div>
-                                    <div class="time-value">${shift.ora_fine}</div>
-                                </div>
+            return `
+                <div class="shift-card ${isPast ? 'past' : ''} ${isOngoing ? 'ongoing' : ''}">
+                    <div class="shift-card-inner">
+                        <div class="card-sidebar">
+                            <div>
+                                <div class="time-label">Inizio</div>
+                                <div class="time-value">${shift.ora_inizio}</div>
                             </div>
-                            <div class="card-main" style="background-color: ${mainColor};">
-                                <div class="card-main-content">
-                                    <div class="shift-header-info">
-                                        <h3>${shift.nome_turno}</h3>
-                                        <p>${shift.categoria}</p>
-                                    </div>
-                                    ${progressBarHtml}
-                                    <i class='bx bx-chevron-down expand-arrow'></i>
-                                </div>
+                            <div style="margin-top: 1rem;">
+                                <div class="time-label">Fine</div>
+                                <div class="time-value">${shift.ora_fine}</div>
                             </div>
                         </div>
-                        <div class="shift-details" style="border-color: ${mainColor};">
-                            <p><strong>Data:</strong> ${shift.data_inizio}</p>
-                            <p><strong>Descrizione:</strong> ${shift.descrizione}</p>
-                            <p><strong>Luogo:</strong> ${shift.luogo}</p>
-                            <div style="margin-top: 1rem;">
-                                <button class="btn btn-secondary view-colleagues-btn" data-shift-id="${shift.id_turno}">
-                                    <i class='bx bx-group'></i> Vedi Altri Volontari
-                                </button>
+                        <div class="card-main" style="background-color: ${mainColor};">
+                            <div class="card-main-content">
+                                <div class="shift-header-info">
+                                    <h3>${shift.nome_turno}</h3>
+                                    <p>${shift.categoria}</p>
+                                </div>
+                                ${progressBarHtml}
+                                <i class='bx bx-chevron-down expand-arrow'></i>
                             </div>
                         </div>
                     </div>
-                `;
-            }).join('');
+                    <div class="shift-details" style="border-color: ${mainColor};">
+                        <p><strong>Data:</strong> ${shift.data_inizio}</p>
+                        <p><strong>Descrizione:</strong> ${shift.descrizione}</p>
+                        <p><strong>Luogo:</strong> ${shift.luogo}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary view-colleagues-btn" data-shift-id="${shift.id_turno}">
+                                <i class='bx bx-group'></i> Vedi Altri Volontari
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         /**
@@ -1391,50 +1613,15 @@
                 }
             });
 
-            const renderEventList = (eventList) => {
+            const renderEventList = (eventList, isFullView = true) => {
                 if(eventList.length === 0) return '<p>Nessun evento in questa categoria.</p>';
                 const gridHtml = eventList.sort((a,b) => new Date(`${a.date.split('/').reverse().join('-')}T${a.startTime}`) - new Date(`${b.date.split('/').reverse().join('-')}T${b.startTime}`)).map(event => {
-                    let typeClass = `type-${event.tipologia?.toLowerCase() || 'generale'}`;
-                    let icon = 'bx-calendar-event';
-                    
-                    if(event.tipologia === 'Sport') {
-                        const sportKey = toCssClass(event.eventName);
-                        typeClass = `sport-${sportKey}`;
-                        const sportDetail = SPORT_DETAILS[event.eventName];
-                        icon = sportDetail ? sportDetail.icon : 'bx-trophy';
-                    }
-
-                    let progressBarHtml = '';
                     const isOngoing = events.ongoing.includes(event);
-                    if(isOngoing){
-                        const progress = calculateProgress(event.date, event.startTime, event.endTime);
-                        progressBarHtml = `
-                         <div class="progress-bar-container" data-date="${event.date}" data-start-time="${event.startTime}" data-end-time="${event.endTime}">
-                           <div class="progress-bar" style="width: ${progress}%;"></div>
-                         </div>`;
+                    if(isFullView) {
+                        return renderFullEventCard(event, isOngoing, events.past.includes(event));
+                    } else {
+                        return renderCompactEventCard(event, isOngoing);
                     }
-
-                    return `<div class="race-event-card ${isOngoing ? 'ongoing' : ''} ${events.past.includes(event) ? 'past' : ''}">
-                        <div class="race-event-header ${typeClass}">
-                           <i class='bx ${icon}'></i>
-                           <h4>${event.eventName} <span class="level-tag level-${event.level?.split(' ')[0].toLowerCase() || 'generale'}">${event.level || 'Generale'}</span></h4>
-                        </div>
-                        <div class="race-event-body">
-                           <div class="race-event-body-top">
-                               <div class="race-event-info">
-                                  <p class="event-time">${event.startTime} - ${event.endTime}</p>
-                                  <p>${event.location}</p>
-                               </div>
-                               ${isAdmin ? `
-                               <div class="race-event-actions">
-                                   <button class="btn btn-primary edit-race-event-btn" data-id="${event.id}"><i class='bx bx-edit'></i></button>
-                                   <button class="btn btn-danger delete-race-event-btn" data-id="${event.id}"><i class='bx bx-trash'></i></button>
-                               </div>
-                               ` : ''}
-                           </div>
-                           ${progressBarHtml ? `<div style="padding-top: 1rem;">${progressBarHtml}</div>` : ''}
-                        </div>
-                    </div>`
                 }).join('');
                 return `<div class="event-grid">${gridHtml}</div>`;
             };
@@ -1460,6 +1647,87 @@
                 contentArea.querySelectorAll('.edit-race-event-btn').forEach(btn => btn.addEventListener('click', () => showRaceEventForm(btn.dataset.id)));
                 contentArea.querySelectorAll('.delete-race-event-btn').forEach(btn => btn.addEventListener('click', () => handleDeleteRaceEvent(btn.dataset.id)));
             }
+        }
+        
+        /**
+         * Crea l'HTML per una card evento completa (usata in Programma Gare).
+         */
+        function renderFullEventCard(event, isOngoing, isPast) {
+            const isAdmin = AppState.currentUser.ruolo === 'Admin' || AppState.currentUser.ruolo === 'Responsabile';
+            let typeClass = `type-${event.tipologia?.toLowerCase() || 'generale'}`;
+            let icon = 'bx-calendar-event';
+            
+            if(event.tipologia === 'Sport') {
+                const sportKey = toCssClass(event.eventName);
+                typeClass = `sport-${sportKey}`;
+                const sportDetail = SPORT_DETAILS[event.eventName];
+                icon = sportDetail ? sportDetail.icon : 'bx-trophy';
+            }
+
+            let progressBarHtml = '';
+            if(isOngoing){
+                const progress = calculateProgress(event.date, event.startTime, event.endTime);
+                progressBarHtml = `
+                 <div class="progress-bar-container" data-date="${event.date}" data-start-time="${event.startTime}" data-end-time="${event.endTime}">
+                   <div class="progress-bar" style="width: ${progress}%;"></div>
+                 </div>`;
+            }
+
+            return `<div class="race-event-card ${isOngoing ? 'ongoing' : ''} ${isPast ? 'past' : ''}">
+                <div class="race-event-header ${typeClass}">
+                   <i class='bx ${icon}'></i>
+                   <h4>${event.eventName} <span class="level-tag level-${event.level?.split(' ')[0].toLowerCase() || 'generale'}">${event.level || 'Generale'}</span></h4>
+                </div>
+                <div class="race-event-body">
+                   <div class="race-event-body-top">
+                       <div class="race-event-info">
+                          <p class="event-time">${event.startTime} - ${event.endTime}</p>
+                          <p>${event.location}</p>
+                       </div>
+                       ${isAdmin ? `
+                       <div class="race-event-actions">
+                           <button class="btn btn-primary edit-race-event-btn" data-id="${event.id}"><i class='bx bx-edit'></i></button>
+                           <button class="btn btn-danger delete-race-event-btn" data-id="${event.id}"><i class='bx bx-trash'></i></button>
+                       </div>
+                       ` : ''}
+                   </div>
+                   ${progressBarHtml ? `<div style="padding-top: 1rem;">${progressBarHtml}</div>` : ''}
+                </div>
+            </div>`;
+        }
+        
+        /**
+         * Crea l'HTML per una card evento compatta (usata in Dashboard).
+         */
+        function renderCompactEventCard(event, isOngoing = true) {
+            let typeClass = `type-${event.tipologia?.toLowerCase() || 'generale'}`;
+            let icon = 'bx-calendar-event';
+            
+            if(event.tipologia === 'Sport') {
+                const sportKey = toCssClass(event.eventName);
+                typeClass = `sport-${sportKey}`;
+                const sportDetail = SPORT_DETAILS[event.eventName];
+                icon = sportDetail ? sportDetail.icon : 'bx-trophy';
+            }
+            
+            const progress = calculateProgress(event.date, event.startTime, event.endTime);
+            const progressBarHtml = `
+             <div class="progress-bar-container" data-date="${event.date}" data-start-time="${event.startTime}" data-end-time="${event.endTime}">
+               <div class="progress-bar" style="width: ${progress}%;"></div>
+             </div>`;
+
+            return `
+                <div class="compact-event-card ${isOngoing ? 'ongoing' : ''}">
+                    <div class="compact-event-header ${typeClass}">
+                        <i class='bx ${icon}'></i>
+                        <h4>${event.eventName} <span class="level-tag level-${event.level?.split(' ')[0].toLowerCase() || 'generale'}">${event.level || 'Generale'}</span></h4>
+                    </div>
+                    <div class="compact-event-body">
+                        <p><strong>Luogo:</strong> ${event.location}</p>
+                        ${progressBarHtml}
+                    </div>
+                </div>
+            `;
         }
         
         /**
@@ -1873,7 +2141,7 @@
                         <label for="ora_fine">Ora Fine (HH:MM)</label>
                         <input type="time" id="ora_fine" value="${shift.ora_fine || ''}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">${isEditing ? 'Salva Modifiche' : 'Crea Turno'}</button>
+                    <button type="submit" class="btn btn-primary btn-block">${isEditing ? 'Salva Modifiche' : 'Aggiungi Volontario'}</button>
                     ${isEditing ? '<button type="button" id="delete-shift-btn" class="btn btn-danger btn-block">Rimuovi Turno</button>' : ''}
                 </form>
             `;
@@ -1942,7 +2210,7 @@
                 });
                 await batch.commit();
 
-                // Rimuove il turno
+                // Rimuove il volontario
                 await deleteDoc(doc(db, 'shifts', shiftId));
                 showToast('Turno e assegnazioni rimossi.');
                 window.closeCurrentModal();
@@ -2203,7 +2471,6 @@
                 showToast('Errore durante l\'eliminazione.', 'error');
             }
         }
-
 
         // ====================================================================
         // INIZIO APPLICAZIONE
