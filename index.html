@@ -18,7 +18,7 @@
           #VARIABILI E TEMA
         \*------------------------------------*/
         :root {
-            /* NUOVI FONT */
+            /* FONT */
             --font-family-headings: 'Nunito', sans-serif;
             --font-family-body: 'Quicksand', sans-serif;
 
@@ -36,6 +36,12 @@
             --disabled-color: #5f7a85;
             --ongoing-color: var(--success-color);
             --general-event-color: #8854d0; /* Viola per eventi generali */
+
+            /* Colori Gemini */
+            --gemini-blue: #4285F4;
+            --gemini-green: #34A853;
+            --gemini-red: #EA4335;
+            --gemini-yellow: #FBBC05;
 
             /* Colori Sport */
             --sport-velocita: #f39c12;
@@ -90,7 +96,7 @@
         h1, h2, h3, h4 {
             font-family: var(--font-family-headings);
             color: var(--heading-color);
-            font-weight: 800; /* Nunito ha più pesi */
+            font-weight: 800;
         }
 
         .hidden { display: none !important; }
@@ -139,14 +145,35 @@
             font-weight: 900;
         }
 
-        header.app-header .header-icons i {
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header-icons .icon-btn {
+            position: relative;
             font-size: 1.8rem;
-            margin-left: 1rem;
             cursor: pointer;
             transition: color 0.2s;
         }
-        header.app-header .header-icons i:hover {
+        .header-icons .icon-btn:hover {
             color: var(--primary-accent-color);
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: var(--gemini-red);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--card-bg-color);
         }
 
         main#content-area {
@@ -243,7 +270,7 @@
         .summary-card {
             flex: 0 0 220px;
             background: var(--card-bg-color);
-            padding: 1.5rem;
+            padding: 1rem; /* Ridotto per compattezza */
             border-radius: 1rem;
             display: flex;
             align-items: center;
@@ -297,6 +324,15 @@
             color: var(--secondary-accent-color);
             cursor: pointer;
             text-decoration: none;
+            background-color: var(--card-bg-color);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--secondary-accent-color);
+            transition: all 0.2s ease;
+        }
+        .see-more-btn:hover {
+            background-color: var(--secondary-accent-color);
+            color: white;
         }
 
         /*------------------------------------*\
@@ -338,16 +374,15 @@
         .card-main-content { padding: 0.8rem 1.2rem; position: relative; }
         
         /* CONTRASTO MIGLIORATO CARD TURNI */
-        .shift-header-info p { margin: 0; font-size: 1rem; font-weight: 500; color: #FFFFFF; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
-        .shift-header-info h3 { font-size: 1.4rem; color: #FFFFFF; margin: 0.25rem 0 0 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .shift-header-info p { margin: 0; font-size: 1rem; font-weight: 700; color: var(--bg-color); text-shadow: none; }
+        .shift-header-info h3 { font-size: 1.4rem; color: var(--bg-color); margin: 0.25rem 0 0 0; text-shadow: none; }
         body.light-theme .shift-header-info p,
         body.light-theme .shift-header-info h3 {
             color: var(--heading-color);
-            text-shadow: none;
         }
+        .expand-arrow { position: absolute; top: 1rem; right: 1rem; transform: rotate(0deg); transition: transform 0.3s ease; font-size: 1.5rem; color: var(--bg-color); text-shadow: none; }
 
-        .expand-arrow { position: absolute; top: 1rem; right: 1rem; transform: rotate(0deg); transition: transform 0.3s ease; font-size: 1.5rem; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-        .shift-card.expanded .expand-arrow { transform: rotate(180deg); }
+
         .shift-details { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, padding 0.5s ease; background-color: var(--card-bg-color); padding: 0 1.5rem; }
         .shift-card.expanded .shift-details { max-height: 500px; padding: 1.5rem; }
         .shift-details p { margin-bottom: 0.5rem; }
@@ -370,8 +405,15 @@
         
         .btn { padding: 0.8rem 1.5rem; border-radius: 50px; border: 2px solid transparent; cursor: pointer; font-weight: 700; font-family: var(--font-family-body); transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; position: relative; min-height: 48px; }
         .btn-loader { font-size: 1.5rem; }
-        .btn-primary { background-image: linear-gradient(to right, var(--primary-accent-color), var(--secondary-accent-color)); color: #ffffff; border: none; }
+        
+        /* PULSANTI CON GRADIENTE GEMINI */
+        .btn-primary {
+            background-image: linear-gradient(45deg, var(--gemini-blue), var(--gemini-green));
+            color: #ffffff;
+            border: none;
+        }
         .btn-primary:hover { opacity: 0.9; }
+        
         .btn-secondary { background-color: var(--primary-accent-color); color: #ffffff; border-color: var(--primary-accent-color); }
         .btn-secondary:hover { background-color: transparent; color: var(--primary-accent-color); }
         .btn-danger { background-color: var(--danger-color); color: #ffffff; border-color: var(--danger-color); }
@@ -438,27 +480,44 @@
         .race-event-actions { display: flex; gap: 0.5rem; }
         .race-event-actions .btn { padding: 0.6rem; width: 40px; height: 40px; }
         
-        .race-event-details { padding-left: 2.55rem; /* Allineato con le pillole */ }
+        .race-event-details { padding-left: 2.55rem; }
         .race-event-details p { margin: 0; line-height: 1.4; }
         .race-event-details .event-time { font-weight: 700; color: var(--text-color); }
         .race-event-details .event-location { font-size: 0.9rem; opacity: 0.7; }
         
         .progress-bar-container {
             width: 100%;
-            height: 14px; /* Aumentata altezza */
+            height: 18px; /* Aumentata altezza */
             background-color: rgba(0,0,0,0.2);
-            border-radius: 14px;
+            border-radius: 18px;
             overflow: hidden;
             margin-top: 1rem;
-            padding: 2px;
+            padding: 3px; /* Aumentato offset */
         }
         .progress-bar {
             height: 100%;
-            border-radius: 10px;
+            border-radius: 12px;
             transition: width 0.5s ease, background-color 0.3s;
         }
 
-        /* Notifiche Toast */
+        /* Notifiche */
+        #notification-list { list-style: none; padding: 0; }
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .notification-item:last-child { border-bottom: none; }
+        .notification-item:hover { background-color: rgba(255,255,255,0.05); }
+        .notification-item.unread {
+            background-color: rgba(23, 162, 184, 0.1);
+            border-left: 3px solid var(--secondary-accent-color);
+        }
+        .notification-item p { margin: 0 0 0.25rem 0; }
+        .notification-item .meta { font-size: 0.8rem; opacity: 0.6; }
+
+
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; }
         .toast { background-color: var(--card-bg-color); color: var(--text-color); padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 4px 15px var(--shadow-color); opacity: 0; transition: opacity 0.5s, transform 0.5s; transform: translateX(100%); }
         .toast.show { opacity: 1; transform: translateX(0); }
@@ -494,7 +553,10 @@
             <header class="app-header">
                 <h1 id="header-title">I Miei Turni</h1>
                 <div class="header-icons">
-                    <i class='bx bx-user' id="profile-btn-header"></i>
+                    <i class='bx bx-bell icon-btn' id="notifications-btn">
+                        <span class="notification-badge hidden"></span>
+                    </i>
+                    <i class='bx bx-user icon-btn' id="profile-btn-header"></i>
                 </div>
             </header>
 
@@ -541,6 +603,9 @@
             where,
             onSnapshot,
             writeBatch,
+            serverTimestamp,
+            updateDoc,
+            arrayUnion
         } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 
         // ********************************************************************
@@ -567,6 +632,7 @@
         const assignmentsCol = collection(db, "assignments");
         const categoriesCol = collection(db, "shift_categories");
         const raceEventsCol = collection(db, "race_events");
+        const notificationsCol = collection(db, "notifications");
         const settingsDoc = doc(db, "app_settings", "general");
 
         // Stato dell'applicazione
@@ -577,6 +643,8 @@
             assignments: [],
             shiftCategories: [],
             raceEvents: [],
+            notifications: [],
+            unreadCount: 0,
             appSettings: {},
             currentView: 'dashboard',
             progressInterval: null
@@ -594,6 +662,7 @@
         const navButtons = document.querySelectorAll('.nav-button');
         const adminNavButton = document.getElementById('admin-nav-button');
         const profileBtnHeader = document.getElementById('profile-btn-header');
+        const notificationsBtn = document.getElementById('notifications-btn');
         const modalContainer = document.getElementById('modal-container');
         const toastContainer = document.getElementById('toast-container');
         
@@ -807,6 +876,7 @@
                 button.addEventListener('click', () => switchView(button.dataset.view));
             });
             profileBtnHeader.addEventListener('click', showProfileModal);
+            notificationsBtn.addEventListener('click', showNotificationsPanel);
             contentArea.addEventListener('click', e => {
                 const colleaguesBtn = e.target.closest('.view-colleagues-btn');
                 if (colleaguesBtn) {
@@ -840,6 +910,20 @@
         }
         
         function startRealtimeListeners() {
+            // Listener per le notifiche
+            const q = query(notificationsCol, where('targetEmails', 'array-contains', AppState.currentUser.email));
+            onSnapshot(q, (snapshot) => {
+                AppState.notifications = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+                // Ordina le notifiche lato client
+                AppState.notifications.sort((a, b) => {
+                    const timeA = a.timestamp?.toMillis() || 0;
+                    const timeB = b.timestamp?.toMillis() || 0;
+                    return timeB - timeA; // Dal più recente al meno recente
+                });
+                AppState.unreadCount = AppState.notifications.filter(n => !n.readBy.includes(AppState.currentUser.email)).length;
+                updateNotificationBell();
+            });
+
             onSnapshot(settingsDoc, (doc) => {
                 AppState.appSettings = doc.exists() ? doc.data() : {};
                 if (AppState.currentView === 'dashboard') renderDashboard();
@@ -1037,7 +1121,7 @@
             
             const baseColor = getCategoryColor(shift.categoria);
             const lightColor = shadeColor(baseColor, 40);
-            const darkColor = shadeColor(baseColor, -45); // Più scuro
+            const darkColor = shadeColor(baseColor, -60); // Più scuro
 
             let progressBarHtml = '';
             if(isOngoing){
@@ -1151,10 +1235,16 @@
         
         function renderAdminPanel() {
             contentArea.innerHTML = `
+                <section class="admin-section" id="admin-notifications">
+                     <div class="admin-section-header">
+                        <h2>Notifiche</h2>
+                        <button class="btn btn-primary" id="send-notification-btn"><i class='bx bxs-paper-plane'></i>Invia Notifica</button>
+                    </div>
+                </section>
                 <section class="admin-section" id="admin-settings">
                      <div class="admin-section-header">
                         <h2>Impostazioni Generali</h2>
-                        <button class="btn btn-primary" id="manage-settings-btn"><i class='bx bx-edit-alt'></i>Modifica Dati</button>
+                        <button class="btn btn-secondary" id="manage-settings-btn"><i class='bx bx-edit-alt'></i>Modifica Dati</button>
                     </div>
                 </section>
                 <section class="admin-section" id="admin-volunteers">
@@ -1169,6 +1259,7 @@
             renderVolunteersList();
             renderShiftsAccordion();
 
+            document.getElementById('send-notification-btn').addEventListener('click', showSendNotificationModal);
             document.getElementById('manage-settings-btn').addEventListener('click', showAppSettingsModal);
             document.getElementById('add-volunteer-btn').addEventListener('click', () => showVolunteerForm());
             document.getElementById('add-shift-main-btn').addEventListener('click', () => showShiftForm());
@@ -1478,6 +1569,132 @@
             if (!confirm('Sei sicuro di voler eliminare questo evento?')) return;
             try { await deleteDoc(doc(db, 'race_events', eventId)); showToast('Evento eliminato.'); }
             catch (error) { showToast('Errore durante l\'eliminazione.', 'error'); }
+        }
+        
+        // ====================================================================
+        // NUOVE FUNZIONI NOTIFICHE
+        // ====================================================================
+        function updateNotificationBell() {
+            const badge = notificationsBtn.querySelector('.notification-badge');
+            if (AppState.unreadCount > 0) {
+                badge.textContent = AppState.unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function showNotificationsPanel() {
+            const notificationsHtml = AppState.notifications.length > 0
+                ? '<ul id="notification-list">' + AppState.notifications.map(n => {
+                    const isUnread = !n.readBy.includes(AppState.currentUser.email);
+                    const date = n.timestamp?.toDate().toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) || '';
+                    return `
+                        <li class="notification-item ${isUnread ? 'unread' : ''}" data-id="${n.id}">
+                            <p>${n.message}</p>
+                            <div class="meta">Da: ${n.sender} &bull; ${date}</div>
+                        </li>`;
+                }).join('') + '</ul>'
+                : '<p>Nessuna notifica.</p>';
+            
+            renderModal('Notifiche', notificationsHtml, () => {
+                document.getElementById('notification-list')?.addEventListener('click', e => {
+                    const item = e.target.closest('.notification-item');
+                    if (item && item.classList.contains('unread')) {
+                        markNotificationAsRead(item.dataset.id);
+                    }
+                });
+            });
+        }
+
+        async function markNotificationAsRead(notificationId) {
+            const notifRef = doc(db, 'notifications', notificationId);
+            try {
+                await updateDoc(notifRef, {
+                    readBy: arrayUnion(AppState.currentUser.email)
+                });
+            } catch (error) {
+                console.error("Errore nel segnare la notifica come letta:", error);
+            }
+        }
+
+        function showSendNotificationModal() {
+            const shiftOptions = AppState.shifts.map(s => `<option value="${s.id_turno}">${s.nome_turno} (${s.data_inizio})</option>`).join('');
+            const formHtml = `
+                <form id="send-notification-form">
+                    <div class="form-group">
+                        <label for="notification-message">Messaggio</label>
+                        <textarea id="notification-message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notification-recipient">Destinatario</label>
+                        <select id="notification-recipient" required>
+                            <option value="all">Tutti i volontari</option>
+                            <option value="shift">Un turno specifico</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden" id="shift-selector-container">
+                        <label for="notification-shift">Seleziona Turno</label>
+                        <select id="notification-shift">
+                            ${shiftOptions}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Invia Notifica</button>
+                </form>
+            `;
+            renderModal('Invia Notifica', formHtml, () => {
+                const recipientSelect = document.getElementById('notification-recipient');
+                const shiftSelector = document.getElementById('shift-selector-container');
+                recipientSelect.addEventListener('change', () => {
+                    shiftSelector.classList.toggle('hidden', recipientSelect.value !== 'shift');
+                });
+                document.getElementById('send-notification-form').addEventListener('submit', handleSendNotification);
+            });
+        }
+
+        async function handleSendNotification(e) {
+            e.preventDefault();
+            const message = document.getElementById('notification-message').value.trim();
+            if (!message) {
+                showToast('Il messaggio non può essere vuoto.', 'error');
+                return;
+            }
+
+            const recipientType = document.getElementById('notification-recipient').value;
+            let targetEmails = [];
+
+            if (recipientType === 'all') {
+                targetEmails = AppState.volunteers.map(v => v.email);
+            } else {
+                const shiftId = document.getElementById('notification-shift').value;
+                if (!shiftId) {
+                    showToast('Seleziona un turno.', 'error');
+                    return;
+                }
+                targetEmails = AppState.assignments
+                    .filter(a => a.id_turno === shiftId)
+                    .map(a => a.email_volontario);
+            }
+            
+            if (targetEmails.length === 0) {
+                showToast('Nessun destinatario trovato per questa selezione.', 'error');
+                return;
+            }
+
+            try {
+                await addDoc(notificationsCol, {
+                    message: message,
+                    sender: `${AppState.currentUser.nome} ${AppState.currentUser.cognome}`,
+                    timestamp: serverTimestamp(),
+                    targetEmails: targetEmails,
+                    readBy: []
+                });
+                showToast('Notifica inviata con successo!', 'success');
+                window.closeCurrentModal();
+            } catch (error) {
+                console.error("Errore invio notifica:", error);
+                showToast('Errore durante l\'invio.', 'error');
+            }
         }
 
         // ====================================================================
