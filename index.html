@@ -7,7 +7,7 @@
     
     <!-- PWA Manifest e Meta Tags -->
     <meta name="theme-color" content="#001f2b"/>
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkdlc3Rpb25lIFZvbG9udGFyaSIsCiAgInNob3J0X25hbWUiOiAiVm9sb250YXJpIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwMDFmMmIiLAogICJ0aGVtZV9jb2xvciI6ICIjMDAxZjJiIiwKICAiZGVzY3JpcHRpb24iOiAiQXBwIHBlciBsYSBnZXN0aW9uZSBkZWkgdm9sb250YXJpIGUgZGVpIHR1cm5pLiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImh0dHBzOi8vcGxhY2Vob2xkLmNvLzE5MngxOTIvMDAxZjJiL2ZmZmZmZj90ZXh0PUdWLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGQuY28vNTEyeDUxMi8wMDFmMmIvZmZmZmZmP3RleHQ9R1YsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
+    <link rel="manifest" id="manifest">
     
     <!-- Google Fonts: Nunito e Quicksand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -601,7 +601,6 @@
     <div id="modal-container"></div>
     
     <div id="toast-container"></div>
-
 
     <script type="module">
         // Importa le funzioni necessarie dai vari SDK
@@ -1470,7 +1469,7 @@
         function showProfileModal() {
             const { nome, cognome, email, telefono } = AppState.currentUser;
             const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-            const content = `<p><strong>Nome:</strong> ${nome} ${cognome}</p><p><strong>Email:</strong> ${email}</p><p><strong>Telefono:</strong> ${telefono}</p><hr style="margin: 1.5rem 0; border-color: var(--border-color);"><div class="theme-switcher"><span>Tema Chiaro</span><label class="switch"><input type="checkbox" id="theme-toggle" ${currentTheme === 'light' ? 'checked' : ''}><span class="slider"></span></label></div><button id="logout-btn" class="btn btn-danger btn-block">Logout</button>`;
+            const content = `<p><strong>Nome:</strong> ${nome} ${cognome}</p><p><strong>Email:</strong> ${email}</p><p><strong>Telefono:</strong> ${telefono}</p><hr style="margin: 1.5rem 0; border-color: var(--border-color);"><div class="theme-switcher"><span>Tema Chiaro</span><label class="switch"><input type="checkbox" id="theme-toggle" ${currentTheme === 'light' ? 'checked' : ''}><span class="slider"></span></label></div><div style="margin-top: 1rem;"><button id="enable-push-btn" class="btn btn-secondary btn-block">Abilita Notifiche Push</button></div><button id="logout-btn" class="btn btn-danger btn-block">Logout</button>`;
             renderModal('Il Mio Profilo', content, () => {
                 document.getElementById('logout-btn').addEventListener('click', handleLogout);
                 document.getElementById('theme-toggle').addEventListener('change', (e) => {
@@ -1478,6 +1477,7 @@
                     localStorage.setItem('theme', theme);
                     applyTheme();
                 });
+                document.getElementById('enable-push-btn').addEventListener('click', enablePushNotifications);
             });
         }
         
@@ -1644,6 +1644,29 @@
         // ====================================================================
         // NUOVE FUNZIONI NOTIFICHE
         // ====================================================================
+        async function enablePushNotifications() {
+            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                showToast('Notifiche Push non supportate da questo browser.', 'error');
+                return;
+            }
+
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    showToast('Permesso per le notifiche concesso!', 'success');
+                    // Qui andrebbe la logica per ottenere la sottoscrizione e salvarla.
+                    // Per ora, ci limitiamo a confermare che il permesso è stato dato.
+                    const registration = await navigator.serviceWorker.ready;
+                    console.log('Service Worker pronto per le notifiche push.', registration);
+                } else {
+                    showToast('Permesso per le notifiche non concesso.', 'error');
+                }
+            } catch (error) {
+                console.error('Errore durante l\'abilitazione delle notifiche push:', error);
+                showToast('Errore durante l\'abilitazione delle notifiche.', 'error');
+            }
+        }
+
         function updateNotificationBell() {
             const badge = notificationsBtn.querySelector('.notification-badge');
             if (AppState.unreadCount > 0) {
@@ -1730,7 +1753,10 @@
         function handleClearAllNotifications() {
             showConfirmationModal('Sei sicuro di voler archiviare TUTTE le notifiche per TUTTI gli utenti? Questa azione è consigliata solo per pulizia e non può essere annullata.', async () => {
                 const allVolunteerEmails = AppState.volunteers.map(v => v.email);
-                if(allVolunteerEmails.length === 0) return;
+                if(allVolunteerEmails.length === 0) {
+                    window.closeCurrentModal();
+                    return;
+                }
 
                 const batch = writeBatch(db);
                 const notificationsSnapshot = await getDocs(notificationsCol);
@@ -1842,6 +1868,46 @@
         // INIZIO APPLICAZIONE
         // ====================================================================
         function init() {
+            // Registra il Service Worker
+            if ('serviceWorker' in navigator) {
+                const swScriptElement = document.getElementById('sw-script');
+                if (swScriptElement) {
+                    const swScriptContent = swScriptElement.textContent;
+                    const swBlob = new Blob([swScriptContent], { type: 'application/javascript' });
+                    const swUrl = URL.createObjectURL(swBlob);
+                    navigator.serviceWorker.register(swUrl)
+                        .then(registration => console.log('Service Worker registrato con successo:', registration))
+                        .catch(error => console.error('Registrazione Service Worker fallita:', error));
+                }
+            }
+
+            // Aggiunge il link al manifest dinamicamente
+            const manifestLink = document.getElementById('manifest');
+            const manifestContent = `{
+              "name": "Gestione Volontari",
+              "short_name": "Volontari",
+              "start_url": ".",
+              "display": "standalone",
+              "background_color": "#001f2b",
+              "theme_color": "#001f2b",
+              "description": "App per la gestione dei volontari e dei turni.",
+              "icons": [
+                {
+                  "src": "https://placehold.co/192x192/001f2b/ffffff?text=GV",
+                  "sizes": "192x192",
+                  "type": "image/png"
+                },
+                {
+                  "src": "https://placehold.co/512x512/001f2b/ffffff?text=GV",
+                  "sizes": "512x512",
+                  "type": "image/png"
+                }
+              ]
+            }`;
+            const blob = new Blob([manifestContent], { type: 'application/json' });
+            manifestLink.href = URL.createObjectURL(blob);
+
+
             applyTheme();
             loginForm.addEventListener('submit', handleLogin);
             onAuthStateChanged(auth, (user) => {
