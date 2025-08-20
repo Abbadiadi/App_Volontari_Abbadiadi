@@ -6,40 +6,39 @@
     <title>Gestione Volontari</title>
     
     <!-- PWA Manifest e Meta Tags -->
-    <meta name="theme-color" content="#001f2b"/>
-    <link rel="manifest" id="manifest">
+    <meta name="theme-color" content="#0d1f2b"/>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkdlc3Rpb25lIFZvbG9udGFyaSIsCiAgInNob3J0X25hbWUiOiAiVm9sb250YXJpIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZDFmMmIiLAogICJ0aGVtZV9jb2xvciI6ICIjMGQxZjJiIiwKICAiZGVzY3JpcHRpb24iOiAiQXBwIHBlciBsYSBnZXN0aW9uZSBkZWkgdm9sb250YXJpIGUgZGVpIHR1cm5pLiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImh0dHBzOi8vcGxhY2Vob2xkLmNvLzE5MngxOTIvMGQxZjJiL2ZmZmZmZj90ZXh0PUdWLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGQuY28vNTEyeDUxMi8wZDFmMmIvZmZmZmZmP3RleHQ9R1YsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
     
-    <!-- Google Fonts: Nunito e Quicksand -->
+    <!-- Google Fonts: Lexend -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Icone (Boxicons) -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Google Fonts: Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
         /*------------------------------------*\
-          #VARIABILI E TEMA
+          #MATERIAL 3 EXPRESSIVE - VARIABILI E TEMA
         \*------------------------------------*/
         :root {
             /* FONT */
-            --font-family-headings: 'Nunito', sans-serif;
-            --font-family-body: 'Quicksand', sans-serif;
+            --font-family-main: 'Lexend', sans-serif;
 
             /* Colori Tema Scuro (Blu Profondo) */
-            --bg-color: #001f2b;
-            --card-bg-color: #003344;
-            --text-color: #eaf4f8;
+            --bg-color: #0d1f2b;
+            --card-bg-color: #1a3a4a;
+            --text-color: #e0e0e0;
             --heading-color: #ffffff;
-            --primary-accent-color: #cda434; /* Oro */
-            --secondary-accent-color: #17a2b8; /* Azzurro */
-            --border-color: #004b66;
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --danger-color: #e74c3c;
-            --success-color: #2ecc71;
+            --primary-accent-color: #fdd835; /* Giallo Material */
+            --secondary-accent-color: #26c6da; /* Ciano Material */
+            --border-color: #2a4a5a;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --danger-color: #ef5350;
+            --success-color: #66bb6a;
             --disabled-color: #5f7a85;
             --ongoing-color: var(--success-color);
-            --general-event-color: #8854d0; /* Viola per eventi generali */
+            --general-event-color: #ab47bc; /* Viola per eventi generali */
 
             /* Colori Gemini */
             --gemini-blue: #4285F4;
@@ -48,26 +47,26 @@
             --gemini-yellow: #FBBC05;
 
             /* Colori Sport */
-            --sport-velocita: #f39c12;
-            --sport-maratonina: #3498db;
-            --sport-staffetta: #2ecc71;
-            --sport-tiro-al-bersaglio---nerf: #e74c3c;
-            --sport-lancio-del-vortex: #9b59b6;
-            --sport-kan-jam-frisbee: #1abc9c;
-            --sport-salto-in-lungo: #e67e22;
-            --sport-calci-di-rigore: #27ae60;
-            --sport-bocce-curling: #34495e;
-            --sport-tiri-liberi-basket: #d35400;
+            --sport-velocita: #ffa726;
+            --sport-maratonina: #42a5f5;
+            --sport-staffetta: #66bb6a;
+            --sport-tiro-al-bersaglio---nerf: #ef5350;
+            --sport-lancio-del-vortex: #ab47bc;
+            --sport-kan-jam-frisbee: #26a69a;
+            --sport-salto-in-lungo: #ff7043;
+            --sport-calci-di-rigore: #9ccc65;
+            --sport-bocce-curling: #78909c;
+            --sport-tiri-liberi-basket: #ffca28;
         }
 
         body.light-theme {
             /* Colori Tema Chiaro */
-            --bg-color: #f4f6f8;
+            --bg-color: #f7f9fc;
             --card-bg-color: #ffffff;
-            --text-color: #333333;
-            --heading-color: #001f2b;
-            --primary-accent-color: #b8860b;
-            --secondary-accent-color: #17a2b8;
+            --text-color: #3c4043;
+            --heading-color: #1f1f1f;
+            --primary-accent-color: #f9ab00;
+            --secondary-accent-color: #00acc1;
             --border-color: #e0e0e0;
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
@@ -88,22 +87,31 @@
         }
 
         body {
-            font-family: var(--font-family-body);
+            font-family: var(--font-family-main);
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            font-weight: 500;
+            font-weight: 400;
             transition: background-color 0.3s, color 0.3s;
             overflow-x: hidden;
         }
 
         h1, h2, h3, h4 {
-            font-family: var(--font-family-headings);
+            font-family: var(--font-family-main);
             color: var(--heading-color);
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .hidden { display: none !important; }
+        
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+
 
         /*------------------------------------*\
           #LAYOUT PRINCIPALE
@@ -120,6 +128,9 @@
             align-items: center;
             height: 100vh;
             padding: 1rem;
+            background-image: url('https://i.imgur.com/mMt74yR.jpeg');
+            background-size: cover;
+            background-position: center;
         }
 
         #app-view {
@@ -134,7 +145,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
             transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
@@ -146,9 +157,9 @@
         }
         
         header.app-header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--primary-accent-color);
-            font-weight: 900;
+            font-weight: 800;
         }
 
         .header-icons {
@@ -158,7 +169,7 @@
         }
         .header-icons .icon-btn {
             position: relative;
-            font-size: 1.8rem;
+            font-size: 28px;
             cursor: pointer;
             transition: color 0.2s;
         }
@@ -222,13 +233,13 @@
             height: 60px;
         }
 
-        .nav-button i {
-            font-size: 1.8rem;
+        .nav-button .material-symbols-outlined {
+            font-size: 28px;
         }
         
         .nav-button.active {
             color: var(--primary-accent-color);
-            background-color: rgba(56, 189, 248, 0.1);
+            background-color: rgba(253, 216, 53, 0.1);
         }
 
         /*------------------------------------*\
@@ -269,17 +280,18 @@
             flex: 0 0 220px;
             background: var(--card-bg-color);
             padding: 1rem;
-            border-radius: 1rem;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             gap: 1rem;
             border: 1px solid var(--border-color);
             margin-right: 1rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .summary-card:hover {
             transform: translateY(-4px);
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
         .summary-card:last-child {
             margin-right: 0;
@@ -294,7 +306,6 @@
             justify-content: center;
         }
         .summary-card .card-content .value {
-            font-family: var(--font-family-headings);
             font-weight: 800;
             font-size: 1.5rem;
             line-height: 1.2;
@@ -338,7 +349,7 @@
         \*------------------------------------*/
         #login-card {
             background-color: var(--card-bg-color);
-            padding: 2.5rem 2rem;
+            padding: 2.5rem;
             border-radius: 28px;
             box-shadow: 0 10px 30px var(--shadow-color);
             width: 100%;
@@ -346,14 +357,127 @@
             text-align: center;
             border: 1px solid var(--border-color);
         }
-        #login-card .login-icon {
-            font-size: 4rem;
-            color: var(--secondary-accent-color);
-            margin-bottom: 1rem;
+        #login-card .login-logo {
+            width: auto;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
         }
-        #login-card h2 { margin-bottom: 1.5rem; color: var(--heading-color); }
+        #login-card h2 { margin-bottom: 0.5rem; color: var(--heading-color); font-size: 2rem; }
+        #login-card .subtitle { margin-bottom: 1.5rem; opacity: 0.8; }
         #login-error { color: var(--danger-color); margin-top: 1rem; font-size: 0.9rem; min-height: 20px; }
-        #email-input { background-color: white !important; color: #333 !important; border-radius: 50px !important; text-align: center; }
+
+        .input-field-material {
+            position: relative;
+            margin-top: 2rem;
+        }
+        .input-field-material input {
+            width: 100%;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem;
+            background-color: transparent;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        .input-field-material label {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            background-color: var(--card-bg-color);
+            padding: 0 0.5rem;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .input-field-material input:focus {
+            outline: none;
+            border-color: var(--primary-accent-color);
+        }
+        .input-field-material input:focus + label,
+        .input-field-material input:not(:placeholder-shown) + label {
+            top: -0.75rem;
+            left: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--primary-accent-color);
+            z-index: 1;
+        }
+        .input-field-material.error input {
+            border-color: var(--danger-color);
+        }
+        .input-field-material.error input:focus + label,
+        .input-field-material.error input:not(:placeholder-shown) + label {
+            color: var(--danger-color);
+        }
+
+        #login-button {
+            width: auto;
+            min-width: 150px;
+            height: 56px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        #login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        #login-options a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        #login-options a:hover {
+            color: var(--secondary-accent-color);
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .remember-me label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .remember-me input[type="checkbox"] {
+            display: none;
+        }
+        .remember-me .checkbox-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .remember-me .checkbox-box .material-symbols-outlined {
+            font-size: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.2s ease;
+            color: var(--bg-color);
+        }
+        .remember-me input[type="checkbox"]:checked + label .checkbox-box {
+            background-color: var(--primary-accent-color);
+            border-color: var(--primary-accent-color);
+        }
+        .remember-me input[type="checkbox"]:checked + label .checkbox-box .material-symbols-outlined {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
 
         .shift-card {
             background-color: var(--card-bg-color);
@@ -371,7 +495,6 @@
         .card-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; cursor: pointer; border-radius: 0.75rem; overflow: hidden; transition: background-color 0.3s; }
         .card-main-content { padding: 0.8rem 1.2rem; position: relative; }
         
-        /* CONTRASTO MIGLIORATO CARD TURNI */
         .shift-header-info p { margin: 0; font-size: 1rem; font-weight: 700; color: var(--bg-color); text-shadow: none; }
         .shift-header-info h3 { font-size: 1.4rem; color: var(--bg-color); margin: 0.25rem 0 0 0; text-shadow: none; }
         body.light-theme .shift-header-info p,
@@ -404,7 +527,6 @@
         .btn { padding: 0.8rem 1.5rem; border-radius: 50px; border: 2px solid transparent; cursor: pointer; font-weight: 700; font-family: var(--font-family-body); transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; position: relative; min-height: 48px; }
         .btn-loader { font-size: 1.5rem; }
         
-        /* PULSANTI CON GRADIENTE GEMINI */
         .btn-primary {
             background-image: linear-gradient(45deg, var(--gemini-blue), var(--gemini-green));
             color: #ffffff;
@@ -417,6 +539,14 @@
         .btn-danger { background-color: var(--danger-color); color: #ffffff; border-color: var(--danger-color); }
         .btn-danger:hover { background-color: transparent; color: var(--danger-color); }
         .btn-block { width: 100%; margin-top: 1rem; }
+        .btn-icon {
+            padding: 0;
+            width: 48px;
+            height: 48px;
+            min-height: 48px;
+        }
+        .btn-icon .material-symbols-outlined { font-size: 24px; }
+
 
         .theme-switcher { display: flex; align-items: center; gap: 1rem; }
         .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
@@ -549,18 +679,29 @@
         <!-- VISTA LOGIN -->
         <div id="login-view">
             <div id="login-card">
-                <i class='bx bx-user-circle login-icon'></i>
-                <h2>Benvenuto</h2>
+                <img src="https://i.imgur.com/LbsDtxa.png" alt="Logo App" class="login-logo">
+                <h2>Benvenuto!</h2>
                 <p class="subtitle">Accedi con la tua email da volontario</p>
                 <form id="login-form">
-                    <div class="form-group">
-                        <input type="email" id="email-input" placeholder="La tua email" required>
+                    <div class="input-field-material">
+                        <input type="email" id="email-input" placeholder=" " required>
+                        <label for="email-input">Email</label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="login-button">
-                        <span class="btn-text">Accedi</span>
-                        <i class='bx bx-loader-alt bx-spin btn-loader hidden'></i>
-                    </button>
                     <p id="login-error">&nbsp;</p>
+                    <button type="submit" class="btn btn-primary" id="login-button">
+                        <span class="btn-text">Accedi</span>
+                        <span class="material-symbols-outlined btn-loader hidden">progress_activity</span>
+                    </button>
+                    <div id="login-options">
+                        <label for="remember-me-checkbox" class="remember-me">
+                            <input type="checkbox" id="remember-me-checkbox">
+                            <span class="checkbox-box">
+                                <span class="material-symbols-outlined">check</span>
+                            </span>
+                            <span class="checkbox-label">Ricordami</span>
+                        </label>
+                        <a href="mailto:abbadiadisocial@gmail.com">Problemi di accesso?</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -570,10 +711,11 @@
             <header class="app-header">
                 <h1 id="header-title">I Miei Turni</h1>
                 <div class="header-icons">
-                    <i class='bx bx-bell icon-btn' id="notifications-btn">
+                    <span class="material-symbols-outlined icon-btn" id="notifications-btn">
+                        notifications
                         <span class="notification-badge hidden"></span>
-                    </i>
-                    <i class='bx bx-user icon-btn' id="profile-btn-header"></i>
+                    </span>
+                    <span class="material-symbols-outlined icon-btn" id="profile-btn-header">person</span>
                 </div>
             </header>
 
@@ -583,16 +725,16 @@
 
             <nav class="bottom-nav">
                  <button class="nav-button active" data-view="dashboard">
-                    <i class='bx bxs-home'></i>
+                    <span class="material-symbols-outlined">home</span>
                 </button>
                 <button class="nav-button" data-view="my-shifts">
-                    <i class='bx bx-calendar'></i>
+                    <span class="material-symbols-outlined">calendar_month</span>
                 </button>
                 <button class="nav-button" data-view="race-program">
-                    <i class='bx bx-grid-alt'></i>
+                    <span class="material-symbols-outlined">grid_view</span>
                 </button>
                 <button class="nav-button" data-view="admin-panel" id="admin-nav-button">
-                    <i class='bx bx-cog'></i>
+                    <span class="material-symbols-outlined">settings</span>
                 </button>
             </nav>
         </div>
@@ -683,16 +825,16 @@
         const toastContainer = document.getElementById('toast-container');
         
         const SPORT_DETAILS = {
-            'Velocità': { icon: 'bx-run', color: '#f39c12' },
-            'Maratonina': { icon: 'bx-walk', color: '#3498db' },
-            'Staffetta': { icon: 'bx-transfer', color: '#2ecc71' },
-            'Tiro al bersaglio - Nerf': { icon: 'bx-target-lock', color: '#e74c3c' },
-            'Lancio del vortex': { icon: 'bx-rocket', color: '#9b59b6' },
-            'Kan-jam frisbee': { icon: 'bx-disc', color: '#1abc9c' },
-            'Salto in lungo': { icon: 'bx-ruler', color: '#e67e22' },
-            'Calci di rigore': { icon: 'bx-football', color: '#27ae60' },
-            'Bocce curling': { icon: 'bx-circle', color: '#34495e' },
-            'Tiri liberi basket': { icon: 'bx-basketball', color: '#d35400' }
+            'Velocità': { icon: 'directions_run', color: '#f39c12' },
+            'Maratonina': { icon: 'directions_walk', color: '#3498db' },
+            'Staffetta': { icon: 'swap_horiz', color: '#2ecc71' },
+            'Tiro al bersaglio - Nerf': { icon: 'my_location', color: '#e74c3c' },
+            'Lancio del vortex': { icon: 'rocket_launch', color: '#9b59b6' },
+            'Kan-jam frisbee': { icon: 'album', color: '#1abc9c' },
+            'Salto in lungo': { icon: 'square_foot', color: '#e67e22' },
+            'Calci di rigore': { icon: 'sports_soccer', color: '#27ae60' },
+            'Bocce curling': { icon: 'circle', color: '#34495e' },
+            'Tiri liberi basket': { icon: 'sports_basketball', color: '#d35400' }
         };
 
 
@@ -848,9 +990,14 @@
             const loginButton = document.getElementById('login-button');
             const buttonText = loginButton.querySelector('.btn-text');
             const buttonLoader = loginButton.querySelector('.btn-loader');
+            const emailFieldContainer = emailInput.parentElement;
+            const rememberMe = document.getElementById('remember-me-checkbox').checked;
+            
             loginButton.disabled = true;
             buttonText.classList.add('hidden');
             buttonLoader.classList.remove('hidden');
+            emailFieldContainer.classList.remove('error');
+
             const email = emailInput.value.trim().toLowerCase();
             loginError.textContent = '\u00A0';
 
@@ -859,13 +1006,20 @@
                 if (userDoc.exists()) {
                     AppState.currentUser = { id: userDoc.id, ...userDoc.data() };
                     localStorage.setItem('userEmail', email);
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
                     initializeAppUI();
                 } else {
                     loginError.textContent = 'Email non trovata. Contatta un responsabile.';
+                    emailFieldContainer.classList.add('error');
                 }
             } catch (error) {
                 console.error("Errore durante il login:", error);
                 loginError.textContent = 'Si è verificato un errore di connessione. Riprova.';
+                emailFieldContainer.classList.add('error');
             } finally {
                 loginButton.disabled = false;
                 buttonText.classList.remove('hidden');
@@ -887,6 +1041,17 @@
         function showLoginView() {
             loginView.classList.remove('hidden');
             appView.classList.add('hidden');
+            const emailFieldContainer = emailInput.parentElement;
+            emailInput.addEventListener('input', () => {
+                emailFieldContainer.classList.remove('error');
+                loginError.textContent = '\u00A0';
+            });
+            
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                emailInput.value = rememberedEmail;
+                document.getElementById('remember-me-checkbox').checked = true;
+            }
         }
 
         function initializeAppUI() {
@@ -1052,35 +1217,35 @@
 
                     <div class="summary-card-container">
                         <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(205, 164, 52, 0.2); color: var(--primary-accent-color);"><i class='bx bx-calendar-event'></i></div>
+                            <div class="icon-wrapper" style="background-color: rgba(205, 164, 52, 0.2); color: var(--primary-accent-color);"><span class="material-symbols-outlined">event</span></div>
                             <div class="card-content">
                                 <div class="value">${diffDays > 0 ? diffDays : '0'} giorni</div>
                                 <div class="label">alle Abbadiadi</div>
                             </div>
                         </div>
                         <div class="summary-card" id="meeting-card">
-                            <div class="icon-wrapper" style="background-color: rgba(253, 126, 20, 0.2); color: #fd7e14;"><i class='bx bx-group'></i></div>
+                            <div class="icon-wrapper" style="background-color: rgba(253, 126, 20, 0.2); color: #fd7e14;"><span class="material-symbols-outlined">groups</span></div>
                             <div class="card-content">
                                 <div class="value">Riunione Volontari</div>
                                 <div class="label">${meetingDate || 'Non definita'}</div>
                             </div>
                         </div>
                         <div class="summary-card" id="weather-card">
-                            <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><i class='bx bx-loader-alt bx-spin'></i></div>
+                            <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><span class="material-symbols-outlined">progress_activity</span></div>
                             <div class="card-content">
                                 <div class="value">Carico...</div>
                                 <div class="label">Meteo a Pinerolo</div>
                             </div>
                         </div>
                         <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(46, 204, 113, 0.2); color: var(--success-color);"><i class='bx bx-check-circle'></i></div>
+                            <div class="icon-wrapper" style="background-color: rgba(46, 204, 113, 0.2); color: var(--success-color);"><span class="material-symbols-outlined">check_circle</span></div>
                             <div class="card-content">
                                 <div class="value">${completedShifts} / ${myShifts.length}</div>
                                 <div class="label">Turni completati</div>
                             </div>
                         </div>
                         <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(136, 84, 208, 0.2); color: var(--general-event-color);"><i class='bx bx-bell'></i></div>
+                            <div class="icon-wrapper" style="background-color: rgba(136, 84, 208, 0.2); color: var(--general-event-color);"><span class="material-symbols-outlined">campaign</span></div>
                             <div class="card-content">
                                 <div class="value">${nextGeneralEvent ? nextGeneralEvent.eventName : 'Nessuno'}</div>
                                 <div class="label">Prossimo evento</div>
@@ -1131,7 +1296,7 @@
                 const description = getWeatherDescription(weatherCode);
 
                 weatherCard.innerHTML = `
-                    <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><i class='bx ${iconClass}'></i></div>
+                    <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><span class="material-symbols-outlined">${iconClass}</span></div>
                     <div class="card-content">
                         <div class="value">${Math.round(temperature)}°C</div>
                         <div class="label">${description}</div>
@@ -1148,16 +1313,16 @@
         }
 
         function getWeatherIcon(code) {
-            if (code === 0) return 'bxs-sun'; // Clear sky
-            if (code >= 1 && code <= 3) return 'bxs-cloud'; // Mainly clear, partly cloudy, overcast
-            if (code >= 45 && code <= 48) return 'bxs-cloud'; // Fog
-            if (code >= 51 && code <= 57) return 'bxs-cloud-drizzle'; // Drizzle
-            if (code >= 61 && code <= 67) return 'bxs-cloud-rain'; // Rain
-            if (code >= 71 && code <= 77) return 'bxs-cloud-snow'; // Snow
-            if (code >= 80 && code <= 82) return 'bxs-cloud-showers'; // Rain showers
-            if (code >= 85 && code <= 86) return 'bxs-cloud-snow'; // Snow showers
-            if (code >= 95 && code <= 99) return 'bxs-thunderstorm'; // Thunderstorm
-            return 'bx-question-mark';
+            if (code === 0) return 'clear_day'; // Clear sky
+            if (code >= 1 && code <= 3) return 'cloudy'; // Mainly clear, partly cloudy, overcast
+            if (code >= 45 && code <= 48) return 'foggy'; // Fog
+            if (code >= 51 && code <= 57) return 'rainy'; // Drizzle
+            if (code >= 61 && code <= 67) return 'rainy'; // Rain
+            if (code >= 71 && code <= 77) return 'weather_snowy'; // Snow
+            if (code >= 80 && code <= 82) return 'rainy'; // Rain showers
+            if (code >= 85 && code <= 86) return 'weather_snowy'; // Snow showers
+            if (code >= 95 && code <= 99) return 'thunderstorm'; // Thunderstorm
+            return 'help';
         }
 
         function getWeatherDescription(code) {
@@ -1210,7 +1375,7 @@
                                     <p>${shift.categoria}</p>
                                 </div>
                                 ${progressBarHtml}
-                                <i class='bx bx-chevron-down expand-arrow'></i>
+                                <span class="material-symbols-outlined expand-arrow">expand_more</span>
                             </div>
                         </div>
                     </div>
@@ -1218,14 +1383,14 @@
                         <p><strong>Data:</strong> ${shift.data_inizio}</p>
                         <p><strong>Descrizione:</strong> ${shift.descrizione}</p>
                         <p><strong>Luogo:</strong> ${shift.luogo}</p>
-                        <div style="margin-top: 1rem;"><button class="btn btn-secondary view-colleagues-btn" data-shift-id="${shift.id_turno}"><i class='bx bx-group'></i> Vedi Altri Volontari</button></div>
+                        <div style="margin-top: 1rem;"><button class="btn btn-secondary view-colleagues-btn"><span class="material-symbols-outlined">group</span>Vedi Altri</button></div>
                     </div>
                 </div>`;
         }
         
         function renderRaceProgram() {
             const isAdmin = AppState.currentUser.ruolo === 'Admin' || AppState.currentUser.ruolo === 'Responsabile';
-            let adminButtonHtml = isAdmin ? `<div style="text-align: right; margin-bottom: 1.5rem;"><button class="btn btn-primary" id="add-race-event-btn"><i class='bx bx-plus'></i>Crea Evento</button></div>` : '';
+            let adminButtonHtml = isAdmin ? `<div style="text-align: right; margin-bottom: 1.5rem;"><button class="btn btn-primary" id="add-race-event-btn"><span class="material-symbols-outlined">add</span>Crea Evento</button></div>` : '';
 
             const now = new Date();
             const events = { ongoing: [], upcoming: [], past: [] };
@@ -1244,9 +1409,9 @@
 
             contentArea.innerHTML = `
                 ${adminButtonHtml}
-                <div class="race-program-section"><h3><i class='bx bx-play-circle' style="color: var(--ongoing-color);"></i>In Corso</h3>${renderEventList(events.ongoing, isAdmin)}</div>
-                <div class="race-program-section"><h3><i class='bx bx-time-five' ></i>Prossimi Eventi</h3>${renderEventList(events.upcoming, isAdmin)}</div>
-                <div class="race-program-section"><h3><i class='bx bx-check-double'></i>Conclusi</h3>${renderEventList(events.past, isAdmin)}</div>`;
+                <div class="race-program-section"><h3><span class="material-symbols-outlined" style="color: var(--ongoing-color);">play_circle</span>In Corso</h3>${renderEventList(events.ongoing, isAdmin)}</div>
+                <div class="race-program-section"><h3><span class="material-symbols-outlined">schedule</span>Prossimi Eventi</h3>${renderEventList(events.upcoming, isAdmin)}</div>
+                <div class="race-program-section"><h3><span class="material-symbols-outlined">done_all</span>Conclusi</h3>${renderEventList(events.past, isAdmin)}</div>`;
             
             if (isAdmin) {
                 document.getElementById('add-race-event-btn').addEventListener('click', () => showRaceEventForm());
@@ -1257,7 +1422,7 @@
         
         function renderFullEventCard(event, isOngoing, isPast, showAdminActions) {
             let pillColor = 'var(--general-event-color)';
-            let icon = 'bx-calendar-event';
+            let icon = 'event';
             
             if(event.tipologia === 'Sport') {
                 const sportDetail = SPORT_DETAILS[event.eventName];
@@ -1265,7 +1430,7 @@
                     icon = sportDetail.icon;
                     pillColor = sportDetail.color;
                 } else {
-                    icon = 'bx-trophy';
+                    icon = 'emoji_events';
                 }
             }
 
@@ -1278,15 +1443,15 @@
             return `
             <div class="race-event-card ${isOngoing ? 'ongoing' : ''} ${isPast ? 'past' : ''}">
                 <div class="race-event-top-row">
-                    <i class='bx ${icon} race-event-icon' style="color: ${pillColor};"></i>
+                    <span class="material-symbols-outlined race-event-icon" style="color: ${pillColor};">${icon}</span>
                     <div class="race-event-pills">
                         <span class="event-name-pill" style="background-color: ${pillColor};">${event.eventName}</span>
                         <span class="event-level-pill">${event.level || 'Generale'}</span>
                     </div>
                     ${showAdminActions ? `
                     <div class="race-event-actions">
-                        <button class="btn btn-primary edit-race-event-btn" data-id="${event.id}"><i class='bx bx-edit'></i></button>
-                        <button class="btn btn-danger delete-race-event-btn" data-id="${event.id}"><i class='bx bx-trash'></i></button>
+                        <button class="btn btn-primary btn-icon edit-race-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="btn btn-danger btn-icon delete-race-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">delete</span></button>
                     </div>` : ''}
                 </div>
                 <div class="race-event-details">
@@ -1302,15 +1467,15 @@
                 <section class="admin-section" id="admin-settings">
                      <div class="admin-section-header">
                         <h2>Impostazioni Generali</h2>
-                        <button class="btn btn-secondary" id="manage-settings-btn"><i class='bx bx-edit-alt'></i>Modifica Dati</button>
+                        <button class="btn btn-secondary" id="manage-settings-btn"><span class="material-symbols-outlined">edit_note</span>Modifica Dati</button>
                     </div>
                 </section>
                 <section class="admin-section" id="admin-volunteers">
-                    <div class="admin-section-header"><h2>Volontari</h2><button class="btn btn-secondary" id="add-volunteer-btn"><i class='bx bx-plus'></i>Aggiungi</button></div>
+                    <div class="admin-section-header"><h2>Volontari</h2><button class="btn btn-secondary" id="add-volunteer-btn"><span class="material-symbols-outlined">add</span>Aggiungi</button></div>
                     <div id="volunteers-list"></div>
                 </section>
                 <section class="admin-section" id="admin-shifts">
-                    <div class="admin-section-header"><h2>Turni</h2><div><button class="btn" id="manage-categories-btn" style="background-color: var(--border-color);"><i class='bx bx-category'></i> Gestisci Categorie</button><button class="btn btn-secondary" id="add-shift-main-btn"><i class='bx bx-plus'></i>Crea Turno</button></div></div>
+                    <div class="admin-section-header"><h2>Turni</h2><div><button class="btn" id="manage-categories-btn" style="background-color: var(--border-color);"><span class="material-symbols-outlined">category</span> Gestisci</button><button class="btn btn-secondary" id="add-shift-main-btn"><span class="material-symbols-outlined">add</span>Crea Turno</button></div></div>
                     <div id="shifts-accordion"></div>
                 </section>`;
             
@@ -1334,7 +1499,7 @@
         function renderVolunteersList() {
             const listContainer = document.getElementById('volunteers-list');
             if (!listContainer) return;
-            listContainer.innerHTML = AppState.volunteers.map(v => `<div class="volunteer-item" data-id="${v.id}"><div class="volunteer-summary"><span>${v.cognome} ${v.nome}</span><i class='bx bx-chevron-down'></i></div><div class="volunteer-details"><p><strong>Email:</strong> ${v.email}</p><p><strong>Telefono:</strong> ${v.telefono}</p><p><strong>Ruolo:</strong> ${v.ruolo}</p><div class="volunteer-actions"><button class="btn btn-secondary edit-volunteer-btn" data-id="${v.id}">Modifica</button><button class="btn btn-secondary view-shifts-btn" data-id="${v.id}">Vedi Turni</button></div></div></div>`).join('');
+            listContainer.innerHTML = AppState.volunteers.map(v => `<div class="volunteer-item" data-id="${v.id}"><div class="volunteer-summary"><span>${v.cognome} ${v.nome}</span><span class="material-symbols-outlined">expand_more</span></div><div class="volunteer-details"><p><strong>Email:</strong> ${v.email}</p><p><strong>Telefono:</strong> ${v.telefono}</p><p><strong>Ruolo:</strong> ${v.ruolo}</p><div class="volunteer-actions"><button class="btn btn-secondary btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button><button class="btn btn-secondary btn-icon view-shifts-btn" data-id="${v.id}"><span class="material-symbols-outlined">event_list</span></button></div></div></div>`).join('');
             listContainer.querySelectorAll('.edit-volunteer-btn').forEach(btn => btn.addEventListener('click', () => showVolunteerForm(btn.dataset.id)));
             listContainer.querySelectorAll('.view-shifts-btn').forEach(btn => btn.addEventListener('click', () => showVolunteerShiftsModal(btn.dataset.id)));
         }
@@ -1346,7 +1511,7 @@
                 (acc[shift.categoria || 'Senza Categoria'] = acc[shift.categoria || 'Senza Categoria'] || []).push(shift);
                 return acc;
             }, {});
-            accordionContainer.innerHTML = Object.keys(shiftsByCategory).sort().map(category => `<div class="accordion-item" style="border-left-color: ${getCategoryColor(category)}"><div class="accordion-header"><h3>${category} (${shiftsByCategory[category].length})</h3><i class='bx bx-chevron-down'></i></div><div class="accordion-body">${shiftsByCategory[category].map(shift => `<div class="shift-admin-item"><div class="shift-admin-info"><h4>${shift.nome_turno}</h4><p>${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p></div><div class="shift-admin-actions"><button class="btn btn-primary edit-shift-btn" data-id="${shift.id}">Modifica</button><button class="btn btn-secondary manage-volunteers-btn" data-id="${shift.id}">Gestisci</button></div></div>`).join('')}</div></div>`).join('');
+            accordionContainer.innerHTML = Object.keys(shiftsByCategory).sort().map(category => `<div class="accordion-item" style="border-left-color: ${getCategoryColor(category)}"><div class="accordion-header"><h3>${category} (${shiftsByCategory[category].length})</h3><span class="material-symbols-outlined">expand_more</span></div><div class="accordion-body">${shiftsByCategory[category].map(shift => `<div class="shift-admin-item"><div class="shift-admin-info"><h4>${shift.nome_turno}</h4><p>${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p></div><div class="shift-admin-actions"><button class="btn btn-primary btn-icon edit-shift-btn" data-id="${shift.id}"><span class="material-symbols-outlined">edit</span></button><button class="btn btn-secondary btn-icon manage-volunteers-btn" data-id="${shift.id}"><span class="material-symbols-outlined">group</span></button></div></div>`).join('')}</div></div>`).join('');
             accordionContainer.querySelectorAll('.edit-shift-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); showShiftForm(btn.dataset.id); }));
             accordionContainer.querySelectorAll('.manage-volunteers-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); showManageVolunteersModal(btn.dataset.id); }));
         }
@@ -1430,8 +1595,8 @@
         }
 
         function showManageCategoriesModal() {
-            let listHtml = AppState.shiftCategories.length > 0 ? AppState.shiftCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger delete-category-btn" data-id="${cat}"><i class='bx bx-trash'></i></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
-            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary"><i class='bx bx-plus'></i></button></form></div>`;
+            let listHtml = AppState.shiftCategories.length > 0 ? AppState.shiftCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger btn-icon delete-category-btn" data-id="${cat}"><span class="material-symbols-outlined">delete</span></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
+            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary btn-icon"><span class="material-symbols-outlined">add</span></button></form></div>`;
             renderModal('Gestisci Categorie', contentHtml, () => {
                 document.getElementById('add-category-form').addEventListener('submit', handleAddCategory);
                 document.querySelectorAll('.delete-category-btn').forEach(btn => btn.addEventListener('click', (e) => handleDeleteCategory(e.target.closest('button').dataset.id)));
@@ -1469,7 +1634,7 @@
         function showProfileModal() {
             const { nome, cognome, email, telefono } = AppState.currentUser;
             const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-            const content = `<p><strong>Nome:</strong> ${nome} ${cognome}</p><p><strong>Email:</strong> ${email}</p><p><strong>Telefono:</strong> ${telefono}</p><hr style="margin: 1.5rem 0; border-color: var(--border-color);"><div class="theme-switcher"><span>Tema Chiaro</span><label class="switch"><input type="checkbox" id="theme-toggle" ${currentTheme === 'light' ? 'checked' : ''}><span class="slider"></span></label></div><div style="margin-top: 1rem;"><button id="enable-push-btn" class="btn btn-secondary btn-block">Abilita Notifiche Push</button></div><button id="logout-btn" class="btn btn-danger btn-block">Logout</button>`;
+            const content = `<p><strong>Nome:</strong> ${nome} ${cognome}</p><p><strong>Email:</strong> ${email}</p><p><strong>Telefono:</strong> ${telefono}</p><hr style="margin: 1.5rem 0; border-color: var(--border-color);"><div class="theme-switcher"><span>Tema Chiaro</span><label class="switch"><input type="checkbox" id="theme-toggle" ${currentTheme === 'light' ? 'checked' : ''}><span class="slider"></span></label></div><button id="logout-btn" class="btn btn-danger btn-block" style="margin-top: 1rem;">Logout</button>`;
             renderModal('Il Mio Profilo', content, () => {
                 document.getElementById('logout-btn').addEventListener('click', handleLogout);
                 document.getElementById('theme-toggle').addEventListener('change', (e) => {
@@ -1477,7 +1642,6 @@
                     localStorage.setItem('theme', theme);
                     applyTheme();
                 });
-                document.getElementById('enable-push-btn').addEventListener('click', enablePushNotifications);
             });
         }
         
@@ -1561,7 +1725,7 @@
             const assignments = AppState.assignments.filter(a => a.email_volontario === volunteerEmail);
             const shiftIds = assignments.map(a => a.id_turno);
             const shifts = AppState.shifts.filter(s => shiftIds.includes(s.id_turno));
-            let contentHtml = shifts.length > 0 ? shifts.map(s => `<div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;"><span>${s.nome_turno} (${s.data_inizio})</span><button class="btn btn-danger remove-assignment-btn" data-assignment-id="${assignments.find(a => a.id_turno === s.id_turno).id}"><i class='bx bx-trash'></i></button></div>`).join('') : '<p>Nessun turno assegnato.</p>';
+            let contentHtml = shifts.length > 0 ? shifts.map(s => `<div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;"><span>${s.nome_turno} (${s.data_inizio})</span><button class="btn btn-danger btn-icon remove-assignment-btn" data-assignment-id="${assignments.find(a => a.id_turno === s.id_turno).id}"><span class="material-symbols-outlined">delete</span></button></div>`).join('') : '<p>Nessun turno assegnato.</p>';
             renderModal(`Turni di ${volunteer.nome} ${volunteer.cognome}`, contentHtml, () => {
                 document.querySelectorAll('.remove-assignment-btn').forEach(btn => btn.addEventListener('click', (e) => {
                     showConfirmationModal('Rimuovere questa assegnazione?', async () => {
@@ -1579,7 +1743,7 @@
             const assignedEmails = new Set(AppState.assignments.filter(a => a.id_turno === shift.id_turno).map(a => a.email_volontario));
             const assigned = AppState.volunteers.filter(v => assignedEmails.has(v.email));
             const available = AppState.volunteers.filter(v => !assignedEmails.has(v.email));
-            const contentHtml = `<div><h4>Assegnati</h4><div id="assigned-list" style="margin-bottom: 1.5rem;">${assigned.length > 0 ? assigned.map(v => `<div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;"><span>${v.nome} ${v.cognome}</span><button class="btn btn-danger unassign-btn" data-email="${v.email}"><i class='bx bx-x'></i></button></div>`).join('') : '<p>Nessuno</p>'}</div><h4>Assegna</h4><form id="assign-form"><div class="form-group">${available.length > 0 ? available.map(v => `<label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0;"><input type="checkbox" name="assign-volunteer" value="${v.email}"> ${v.nome} ${v.cognome}</label>`).join('') : '<p>Nessun volontario disponibile.</p>'}</div><button type="submit" class="btn btn-primary btn-block">Assegna</button></form></div>`;
+            const contentHtml = `<div><h4>Assegnati</h4><div id="assigned-list" style="margin-bottom: 1.5rem;">${assigned.length > 0 ? assigned.map(v => `<div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;"><span>${v.nome} ${v.cognome}</span><button class="btn btn-danger btn-icon unassign-btn" data-email="${v.email}"><span class="material-symbols-outlined">close</span></button></div>`).join('') : '<p>Nessuno</p>'}</div><h4>Assegna</h4><form id="assign-form"><div class="form-group">${available.length > 0 ? available.map(v => `<label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0;"><input type="checkbox" name="assign-volunteer" value="${v.email}"> ${v.nome} ${v.cognome}</label>`).join('') : '<p>Nessun volontario disponibile.</p>'}</div><button type="submit" class="btn btn-primary btn-block">Assegna</button></form></div>`;
             renderModal(`Gestisci Volontari per: ${shift.nome_turno}`, contentHtml, () => {
                 document.querySelectorAll('.unassign-btn').forEach(btn => btn.addEventListener('click', (e) => {
                     showConfirmationModal('Rimuovere l\'assegnazione di questo volontario dal turno?', async () => {
@@ -1626,7 +1790,7 @@
             const tipologia = form.querySelector('#eventType').value;
             let eventName = tipologia === 'Sport' ? form.querySelector('#eventNameSport').value : form.querySelector('#eventNameGeneral').value;
             const data = { tipologia, eventName, level: form.querySelector('#level').value, location: form.querySelector('#location').value, date: form.querySelector('#date').value, startTime: form.querySelector('#startTime').value, endTime: form.querySelector('#endTime').value, description: form.querySelector('#description').value };
-            if (!data.tipologia || !data.eventName || !data.location || !data.date || !data.startTime || !data.endTime) { showToast('Tutti i campi obbligatori.', 'error'); return; }
+            if (!data.tipologia || !data.eventName || !data.location || !data.date || !data.startTime || !data.endTime) { showToast('Tutti i campi sono obbligatori.', 'error'); return; }
             try {
                 if (isEditing) await setDoc(doc(db, 'race_events', eventId), data);
                 else await addDoc(raceEventsCol, data);
@@ -1644,29 +1808,6 @@
         // ====================================================================
         // NUOVE FUNZIONI NOTIFICHE
         // ====================================================================
-        async function enablePushNotifications() {
-            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-                showToast('Notifiche Push non supportate da questo browser.', 'error');
-                return;
-            }
-
-            try {
-                const permission = await Notification.requestPermission();
-                if (permission === 'granted') {
-                    showToast('Permesso per le notifiche concesso!', 'success');
-                    // Qui andrebbe la logica per ottenere la sottoscrizione e salvarla.
-                    // Per ora, ci limitiamo a confermare che il permesso è stato dato.
-                    const registration = await navigator.serviceWorker.ready;
-                    console.log('Service Worker pronto per le notifiche push.', registration);
-                } else {
-                    showToast('Permesso per le notifiche non concesso.', 'error');
-                }
-            } catch (error) {
-                console.error('Errore durante l\'abilitazione delle notifiche push:', error);
-                showToast('Errore durante l\'abilitazione delle notifiche.', 'error');
-            }
-        }
-
         function updateNotificationBell() {
             const badge = notificationsBtn.querySelector('.notification-badge');
             if (AppState.unreadCount > 0) {
@@ -1690,7 +1831,7 @@
                                 <p>${n.message}</p>
                                 <div class="meta">Da: ${n.sender} &bull; ${date}</div>
                             </div>
-                            <i class='bx bx-trash delete-notification-btn'></i>
+                            <span class="material-symbols-outlined delete-notification-btn">delete</span>
                         </li>`;
                 }).join('') + '</ul>'
                 : '<p style="padding: 1rem; text-align: center;">Nessuna notifica.</p>';
@@ -1868,46 +2009,6 @@
         // INIZIO APPLICAZIONE
         // ====================================================================
         function init() {
-            // Registra il Service Worker
-            if ('serviceWorker' in navigator) {
-                const swScriptElement = document.getElementById('sw-script');
-                if (swScriptElement) {
-                    const swScriptContent = swScriptElement.textContent;
-                    const swBlob = new Blob([swScriptContent], { type: 'application/javascript' });
-                    const swUrl = URL.createObjectURL(swBlob);
-                    navigator.serviceWorker.register(swUrl)
-                        .then(registration => console.log('Service Worker registrato con successo:', registration))
-                        .catch(error => console.error('Registrazione Service Worker fallita:', error));
-                }
-            }
-
-            // Aggiunge il link al manifest dinamicamente
-            const manifestLink = document.getElementById('manifest');
-            const manifestContent = `{
-              "name": "Gestione Volontari",
-              "short_name": "Volontari",
-              "start_url": ".",
-              "display": "standalone",
-              "background_color": "#001f2b",
-              "theme_color": "#001f2b",
-              "description": "App per la gestione dei volontari e dei turni.",
-              "icons": [
-                {
-                  "src": "https://placehold.co/192x192/001f2b/ffffff?text=GV",
-                  "sizes": "192x192",
-                  "type": "image/png"
-                },
-                {
-                  "src": "https://placehold.co/512x512/001f2b/ffffff?text=GV",
-                  "sizes": "512x512",
-                  "type": "image/png"
-                }
-              ]
-            }`;
-            const blob = new Blob([manifestContent], { type: 'application/json' });
-            manifestLink.href = URL.createObjectURL(blob);
-
-
             applyTheme();
             loginForm.addEventListener('submit', handleLogin);
             onAuthStateChanged(auth, (user) => {
