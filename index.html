@@ -156,9 +156,17 @@
             border-bottom-color: transparent;
         }
         
-        header.app-header h1 {
+        /* Titolo specifico della vista (es. "I Miei Turni") */
+        header.app-header #header-title {
             font-size: 1.6rem;
             color: var(--primary-accent-color);
+            font-weight: 800;
+        }
+        
+        /* Titolo principale dell'app (visibile solo in dashboard) */
+        .header-main-title {
+            font-size: 1.6rem;
+            color: var(--heading-color);
             font-weight: 800;
         }
 
@@ -175,6 +183,18 @@
         }
         .header-icons .icon-btn:hover {
             color: var(--primary-accent-color);
+        }
+        #profile-btn-header {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-image: url('https://placehold.co/40x40/e0e0e0/333333?text=V');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+        #profile-btn-header .material-symbols-outlined {
+            display: none; /* Nasconde l'icona testo */
         }
         .notification-badge {
             position: absolute;
@@ -198,6 +218,7 @@
             padding: 1.5rem;
             overflow-y: auto;
             padding-bottom: 90px;
+            position: relative;
         }
 
         /* Navigazione a Pillola Flottante */
@@ -276,44 +297,75 @@
             display: none;
         }
         
+        /* NUOVO STILE CARD DASHBOARD */
         .summary-card {
-            flex: 0 0 220px;
+            flex: 0 0 240px;
             background: var(--card-bg-color);
-            padding: 1rem;
-            border-radius: 24px;
+            padding: 1.5rem;
+            border-radius: 28px;
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            border: 1px solid var(--border-color);
-            margin-right: 1rem;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
+            border: 2px solid transparent;
+            margin-right: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
         .summary-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 4px 15px var(--shadow-color);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        .summary-card:focus-within {
+            border-color: var(--primary-accent-color);
+        }
+        .summary-card.pressed {
+            transform: scale(0.98);
+            opacity: 0.9;
         }
         .summary-card:last-child {
             margin-right: 0;
         }
         
-        .summary-card .icon-wrapper {
-            font-size: 2rem;
-            padding: 0.8rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .summary-card-header .icon-wrapper {
+            font-size: 2.5rem;
         }
-        .summary-card .card-content .value {
+        .summary-card-content {
+            margin-top: 0.5rem;
+        }
+        .summary-card-content .value {
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 2.2rem;
             line-height: 1.2;
         }
-        .summary-card .card-content .label {
-            font-size: 0.9rem;
+        .summary-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: auto; /* Spinge il footer in basso */
+            padding-top: 1rem;
+        }
+        .summary-card-footer .label {
+            font-size: 1rem;
             font-weight: 500;
             opacity: 0.8;
+        }
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .card-actions .btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            min-height: 40px;
+        }
+        .card-actions .btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .dashboard-section-header {
@@ -402,7 +454,6 @@
             left: 0.75rem;
             font-size: 0.8rem;
             color: var(--primary-accent-color);
-            z-index: 1;
         }
         .input-field-material.error input {
             border-color: var(--danger-color);
@@ -556,31 +607,139 @@
         input:checked + .slider { background-color: var(--primary-accent-color); }
         input:checked + .slider:before { transform: translateX(26px); }
 
-        .admin-section { margin-bottom: 2rem; }
-        .admin-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-accent-color); flex-wrap: wrap; gap: 1rem; }
+        /*------------------------------------*\
+          #PANNELLO ADMIN - NUOVO STILE
+        \*------------------------------------*/
+        #admin-panel-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .admin-accordion-item {
+            background: var(--card-bg-color);
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .admin-accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-accordion-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .admin-accordion-header .material-symbols-outlined {
+            transition: transform 0.3s ease;
+        }
+        .admin-accordion-item.active .admin-accordion-header .material-symbols-outlined {
+            transform: rotate(180deg);
+        }
+        .admin-accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 1.5rem;
+        }
+        .admin-accordion-item.active .admin-accordion-body {
+            max-height: 2000px; /* Valore alto per permettere il contenuto */
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
         
-        .volunteer-item { background: var(--card-bg-color); border-radius: 16px; margin-bottom: 0.5rem; border-left: 5px solid var(--secondary-accent-color); }
-        .volunteer-summary { padding: 0.8rem 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .volunteer-details { display: none; padding: 1rem 1.2rem; border-top: 1px solid var(--border-color); }
-        .volunteer-details.expanded { display: block; }
-        .volunteer-details p { margin-bottom: 0.5rem; }
-        .volunteer-actions { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        
-        .category-item { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid var(--border-color); }
-        .category-item:last-child { border-bottom: none; }
-        #add-category-form { display: flex; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
-        #add-category-form input { flex-grow: 1; }
-        
-        .accordion-item { border-radius: 16px; overflow: hidden; margin-bottom: 1rem; background: var(--card-bg-color); border: 1px solid var(--border-color); }
-        .accordion-header { background-color: transparent; padding: 1rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; border-top: 1px solid var(--border-color); }
-        .accordion-body.show { max-height: 1500px; }
-        
-        .shift-admin-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; }
-        .shift-admin-item:not(:last-child) { border-bottom: 1px solid var(--border-color); }
-        .shift-admin-info h4 { font-family: var(--font-family-body); font-weight: 700; font-size: 1.1rem; margin: 0 0 0.25rem 0; color: var(--heading-color); }
-        .shift-admin-info p { font-size: 0.9rem; color: var(--text-color); opacity: 0.8; margin: 0; }
-        .shift-admin-actions { display: flex; gap: 0.5rem; }
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 16px;
+            transition: background-color 0.2s;
+        }
+        .admin-list-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .admin-list-item:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        .admin-list-item .item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .admin-list-item .item-info .material-symbols-outlined {
+            color: var(--secondary-accent-color);
+        }
+        .admin-list-item .item-info p { margin: 0; }
+        .admin-list-item .item-info .item-title { font-weight: 600; }
+        .admin-list-item .item-info .item-subtitle { font-size: 0.9rem; opacity: 0.7; }
+        .admin-list-item .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .admin-fab {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background-color: var(--primary-accent-color);
+            color: var(--bg-color);
+            border: none;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0);
+            opacity: 0;
+            z-index: 101;
+        }
+        .admin-fab.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .admin-fab .material-symbols-outlined {
+            font-size: 32px;
+            transition: transform 0.3s ease;
+        }
+        .admin-fab.menu-open .material-symbols-outlined {
+             transform: rotate(135deg);
+        }
+
+        .fab-menu {
+            position: fixed;
+            bottom: 170px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-end;
+            z-index: 100;
+        }
+        .fab-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background-color: var(--card-bg-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0);
+            opacity: 0;
+        }
+        .fab-menu.visible .fab-menu-item {
+            transform: scale(1);
+            opacity: 1;
+        }
         
         /* NUOVO STILE CARD EVENTI */
         .event-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
@@ -709,13 +868,16 @@
         <!-- VISTA APPLICAZIONE -->
         <div id="app-view" class="hidden">
             <header class="app-header">
-                <h1 id="header-title">I Miei Turni</h1>
+                <h1 id="header-title" class="hidden">I Miei Turni</h1>
+                <h1 class="header-main-title">Volontari Abbadiadi</h1>
                 <div class="header-icons">
                     <span class="material-symbols-outlined icon-btn" id="notifications-btn">
                         notifications
                         <span class="notification-badge hidden"></span>
                     </span>
-                    <span class="material-symbols-outlined icon-btn" id="profile-btn-header">person</span>
+                    <div id="profile-btn-header">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
                 </div>
             </header>
 
@@ -791,7 +953,7 @@
         const categoriesCol = collection(db, "shift_categories");
         const raceEventsCol = collection(db, "race_events");
         const notificationsCol = collection(db, "notifications");
-        const settingsDoc = doc(db, "app_settings", "general");
+        const dashboardEventsCol = collection(db, "dashboard_events");
 
         // Stato dell'applicazione
         const AppState = {
@@ -801,9 +963,9 @@
             assignments: [],
             shiftCategories: [],
             raceEvents: [],
+            dashboardEvents: [],
             notifications: [],
             unreadCount: 0,
-            appSettings: {},
             currentView: 'dashboard',
             progressInterval: null
         };
@@ -817,6 +979,7 @@
         const contentArea = document.getElementById('content-area');
         const appHeader = document.querySelector('.app-header');
         const headerTitle = document.getElementById('header-title');
+        const headerMainTitle = document.querySelector('.header-main-title');
         const navButtons = document.querySelectorAll('.nav-button');
         const adminNavButton = document.getElementById('admin-nav-button');
         const profileBtnHeader = document.getElementById('profile-btn-header');
@@ -1076,7 +1239,9 @@
             });
             profileBtnHeader.addEventListener('click', showProfileModal);
             notificationsBtn.addEventListener('click', showNotificationsPanel);
+            
             contentArea.addEventListener('click', e => {
+                // Gestione card turni
                 const colleaguesBtn = e.target.closest('.view-colleagues-btn');
                 if (colleaguesBtn) {
                     e.stopPropagation();
@@ -1086,11 +1251,28 @@
                 const card = e.target.closest('.shift-card');
                 if(card) card.classList.toggle('expanded');
 
+                // Gestione "Vedi tutti"
                 const seeMoreBtn = e.target.closest('.see-more-btn');
                 if(seeMoreBtn) switchView(seeMoreBtn.dataset.view);
                 
-                const meetingCard = e.target.closest('#meeting-card');
-                if(meetingCard) showMeetingInfoModal();
+                // Gestione card dashboard con azioni
+                const calendarBtn = e.target.closest('.add-to-calendar-btn');
+                if (calendarBtn) {
+                    e.stopPropagation();
+                    generateICSFile(calendarBtn.dataset.eventId);
+                    return;
+                }
+                const detailsBtn = e.target.closest('.details-btn');
+                if (detailsBtn) {
+                    e.stopPropagation();
+                    showEventDetailsModal(detailsBtn.dataset.eventId);
+                    return;
+                }
+                const summaryCardWithAction = e.target.closest('.summary-card[data-action="details"]');
+                if (summaryCardWithAction) {
+                    showEventDetailsModal(summaryCardWithAction.dataset.eventId);
+                    return;
+                }
             });
         }
         
@@ -1102,8 +1284,10 @@
             });
             
             // Gestione header
-            appHeader.classList.toggle('dashboard-mode', viewName === 'dashboard');
-            headerTitle.classList.toggle('hidden', viewName === 'dashboard');
+            const isDashboard = viewName === 'dashboard';
+            appHeader.classList.toggle('dashboard-mode', isDashboard);
+            headerTitle.classList.toggle('hidden', isDashboard);
+            headerMainTitle.style.display = isDashboard ? 'block' : 'none';
 
             contentArea.innerHTML = '';
             switch (viewName) {
@@ -1122,20 +1306,11 @@
                 AppState.notifications = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
                     .filter(n => !(n.deletedBy && n.deletedBy.includes(AppState.currentUser.email)));
                 
-                // Ordina le notifiche lato client
-                AppState.notifications.sort((a, b) => {
-                    const timeA = a.timestamp?.toMillis() || 0;
-                    const timeB = b.timestamp?.toMillis() || 0;
-                    return timeB - timeA; // Dal più recente al meno recente
-                });
+                AppState.notifications.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
                 AppState.unreadCount = AppState.notifications.filter(n => !n.readBy.includes(AppState.currentUser.email)).length;
                 updateNotificationBell();
             });
 
-            onSnapshot(settingsDoc, (doc) => {
-                AppState.appSettings = doc.exists() ? doc.data() : {};
-                if (AppState.currentView === 'dashboard') renderDashboard();
-            });
             onSnapshot(volunteersCol, (snapshot) => {
                 AppState.volunteers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => a.cognome.localeCompare(b.cognome));
                 if (AppState.currentView === 'admin-panel') renderAdminPanel();
@@ -1157,6 +1332,13 @@
                 AppState.raceEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 if (['race-program', 'dashboard'].includes(AppState.currentView)) switchView(AppState.currentView);
             });
+            onSnapshot(dashboardEventsCol, (snapshot) => {
+                AppState.dashboardEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (AppState.dashboardEvents.length === 0) {
+                    seedDashboardEvents();
+                }
+                if (['dashboard', 'admin-panel'].includes(AppState.currentView)) switchView(AppState.currentView);
+            });
         }
 
         // ====================================================================
@@ -1175,21 +1357,12 @@
 
         function renderDashboard() {
             const now = new Date();
-            const { abbadiadiDate, meetingDate } = AppState.appSettings;
             
-            const targetDate = abbadiadiDate ? new Date(abbadiadiDate) : new Date('2026-06-02T00:00:00');
-            const diffTime = targetDate - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
             const userAssignments = AppState.assignments.filter(a => a.email_volontario === AppState.currentUser.email);
             const myShiftIds = new Set(userAssignments.map(a => a.id_turno));
-            const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id_turno));
+            const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id));
             
             const completedShifts = myShifts.filter(s => new Date(`${s.data_inizio.split('/').reverse().join('-')}T${s.ora_fine}`) < now).length;
-
-            const nextGeneralEvent = AppState.raceEvents
-                .filter(e => e.tipologia === 'Generale' && new Date(`${e.date.split('/').reverse().join('-')}T${e.startTime}`) > now)
-                .sort((a, b) => new Date(`${a.date.split('/').reverse().join('-')}T${a.startTime}`) - new Date(`${b.date.split('/').reverse().join('-')}T${b.startTime}`))[0];
 
             const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
             const upcomingShifts = myShifts
@@ -1206,6 +1379,37 @@
                 return now >= startDate && now <= endDate;
             });
             
+            const dashboardCards = AppState.dashboardEvents
+                .filter(event => event.showOnDashboard)
+                .map(event => {
+                    let value = event.subtitle;
+                    if (event.isCountdown) {
+                        const targetDate = event.date ? new Date(event.date) : new Date();
+                        const diffTime = targetDate - now;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        value = `${diffDays > 0 ? diffDays : '0'} giorni`;
+                    }
+                    
+                    return `
+                        <div class="summary-card" data-action="details" data-event-id="${event.id}">
+                            <div class="summary-card-header">
+                                <span class="material-symbols-outlined icon-wrapper" style="color: ${event.color || '#FFFFFF'};">${event.icon}</span>
+                            </div>
+                            <div class="summary-card-content">
+                                <div class="value">${value}</div>
+                            </div>
+                            <div class="summary-card-footer">
+                                <div class="label">${event.title}</div>
+                                ${event.showCalendarButton ? `
+                                <div class="card-actions">
+                                    <button class="btn btn-icon add-to-calendar-btn" data-event-id="${event.id}" title="Aggiungi al calendario"><span class="material-symbols-outlined">calendar_add_on</span></button>
+                                    <button class="btn btn-icon details-btn" data-event-id="${event.id}" title="Mostra dettagli"><span class="material-symbols-outlined">add_circle</span></button>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            
             contentArea.innerHTML = `
                 <div id="dashboard-view">
                     <div class="dashboard-header">
@@ -1216,39 +1420,31 @@
                     </div>
 
                     <div class="summary-card-container">
-                        <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(205, 164, 52, 0.2); color: var(--primary-accent-color);"><span class="material-symbols-outlined">event</span></div>
-                            <div class="card-content">
-                                <div class="value">${diffDays > 0 ? diffDays : '0'} giorni</div>
-                                <div class="label">alle Abbadiadi</div>
-                            </div>
-                        </div>
-                        <div class="summary-card" id="meeting-card">
-                            <div class="icon-wrapper" style="background-color: rgba(253, 126, 20, 0.2); color: #fd7e14;"><span class="material-symbols-outlined">groups</span></div>
-                            <div class="card-content">
-                                <div class="value">Riunione Volontari</div>
-                                <div class="label">${meetingDate || 'Non definita'}</div>
-                            </div>
-                        </div>
+                        ${dashboardCards}
+                        
+                        <!-- Card Meteo -->
                         <div class="summary-card" id="weather-card">
-                            <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><span class="material-symbols-outlined">progress_activity</span></div>
-                            <div class="card-content">
+                             <div class="summary-card-header">
+                                <span class="material-symbols-outlined icon-wrapper" style="color: var(--secondary-accent-color);">progress_activity</span>
+                            </div>
+                            <div class="summary-card-content">
                                 <div class="value">Carico...</div>
+                            </div>
+                            <div class="summary-card-footer">
                                 <div class="label">Meteo a Pinerolo</div>
                             </div>
                         </div>
+                        
+                        <!-- Card Turni Completati -->
                         <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(46, 204, 113, 0.2); color: var(--success-color);"><span class="material-symbols-outlined">check_circle</span></div>
-                            <div class="card-content">
-                                <div class="value">${completedShifts} / ${myShifts.length}</div>
-                                <div class="label">Turni completati</div>
+                            <div class="summary-card-header">
+                                <span class="material-symbols-outlined icon-wrapper" style="color: var(--success-color);">check_circle</span>
                             </div>
-                        </div>
-                        <div class="summary-card">
-                            <div class="icon-wrapper" style="background-color: rgba(136, 84, 208, 0.2); color: var(--general-event-color);"><span class="material-symbols-outlined">campaign</span></div>
-                            <div class="card-content">
-                                <div class="value">${nextGeneralEvent ? nextGeneralEvent.eventName : 'Nessuno'}</div>
-                                <div class="label">Prossimo evento</div>
+                            <div class="summary-card-content">
+                                <div class="value">${completedShifts} / ${myShifts.length}</div>
+                            </div>
+                            <div class="summary-card-footer">
+                                <div class="label">Turni completati</div>
                             </div>
                         </div>
                     </div>
@@ -1279,56 +1475,40 @@
         async function fetchWeather() {
             const weatherCard = document.getElementById('weather-card');
             if (!weatherCard) return;
-            // Pinerolo, Italy coordinates
-            const lat = 44.88;
-            const lon = 7.33;
+            const lat = 44.88, lon = 7.33; // Pinerolo, Italy
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code`;
 
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
-                const condition = data.current;
-                const weatherCode = condition.weather_code;
-                const temperature = condition.temperature_2m;
+                const { temperature_2m, weather_code } = data.current;
+                const iconClass = getWeatherIcon(weather_code);
+                const description = getWeatherDescription(weather_code);
 
-                const iconClass = getWeatherIcon(weatherCode);
-                const description = getWeatherDescription(weatherCode);
-
-                weatherCard.innerHTML = `
-                    <div class="icon-wrapper" style="background-color: rgba(23, 162, 184, 0.2); color: var(--secondary-accent-color);"><span class="material-symbols-outlined">${iconClass}</span></div>
-                    <div class="card-content">
-                        <div class="value">${Math.round(temperature)}°C</div>
-                        <div class="label">${description}</div>
-                    </div>
-                `;
+                weatherCard.querySelector('.icon-wrapper').textContent = iconClass;
+                weatherCard.querySelector('.value').textContent = `${Math.round(temperature_2m)}°C`;
+                weatherCard.querySelector('.label').textContent = description;
             } catch (error) {
                 console.error("Failed to fetch weather:", error);
-                const content = weatherCard.querySelector('.card-content');
-                if(content) {
-                    content.querySelector('.value').textContent = 'Errore';
-                    content.querySelector('.label').textContent = 'Meteo a Pinerolo';
-                }
+                weatherCard.querySelector('.value').textContent = 'Errore';
             }
         }
 
         function getWeatherIcon(code) {
-            if (code === 0) return 'clear_day'; // Clear sky
-            if (code >= 1 && code <= 3) return 'cloudy'; // Mainly clear, partly cloudy, overcast
-            if (code >= 45 && code <= 48) return 'foggy'; // Fog
-            if (code >= 51 && code <= 57) return 'rainy'; // Drizzle
-            if (code >= 61 && code <= 67) return 'rainy'; // Rain
-            if (code >= 71 && code <= 77) return 'weather_snowy'; // Snow
-            if (code >= 80 && code <= 82) return 'rainy'; // Rain showers
-            if (code >= 85 && code <= 86) return 'weather_snowy'; // Snow showers
-            if (code >= 95 && code <= 99) return 'thunderstorm'; // Thunderstorm
+            if (code === 0) return 'clear_day';
+            if (code >= 1 && code <= 3) return 'cloudy';
+            if (code >= 45 && code <= 48) return 'foggy';
+            if (code >= 51 && code <= 67) return 'rainy';
+            if (code >= 71 && code <= 77) return 'weather_snowy';
+            if (code >= 80 && code <= 82) return 'rainy';
+            if (code >= 85 && code <= 86) return 'weather_snowy';
+            if (code >= 95 && code <= 99) return 'thunderstorm';
             return 'help';
         }
 
         function getWeatherDescription(code) {
-            const descriptions = {
-                0: 'Sereno', 1: 'Prevalentemente sereno', 2: 'Parzialmente nuvoloso', 3: 'Nuvoloso', 45: 'Nebbia', 48: 'Nebbia con brina', 51: 'Pioggerella leggera', 53: 'Pioggerella', 55: 'Pioggerella forte', 56: 'Pioggerella gelata', 57: 'Pioggerella gelata', 61: 'Pioggia debole', 63: 'Pioggia', 65: 'Pioggia forte', 66: 'Pioggia gelata', 67: 'Pioggia gelata', 71: 'Nevicata debole', 73: 'Nevicata', 75: 'Nevicata forte', 77: 'Gragnola', 80: 'Rovescio debole', 81: 'Rovescio', 82: 'Rovescio forte', 85: 'Rovescio di neve', 86: 'Rovescio di neve', 95: 'Temporale', 96: 'Temporale con grandine', 99: 'Temporale con grandine',
-            };
+            const descriptions = { 0: 'Sereno', 1: 'Prevalentemente sereno', 2: 'Parzialmente nuvoloso', 3: 'Nuvoloso', 45: 'Nebbia', 48: 'Nebbia con brina', 51: 'Pioggerella leggera', 53: 'Pioggerella', 55: 'Pioggerella forte', 61: 'Pioggia debole', 63: 'Pioggia', 65: 'Pioggia forte', 71: 'Nevicata debole', 73: 'Nevicata', 75: 'Nevicata forte', 80: 'Rovescio debole', 81: 'Rovescio', 82: 'Rovescio forte', 95: 'Temporale' };
             return descriptions[code] || 'Sconosciuto';
         }
 
@@ -1336,7 +1516,7 @@
         function renderMyShifts() {
             const userAssignments = AppState.assignments.filter(a => a.email_volontario === AppState.currentUser.email);
             const myShiftIds = new Set(userAssignments.map(a => a.id_turno));
-            const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id_turno));
+            const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id));
             myShifts.sort((a, b) => new Date(a.data_inizio.split('/').reverse().join('-') + 'T' + a.ora_inizio) - new Date(b.data_inizio.split('/').reverse().join('-') + 'T' + b.ora_inizio));
             contentArea.innerHTML = myShifts.length > 0 ? myShifts.map(shift => renderShiftCard(shift)).join('') : `<p>Non hai ancora turni assegnati.</p>`;
         }
@@ -1350,15 +1530,12 @@
             
             const baseColor = getCategoryColor(shift.categoria);
             const lightColor = shadeColor(baseColor, 40);
-            const darkColor = shadeColor(baseColor, -60); // Più scuro
+            const darkColor = shadeColor(baseColor, -60);
 
             let progressBarHtml = '';
             if(isOngoing){
                 const progress = calculateProgress(shift.data_inizio, shift.ora_inizio, shift.ora_fine);
-                progressBarHtml = `
-                    <div class="progress-bar-container" data-date="${shift.data_inizio}" data-start-time="${shift.ora_inizio}" data-end-time="${shift.ora_fine}">
-                       <div class="progress-bar" style="width: ${progress}%; background-color: ${darkColor};"></div>
-                    </div>`;
+                progressBarHtml = `<div class="progress-bar-container" data-date="${shift.data_inizio}" data-start-time="${shift.ora_inizio}" data-end-time="${shift.ora_fine}"><div class="progress-bar" style="width: ${progress}%; background-color: ${darkColor};"></div></div>`;
             }
 
             return `
@@ -1383,7 +1560,7 @@
                         <p><strong>Data:</strong> ${shift.data_inizio}</p>
                         <p><strong>Descrizione:</strong> ${shift.descrizione}</p>
                         <p><strong>Luogo:</strong> ${shift.luogo}</p>
-                        <div style="margin-top: 1rem;"><button class="btn btn-secondary view-colleagues-btn"><span class="material-symbols-outlined">group</span>Vedi Altri</button></div>
+                        <div style="margin-top: 1rem;"><button class="btn btn-secondary view-colleagues-btn" data-shift-id="${shift.id}"><span class="material-symbols-outlined">group</span>Vedi Altri</button></div>
                     </div>
                 </div>`;
         }
@@ -1464,131 +1641,277 @@
         
         function renderAdminPanel() {
             contentArea.innerHTML = `
-                <section class="admin-section" id="admin-settings">
-                     <div class="admin-section-header">
-                        <h2>Impostazioni Generali</h2>
-                        <button class="btn btn-secondary" id="manage-settings-btn"><span class="material-symbols-outlined">edit_note</span>Modifica Dati</button>
+                <div id="admin-panel-view">
+                    <!-- Gruppo Eventi -->
+                    <div class="admin-accordion-item" data-group="eventi">
+                        <div class="admin-accordion-header">
+                            <h2>Eventi</h2>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="admin-accordion-body" id="admin-events-list"></div>
                     </div>
-                </section>
-                <section class="admin-section" id="admin-volunteers">
-                    <div class="admin-section-header"><h2>Volontari</h2><button class="btn btn-secondary" id="add-volunteer-btn"><span class="material-symbols-outlined">add</span>Aggiungi</button></div>
-                    <div id="volunteers-list"></div>
-                </section>
-                <section class="admin-section" id="admin-shifts">
-                    <div class="admin-section-header"><h2>Turni</h2><div><button class="btn" id="manage-categories-btn" style="background-color: var(--border-color);"><span class="material-symbols-outlined">category</span> Gestisci</button><button class="btn btn-secondary" id="add-shift-main-btn"><span class="material-symbols-outlined">add</span>Crea Turno</button></div></div>
-                    <div id="shifts-accordion"></div>
-                </section>`;
+
+                    <!-- Gruppo Turni -->
+                    <div class="admin-accordion-item" data-group="turni">
+                        <div class="admin-accordion-header">
+                            <h2>Turni</h2>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="admin-accordion-body" id="admin-shifts-list"></div>
+                    </div>
+
+                    <!-- Gruppo Volontari -->
+                    <div class="admin-accordion-item" data-group="volontari">
+                        <div class="admin-accordion-header">
+                            <h2>Volontari</h2>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="admin-accordion-body" id="admin-volunteers-list"></div>
+                    </div>
+                </div>
+                <button id="admin-fab" class="admin-fab"><span class="material-symbols-outlined">add</span></button>
+                <div id="fab-menu-container"></div>
+            `;
             
-            renderVolunteersList();
-            renderShiftsAccordion();
+            renderAdminLists();
             
-            document.getElementById('manage-settings-btn').addEventListener('click', showAppSettingsModal);
-            document.getElementById('add-volunteer-btn').addEventListener('click', () => showVolunteerForm());
-            document.getElementById('add-shift-main-btn').addEventListener('click', () => showShiftForm());
-            document.getElementById('manage-categories-btn').addEventListener('click', showManageCategoriesModal);
-            document.getElementById('volunteers-list').addEventListener('click', e => {
-                 const summary = e.target.closest('.volunteer-summary');
-                 if (summary) summary.nextElementSibling.classList.toggle('expanded');
+            const accordionContainer = document.getElementById('admin-panel-view');
+            accordionContainer.addEventListener('click', e => {
+                const header = e.target.closest('.admin-accordion-header');
+                if (!header) return;
+
+                const item = header.parentElement;
+                const fab = document.getElementById('admin-fab');
+                const fabMenuContainer = document.getElementById('fab-menu-container');
+                fabMenuContainer.innerHTML = '';
+                fab.classList.remove('menu-open');
+
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                    fab.classList.remove('visible');
+                } else {
+                    accordionContainer.querySelectorAll('.admin-accordion-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                    updateAdminFab(item.dataset.group);
+                    fab.classList.add('visible');
+                }
             });
-            document.getElementById('shifts-accordion').addEventListener('click', e => {
-                const header = e.target.closest('.accordion-header');
-                if (header) header.nextElementSibling.classList.toggle('show');
-            });
+            
+            document.getElementById('admin-fab').addEventListener('click', handleFabClick);
         }
         
-        function renderVolunteersList() {
-            const listContainer = document.getElementById('volunteers-list');
-            if (!listContainer) return;
-            listContainer.innerHTML = AppState.volunteers.map(v => `<div class="volunteer-item" data-id="${v.id}"><div class="volunteer-summary"><span>${v.cognome} ${v.nome}</span><span class="material-symbols-outlined">expand_more</span></div><div class="volunteer-details"><p><strong>Email:</strong> ${v.email}</p><p><strong>Telefono:</strong> ${v.telefono}</p><p><strong>Ruolo:</strong> ${v.ruolo}</p><div class="volunteer-actions"><button class="btn btn-secondary btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button><button class="btn btn-secondary btn-icon view-shifts-btn" data-id="${v.id}"><span class="material-symbols-outlined">event_list</span></button></div></div></div>`).join('');
-            listContainer.querySelectorAll('.edit-volunteer-btn').forEach(btn => btn.addEventListener('click', () => showVolunteerForm(btn.dataset.id)));
-            listContainer.querySelectorAll('.view-shifts-btn').forEach(btn => btn.addEventListener('click', () => showVolunteerShiftsModal(btn.dataset.id)));
+        function renderAdminLists() {
+            document.getElementById('admin-events-list').innerHTML = renderEventsAdminList();
+            document.getElementById('admin-shifts-list').innerHTML = renderShiftsAdminList();
+            document.getElementById('admin-volunteers-list').innerHTML = renderVolunteersAdminList();
+            
+            // Aggiungi event listeners per i bottoni di modifica e gestione
+            document.querySelectorAll('.edit-event-btn').forEach(btn => btn.addEventListener('click', (e) => showDashboardEventForm(e.currentTarget.dataset.id)));
+            document.querySelectorAll('.edit-shift-btn').forEach(btn => btn.addEventListener('click', (e) => showShiftForm(e.currentTarget.dataset.id)));
+            document.querySelectorAll('.edit-volunteer-btn').forEach(btn => btn.addEventListener('click', (e) => showVolunteerForm(e.currentTarget.dataset.id)));
+            document.querySelectorAll('.manage-volunteers-btn').forEach(btn => btn.addEventListener('click', (e) => showManageVolunteersModal(e.currentTarget.dataset.id)));
         }
         
-        function renderShiftsAccordion() {
-            const accordionContainer = document.getElementById('shifts-accordion');
-            if (!accordionContainer) return;
+        function renderEventsAdminList() {
+            return AppState.dashboardEvents.map(event => `
+                <div class="admin-list-item">
+                    <div class="item-info">
+                        <span class="material-symbols-outlined">${event.icon}</span>
+                        <div>
+                            <p class="item-title">${event.title}</p>
+                            <p class="item-subtitle">${event.description}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-icon edit-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button>
+                </div>
+            `).join('');
+        }
+        
+        function renderShiftsAdminList() {
             const shiftsByCategory = AppState.shifts.reduce((acc, shift) => {
-                (acc[shift.categoria || 'Senza Categoria'] = acc[shift.categoria || 'Senza Categoria'] || []).push(shift);
+                const category = shift.categoria || 'Senza Categoria';
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push(shift);
                 return acc;
             }, {});
-            accordionContainer.innerHTML = Object.keys(shiftsByCategory).sort().map(category => `<div class="accordion-item" style="border-left-color: ${getCategoryColor(category)}"><div class="accordion-header"><h3>${category} (${shiftsByCategory[category].length})</h3><span class="material-symbols-outlined">expand_more</span></div><div class="accordion-body">${shiftsByCategory[category].map(shift => `<div class="shift-admin-item"><div class="shift-admin-info"><h4>${shift.nome_turno}</h4><p>${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p></div><div class="shift-admin-actions"><button class="btn btn-primary btn-icon edit-shift-btn" data-id="${shift.id}"><span class="material-symbols-outlined">edit</span></button><button class="btn btn-secondary btn-icon manage-volunteers-btn" data-id="${shift.id}"><span class="material-symbols-outlined">group</span></button></div></div>`).join('')}</div></div>`).join('');
-            accordionContainer.querySelectorAll('.edit-shift-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); showShiftForm(btn.dataset.id); }));
-            accordionContainer.querySelectorAll('.manage-volunteers-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); showManageVolunteersModal(btn.dataset.id); }));
+
+            const sortedCategories = Object.keys(shiftsByCategory).sort();
+
+            if (sortedCategories.length === 0) {
+                return '<p>Nessun turno creato. Aggiungine uno usando il pulsante in basso.</p>';
+            }
+
+            return sortedCategories.map(category => {
+                let categoryHtml = `<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--secondary-accent-color);">${category}</h4>`;
+                
+                categoryHtml += shiftsByCategory[category]
+                    .sort((a,b) => a.nome_turno.localeCompare(b.nome_turno))
+                    .map(shift => `
+                        <div class="admin-list-item">
+                             <div class="item-info">
+                                <span class="material-symbols-outlined" style="color: ${getCategoryColor(shift.categoria)}">assignment</span>
+                                <div>
+                                    <p class="item-title">${shift.nome_turno}</p>
+                                    <p class="item-subtitle">${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                 <button class="btn btn-icon manage-volunteers-btn" data-id="${shift.id}" title="Gestisci Volontari"><span class="material-symbols-outlined">group</span></button>
+                                 <button class="btn btn-icon edit-shift-btn" data-id="${shift.id}" title="Modifica Turno"><span class="material-symbols-outlined">edit</span></button>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                return categoryHtml;
+            }).join('');
         }
+        
+        function renderVolunteersAdminList() {
+             return AppState.volunteers.map(v => `
+                <div class="admin-list-item">
+                    <div class="item-info">
+                        <span class="material-symbols-outlined">person</span>
+                        <div>
+                            <p class="item-title">${v.cognome} ${v.nome}</p>
+                            <p class="item-subtitle">${v.email}</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateAdminFab(group) {
+            const fab = document.getElementById('admin-fab');
+            fab.dataset.group = group;
+            const icon = fab.querySelector('.material-symbols-outlined');
+            
+            if (group === 'turni') {
+                icon.textContent = 'edit';
+            } else {
+                icon.textContent = 'add';
+            }
+        }
+
+        function handleFabClick(e) {
+            const fab = e.currentTarget;
+            const group = fab.dataset.group;
+            
+            if (group === 'eventi') {
+                showDashboardEventForm(); 
+            } else if (group === 'volontari') {
+                showVolunteerForm();
+            } else if (group === 'turni') {
+                toggleFabMenu(fab);
+            }
+        }
+        
+        function toggleFabMenu(fab) {
+            const fabMenuContainer = document.getElementById('fab-menu-container');
+            const isOpen = fab.classList.contains('menu-open');
+            
+            if (isOpen) {
+                fab.classList.remove('menu-open');
+                fabMenuContainer.innerHTML = '';
+            } else {
+                fab.classList.add('menu-open');
+                fabMenuContainer.innerHTML = `
+                    <div class="fab-menu">
+                        <div class="fab-menu-item" id="fab-manage-categories">
+                            <span>Gestisci Categorie</span>
+                            <span class="material-symbols-outlined">category</span>
+                        </div>
+                        <div class="fab-menu-item" id="fab-create-shift">
+                            <span>Crea Turno</span>
+                            <span class="material-symbols-outlined">add</span>
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    const menu = fabMenuContainer.querySelector('.fab-menu');
+                    if (menu) menu.classList.add('visible');
+                    document.getElementById('fab-manage-categories').addEventListener('click', () => {
+                        showManageCategoriesModal();
+                        toggleFabMenu(fab);
+                    });
+                    document.getElementById('fab-create-shift').addEventListener('click', () => {
+                        showShiftForm();
+                        toggleFabMenu(fab);
+                    });
+                }, 10);
+            }
+        }
+
 
         // ====================================================================
         // FUNZIONI MODALI E FORM
         // ====================================================================
         
-        function showMeetingInfoModal() {
-            const { meetingDate, meetingLocation, meetingDescription } = AppState.appSettings;
-            if (!meetingDate) {
-                renderModal('Riunione Volontari', '<p>Nessuna riunione in programma al momento.</p>');
+        function generateICSFile(eventId) {
+            const event = AppState.dashboardEvents.find(e => e.id === eventId);
+            if (!event || !event.date) {
+                showToast('Dati dell\'evento non disponibili.', 'error');
                 return;
             }
-            const content = `
-                <p><strong>Data:</strong> ${meetingDate}</p>
-                <p><strong>Luogo:</strong> ${meetingLocation}</p>
-                <hr style="margin: 1rem 0; border-color: var(--border-color);">
-                <p>${meetingDescription}</p>
-            `;
-            renderModal('Dettagli Riunione Volontari', content);
-        }
 
-        function showAppSettingsModal() {
-            const settings = AppState.appSettings;
-            const formHtml = `
-                <form id="app-settings-form">
-                    <h4>Dati Abbadiadi</h4>
-                    <div class="form-group">
-                        <label for="abbadiadiDate">Data Evento (AAAA-MM-GG)</label>
-                        <input type="date" id="abbadiadiDate" value="${settings.abbadiadiDate || ''}" required>
-                    </div>
-                    <hr style="margin: 2rem 0; border-color: var(--border-color);">
-                    <h4>Dati Riunione Volontari</h4>
-                    <div class="form-group">
-                        <label for="meetingDate">Data Riunione</label>
-                        <input type="text" id="meetingDate" placeholder="Es. Sabato 25 Maggio, ore 21:00" value="${settings.meetingDate || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="meetingLocation">Luogo Riunione</label>
-                        <input type="text" id="meetingLocation" placeholder="Es. Oratorio San Filippo" value="${settings.meetingLocation || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="meetingDescription">Breve Descrizione</label>
-                        <textarea id="meetingDescription">${settings.meetingDescription || ''}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Salva Impostazioni</button>
-                </form>
-            `;
-            renderModal('Impostazioni Generali', formHtml, () => {
-                document.getElementById('app-settings-form').addEventListener('submit', handleAppSettingsFormSubmit);
-            });
-        }
+            const toICSDate = (date) => date.toISOString().replace(/-|:|\.\d{3}/g, "");
+            
+            const startDate = new Date(event.date + (event.time ? `T${event.time}` : 'T00:00:00'));
+            const endDate = event.isCountdown 
+                ? new Date(startDate.getTime() + 24 * 60 * 60 * 1000)
+                : new Date(startDate.getTime() + 60 * 60 * 1000); // Default 1 ora
 
-        async function handleAppSettingsFormSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            const data = {
-                abbadiadiDate: form.querySelector('#abbadiadiDate').value,
-                meetingDate: form.querySelector('#meetingDate').value,
-                meetingLocation: form.querySelector('#meetingLocation').value,
-                meetingDescription: form.querySelector('#meetingDescription').value,
+            const eventDetails = {
+                title: event.title,
+                description: event.description,
+                location: 'Pinerolo, TO',
+                startDate: toICSDate(startDate),
+                endDate: toICSDate(endDate)
             };
-            try {
-                await setDoc(settingsDoc, data, { merge: true });
-                showToast('Impostazioni salvate con successo!');
-                window.closeCurrentModal();
-            } catch (error) {
-                console.error("Errore salvataggio impostazioni:", error);
-                showToast('Errore durante il salvataggio.', 'error');
+            
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//GestioneVolontari//NONSGML v1.0//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@gestione-volontari.app\nDTSTAMP:${toICSDate(new Date())}\nDTSTART:${eventDetails.startDate}\nDTEND:${eventDetails.endDate}\nSUMMARY:${eventDetails.title}\nDESCRIPTION:${eventDetails.description}\nLOCATION:${eventDetails.location}\nEND:VEVENT\nEND:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${eventDetails.title}.ics`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showEventDetailsModal(eventId) {
+            const event = AppState.dashboardEvents.find(e => e.id === eventId);
+            if (!event) return;
+
+            let content = `<p>${event.description}</p>`;
+            if (event.date) {
+                const dateString = new Date(event.date + (event.time ? `T${event.time}` : 'T00:00:00'))
+                    .toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: event.time ? '2-digit' : undefined, minute: event.time ? '2-digit' : undefined });
+                content += `<p><strong>Quando:</strong> ${dateString}</p>`;
             }
+            
+            const modalContent = `
+                ${content}
+                ${event.showCalendarButton ? `
+                <div style="margin-top: 2rem; text-align: right;">
+                    <button class="btn btn-primary add-to-calendar-btn-modal" data-event-id="${event.id}"><span class="material-symbols-outlined">calendar_add_on</span>Aggiungi al calendario</button>
+                </div>` : ''}`;
+            renderModal(event.title, modalContent, () => {
+                document.querySelector('.add-to-calendar-btn-modal')?.addEventListener('click', (e) => {
+                    generateICSFile(e.target.closest('button').dataset.eventId);
+                });
+            });
         }
         
         function showColleaguesModal(shiftId) {
-            const shift = AppState.shifts.find(s => s.id_turno === shiftId);
+            const shift = AppState.shifts.find(s => s.id === shiftId);
             if (!shift) return;
-            const assignedEmails = AppState.assignments.filter(a => a.id_turno === shiftId).map(a => a.email_volontario);
+            const assignedEmails = AppState.assignments.filter(a => a.id_turno === shift.id_turno).map(a => a.email_volontario);
             const colleagues = AppState.volunteers.filter(v => assignedEmails.includes(v.email) && v.email !== AppState.currentUser.email);
             let contentHtml = colleagues.length > 0 ? '<ul style="list-style: none; padding: 0;">' + colleagues.map(v => `<li style="padding: 0.5rem 0;">${v.nome} ${v.cognome}</li>`).join('') + '</ul>' : '<p>Sei l\'unico volontario assegnato a questo turno per ora.</p>';
             renderModal(`Altri Volontari per: ${shift.nome_turno}`, contentHtml);
@@ -1806,7 +2129,7 @@
         }
         
         // ====================================================================
-        // NUOVE FUNZIONI NOTIFICHE
+        // FUNZIONI NOTIFICHE
         // ====================================================================
         function updateNotificationBell() {
             const badge = notificationsBtn.querySelector('.notification-badge');
@@ -1920,9 +2243,7 @@
 
         function showSendNotificationModal() {
             const closeCurrent = window.closeCurrentModal;
-            if(closeCurrent) {
-                closeCurrent();
-            }
+            if(closeCurrent) closeCurrent();
 
             setTimeout(() => {
                 const shiftOptions = AppState.shifts.map(s => `<option value="${s.id_turno}">${s.nome_turno} (${s.data_inizio})</option>`).join('');
@@ -2004,6 +2325,136 @@
                 showToast('Errore durante l\'invio.', 'error');
             }
         }
+        
+        // ====================================================================
+        // FUNZIONI SPECIFICHE NUOVO ADMIN PANEL
+        // ====================================================================
+        
+        async function seedDashboardEvents() {
+            const defaultEvents = [
+                { id: 'abbadiadi', title: 'Abbadiadi', description: 'Evento principale annuale.', subtitle: 'alle Abbadiadi', icon: 'event', color: 'var(--primary-accent-color)', date: '2026-06-02', time: null, isCountdown: true, showOnDashboard: true, showCalendarButton: true },
+                { id: 'riunione', title: 'Riunione Volontari', description: 'Riunione organizzativa per tutti i volontari.', subtitle: 'Riunione', icon: 'groups', color: '#fd7e14', date: '2026-05-25', time: '21:00', isCountdown: false, showOnDashboard: true, showCalendarButton: true },
+                { id: 'preparazione', title: 'Preparazione Campi', description: 'Allestimento delle aree di gioco e delle strutture.', subtitle: 'Prep. Campi', icon: 'construction', color: '#e67e22', date: null, time: null, isCountdown: false, showOnDashboard: false, showCalendarButton: false },
+                { id: 'pranzo', title: 'Pranzo', description: 'Pranzo comunitario per i volontari.', subtitle: 'Pranzo', icon: 'restaurant', color: '#2ecc71', date: null, time: null, isCountdown: false, showOnDashboard: false, showCalendarButton: false },
+                { id: 'maratonine', title: 'Maratonine', description: 'Gara di corsa per le varie categorie.', subtitle: 'Maratonine', icon: 'directions_run', color: '#3498db', date: null, time: null, isCountdown: false, showOnDashboard: false, showCalendarButton: false },
+                { id: 'premiazioni', title: 'Premiazioni', description: 'Cerimonia di premiazione finale.', subtitle: 'Premiazioni', icon: 'emoji_events', color: '#f1c40f', date: null, time: null, isCountdown: false, showOnDashboard: false, showCalendarButton: false },
+            ];
+
+            const batch = writeBatch(db);
+            defaultEvents.forEach(event => {
+                const docRef = doc(db, "dashboard_events", event.id);
+                batch.set(docRef, event);
+            });
+            await batch.commit();
+        }
+        
+        function showDashboardEventForm(eventId = null) {
+            const isEditing = eventId !== null;
+            const event = isEditing ? AppState.dashboardEvents.find(e => e.id === eventId) : {};
+            const title = isEditing ? 'Modifica Evento Dashboard' : 'Nuovo Evento Dashboard';
+            
+            const icons = ['event', 'groups', 'construction', 'restaurant', 'directions_run', 'emoji_events', 'celebration', 'flag', 'campaign'];
+
+            const formHtml = `
+                <form id="dashboard-event-form">
+                    <input type="hidden" id="eventId" value="${eventId || ''}">
+                    <div class="form-group">
+                        <label for="eventTitle">Titolo</label>
+                        <input type="text" id="eventTitle" value="${event.title || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Descrizione</label>
+                        <textarea id="eventDescription" required>${event.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventSubtitle">Sottotitolo (nella card)</label>
+                        <input type="text" id="eventSubtitle" value="${event.subtitle || ''}" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="eventIcon">Icona</label>
+                        <select id="eventIcon" required>
+                            ${icons.map(i => `<option value="${i}" ${event.icon === i ? 'selected' : ''}>${i}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Data (AAAA-MM-GG)</label>
+                        <input type="date" id="eventDate" value="${event.date || ''}">
+                    </div>
+                     <div class="form-group">
+                        <label for="eventTime">Ora (opzionale)</label>
+                        <input type="time" id="eventTime" value="${event.time || ''}">
+                    </div>
+                    
+                    <hr style="margin: 2rem 0; border-color: var(--border-color);">
+                    
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <input type="checkbox" id="isCountdown" ${event.isCountdown ? 'checked' : ''} style="width: auto;">
+                        <label for="isCountdown" style="margin: 0;">È un conto alla rovescia? (ignora l'ora)</label>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <input type="checkbox" id="showOnDashboard" ${event.showOnDashboard ? 'checked' : ''} style="width: auto;">
+                        <label for="showOnDashboard" style="margin: 0;">Mostra su Dashboard</label>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <input type="checkbox" id="showCalendarButton" ${event.showCalendarButton ? 'checked' : ''} style="width: auto;">
+                        <label for="showCalendarButton" style="margin: 0;">Mostra pulsante Calendario</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">${isEditing ? 'Salva Modifiche' : 'Aggiungi Evento'}</button>
+                    ${isEditing ? `<button type="button" id="delete-dashboard-event-btn" class="btn btn-danger btn-block">Rimuovi Evento</button>` : ''}
+                </form>
+            `;
+            renderModal(title, formHtml, () => {
+                document.getElementById('dashboard-event-form').addEventListener('submit', handleDashboardEventFormSubmit);
+                if (isEditing) document.getElementById('delete-dashboard-event-btn').addEventListener('click', () => handleDeleteDashboardEvent(eventId));
+            });
+        }
+        
+        async function handleDashboardEventFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const eventId = form.querySelector('#eventId').value;
+            const isEditing = !!eventId;
+            const docId = isEditing ? eventId : form.querySelector('#eventTitle').value.toLowerCase().replace(/\s+/g, '-');
+
+            const data = {
+                title: form.querySelector('#eventTitle').value,
+                description: form.querySelector('#eventDescription').value,
+                subtitle: form.querySelector('#eventSubtitle').value,
+                icon: form.querySelector('#eventIcon').value,
+                date: form.querySelector('#eventDate').value || null,
+                time: form.querySelector('#eventTime').value || null,
+                isCountdown: form.querySelector('#isCountdown').checked,
+                showOnDashboard: form.querySelector('#showOnDashboard').checked,
+                showCalendarButton: form.querySelector('#showCalendarButton').checked,
+            };
+            
+            // Semplice validazione
+            if (!data.title || !data.description || !data.subtitle) {
+                showToast('Titolo, descrizione e sottotitolo sono obbligatori.', 'error');
+                return;
+            }
+
+            try {
+                await setDoc(doc(db, 'dashboard_events', docId), data);
+                showToast(`Evento ${isEditing ? 'aggiornato' : 'aggiunto'}!`);
+                window.closeCurrentModal();
+            } catch (error) {
+                console.error("Errore salvataggio evento dashboard:", error);
+                showToast('Errore durante il salvataggio.', 'error');
+            }
+        }
+        
+        function handleDeleteDashboardEvent(eventId) {
+            showConfirmationModal(`Sei sicuro di voler rimuovere questo evento? L'azione non può essere annullata.`, async () => {
+                try {
+                    await deleteDoc(doc(db, 'dashboard_events', eventId));
+                    showToast('Evento rimosso.');
+                    window.closeCurrentModal();
+                } catch (error) { showToast('Errore durante la rimozione.', 'error'); }
+            });
+        }
+
 
         // ====================================================================
         // INIZIO APPLICAZIONE
