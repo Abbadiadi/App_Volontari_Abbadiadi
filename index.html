@@ -64,6 +64,11 @@
             70% { box-shadow: 0 0 0 12px rgba(46, 204, 113, 0); }
             100% { box-shadow: 0 0 0 0px rgba(46, 204, 113, 0); }
         }
+        
+        @keyframes cardFadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /*------------------------------------*\
           #RESET E STILI GLOBALI
@@ -151,6 +156,9 @@
             font-size: 1.6rem;
             color: var(--heading-color);
             font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .header-icons {
@@ -182,6 +190,7 @@
             justify-content: center;
             color: var(--bg-color);
             font-weight: 700;
+            flex-shrink: 0; /* Impedisce al pulsante di rimpicciolirsi */
         }
         .notification-badge {
             position: absolute;
@@ -325,9 +334,11 @@
         \*------------------------------------*/
         .dashboard-header {
             display: flex;
+            flex-wrap: wrap; /* Aggiunto per andare a capo su mobile */
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            gap: 1rem; /* Spazio tra gli elementi */
         }
         .dashboard-header .welcome-text h2 {
             font-size: 2.2rem;
@@ -468,7 +479,7 @@
         .remember-me input[type="checkbox"]:checked + label .checkbox-box .material-symbols-outlined { transform: translate(-50%, -50%) scale(1); }
 
 
-        /* NUOVO STILE CARD TURNI */
+        /* STILE CARD TURNI (CONTRASTO AUMENTATO) */
         .shift-card {
             background-color: var(--card-bg-color);
             border-radius: 1.5rem;
@@ -513,13 +524,13 @@
             transition: background-color 0.2s;
         }
         .card-main-wrapper:hover {
-            background-color: rgba(255,255,255,0.05);
+            background-color: rgba(255,255,255,0.08);
         }
         body.light-theme .card-main-wrapper {
-            background-color: rgba(0,0,0,0.03);
+            background-color: rgba(0,0,0,0.04);
         }
         body.light-theme .card-main-wrapper:hover {
-            background-color: rgba(0,0,0,0.06);
+            background-color: rgba(0,0,0,0.08);
         }
 
         .card-main {
@@ -584,10 +595,10 @@
 
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 700; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-color); font-size: 1rem; font-family: var(--font-family-body); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-color); font-size: 1rem; font-family: var(--font-family-main); }
         .form-group textarea { resize: vertical; min-height: 80px; }
         
-        .btn { padding: 0.8rem 1.5rem; border-radius: 50px; border: 2px solid transparent; cursor: pointer; font-weight: 700; font-family: var(--font-family-body); transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; position: relative; min-height: 48px; }
+        .btn { padding: 0.8rem 1.5rem; border-radius: 50px; border: 2px solid transparent; cursor: pointer; font-weight: 700; font-family: var(--font-family-main); transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; position: relative; min-height: 48px; }
         .btn-loader { font-size: 1.5rem; }
         
         .btn-primary { background-image: linear-gradient(45deg, var(--gemini-blue), var(--gemini-green)); color: #ffffff; border: none; }
@@ -602,7 +613,7 @@
         .btn-icon .material-symbols-outlined { font-size: 24px; }
 
         /*------------------------------------*\
-          #PANNELLO ADMIN - NUOVO STILE
+          #PANNELLO ADMIN - CORREZIONE PULSANTI
         \*------------------------------------*/
         #admin-panel-view { display: flex; flex-direction: column; gap: 1rem; }
         .admin-accordion-item { background: var(--card-bg-color); border-radius: 28px; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; }
@@ -617,12 +628,12 @@
         .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: 16px; transition: background-color 0.2s; }
         .admin-list-item:not(:last-child) { border-bottom: 1px solid var(--border-color); }
         .admin-list-item:hover { background-color: rgba(255,255,255,0.05); }
-        .admin-list-item .item-info { display: flex; align-items: center; gap: 1rem; }
+        .admin-list-item .item-info { display: flex; align-items: center; gap: 1rem; overflow: hidden; flex-grow: 1; }
         .admin-list-item .item-info .material-symbols-outlined { color: var(--secondary-accent-color); }
-        .admin-list-item .item-info p { margin: 0; }
+        .admin-list-item .item-info p { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .admin-list-item .item-info .item-title { font-weight: 600; }
         .admin-list-item .item-info .item-subtitle { font-size: 0.9rem; opacity: 0.7; }
-        .admin-list-item .item-actions { display: flex; gap: 0.5rem; }
+        .admin-list-item .item-actions { display: flex; gap: 0.8rem; flex-shrink: 0; padding-left: 1rem; }
         
         /* NUOVO STILE SWITCH */
         .form-group.switch-group { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; }
@@ -633,34 +644,160 @@
         .switch-container input:checked + .switch-slider { background-color: var(--primary-accent-color); }
         .switch-container input:checked + .switch-slider:before { transform: translateX(20px); content: 'check'; font-family: 'Material Symbols Outlined'; font-size: 16px; color: var(--primary-accent-color); }
 
-        /* NUOVO STILE CARD EVENTI */
-        .event-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .event-grid { grid-template-columns: repeat(2, 1fr); } }
-        
-        .race-program-section h3 { border-bottom: 2px solid var(--secondary-accent-color); padding-bottom: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        
-        .race-event-card { background-color: var(--card-bg-color); border-radius: 16px; box-shadow: 0 5px 20px var(--shadow-color); transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid var(--border-color); padding: 1rem 1.5rem; }
-        body.light-theme .race-event-card { border: 1px solid var(--border-color); }
-        .race-event-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow-color); }
-        .race-event-card.past { opacity: 0.6; }
-        .race-event-card.ongoing { animation: pulse-border 2s infinite; }
+        /*------------------------------------*\
+          # NUOVO STILE CARD PROGRAMMA GARE (COMPATTATO)
+        \*------------------------------------*/
+        .event-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
 
-        .race-event-top-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-        .race-event-icon { font-size: 1.8rem; color: var(--secondary-accent-color); }
-        .race-event-pills { flex-grow: 1; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-        .event-name-pill { color: white; padding: 0.25rem 0.8rem; border-radius: 50px; font-weight: 700; font-size: 1rem; }
-        .event-level-pill { border: 1px solid var(--text-color); color: var(--text-color); padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 500; opacity: 0.8; }
-        .race-event-actions { display: flex; gap: 0.5rem; }
-        .race-event-actions .btn { padding: 0.6rem; width: 40px; height: 40px; }
-        
-        .race-event-details { padding-left: 2.55rem; }
-        .race-event-details p { margin: 0; line-height: 1.4; }
-        .race-event-details .event-time { font-weight: 700; color: var(--text-color); }
-        .race-event-details .event-location { font-size: 0.9rem; opacity: 0.7; }
-        
-        .progress-bar-container { width: 100%; height: 8px; background-color: rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; }
-        .progress-bar { height: 100%; border-radius: 8px; transition: width 0.5s ease, background-color 0.3s; }
+        .race-program-section h3 {
+            border-bottom: 2px solid var(--secondary-accent-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+        }
 
+        .event-card-v2 {
+            position: relative;
+            border-radius: 20px; /* compattato */
+            padding: 0.5rem 1rem; /* compattato */
+            width: 100%;
+            box-shadow: 0 10px 15px -3px var(--shadow-color);
+            transition: all 0.3s ease-in-out;
+            animation: cardFadeInUp 0.6s ease-out forwards;
+            color: #1e293b;
+        }
+
+        .event-card-v2:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px -10px var(--shadow-color);
+        }
+
+        .event-card-v2.past {
+            opacity: 0.6;
+            filter: grayscale(80%);
+        }
+        .event-card-v2.ongoing {
+            animation: pulse-border 2s infinite;
+        }
+
+        .event-card-v2 .card-content-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .event-card-v2 .card-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #1e293b;
+        }
+        
+        .event-card-v2 .card-icon-container .material-symbols-outlined {
+            font-size: 2rem; /* compattato */
+            opacity: 0.8;
+        }
+
+        .event-card-v2 .card-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* compattato */
+        }
+
+        .event-card-v2 .level-pill {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 0.6rem; /* compattato */
+            font-weight: 500;
+            padding: 0.1rem 0.4rem; /* compattato */
+            border-radius: 9999px;
+            align-self: flex-start;
+            margin-bottom: 0.1rem;
+        }
+
+        .event-card-v2 .event-title {
+            font-size: 1.1rem; /* compattato */
+            line-height: 1.3rem; /* compattato */
+            font-weight: 800;
+            color: #1e293b;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .event-card-v2 .event-subtitle {
+            color: #334155;
+            font-weight: 700; /* aumentato */
+            font-size: 1rem; /* aumentato */
+            line-height: 1.2;
+        }
+
+        .event-card-v2 .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 0.25rem; /* compattato */
+        }
+
+        .event-card-v2 .progress-bar-container-v2 {
+            flex-grow: 1;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 9999px;
+            height: 0.4rem; /* compattato */
+            overflow: hidden;
+        }
+
+        .event-card-v2 .progress-bar-v2 {
+            background-color: #1e293b;
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease;
+        }
+
+        .event-card-v2 .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-card-v2 .card-action-btn {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+            width: 32px; /* compattato */
+            height: 32px; /* compattato */
+            border-radius: 9999px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .event-card-v2 .card-action-btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .event-card-v2 .card-action-btn.delete {
+            background-color: rgba(239, 68, 68, 0.8);
+            color: white;
+        }
+        .event-card-v2 .card-action-btn.delete:hover {
+            background-color: rgb(239, 68, 68);
+            transform: scale(1.1);
+        }
+
+        .event-card-v2 .card-action-btn svg {
+            width: 16px; /* compattato */
+            height: 16px; /* compattato */
+        }
+        
         /* Notifiche */
         #notification-list { list-style: none; padding: 0; }
         .notification-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border-color); transition: background-color 0.2s; }
@@ -725,7 +862,46 @@
         #colleagues-list { display: flex; flex-direction: column; gap: 1rem; }
         .colleague-item { display: flex; align-items: center; gap: 1rem; background-color: var(--bg-color); padding: 0.8rem; border-radius: 12px; }
         .colleague-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--secondary-accent-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; background-size: cover; background-position: center; flex-shrink: 0; }
+        
+        /*------------------------------------*\
+          #MEDIA QUERIES PER RESPONSIVE DESIGN
+        \*------------------------------------*/
+        @media (min-width: 768px) { 
+            .event-grid { grid-template-columns: repeat(2, 1fr); } 
+        }
 
+        @media (max-width: 640px) {
+            .header-main-title { font-size: 1.3rem; }
+            .header-icons { gap: 0.5rem; }
+            main#content-area { padding: 1rem; }
+            .dashboard-header .welcome-text h2 { font-size: 1.8rem; }
+            .summary-card { flex: 0 0 160px; min-height: 160px; }
+            .dashboard-section-title { font-size: 1.5rem; }
+            
+            .modal-content { padding: 1.5rem; }
+            .modal-header h2 { font-size: 1.5rem; }
+            .assignment-columns { grid-template-columns: 1fr; }
+            .assignment-list { height: 200px; }
+
+            #login-card { padding: 2rem 1.5rem; }
+            #login-options { flex-direction: column; gap: 1rem; align-items: flex-start; }
+
+            .event-card-v2 .card-content-wrapper {
+                flex-direction: row; /* MODIFICATO per compattare */
+                align-items: center;
+                gap: 1rem;
+            }
+            .event-card-v2 .card-icon-container .material-symbols-outlined {
+                font-size: 2rem; /* a bit smaller on mobile */
+            }
+            .event-card-v2 .event-title {
+                font-size: 1.1rem;
+                line-height: 1.3rem;
+            }
+             .event-card-v2 .event-subtitle {
+                font-size: 0.85rem;
+            }
+        }
 
     </style>
 </head>
@@ -876,16 +1052,16 @@
         const fabContainer = document.getElementById('fab-container');
         
         const SPORT_DETAILS = {
-            'Velocità': { icon: 'directions_run', color: '#f39c12' },
-            'Maratonina': { icon: 'directions_walk', color: '#3498db' },
-            'Staffetta': { icon: 'swap_horiz', color: '#2ecc71' },
-            'Tiro al bersaglio - Nerf': { icon: 'my_location', color: '#e74c3c' },
-            'Lancio del vortex': { icon: 'rocket_launch', color: '#9b59b6' },
-            'Kan-jam frisbee': { icon: 'album', color: '#1abc9c' },
-            'Salto in lungo': { icon: 'square_foot', color: '#e67e22' },
-            'Calci di rigore': { icon: 'sports_soccer', color: '#27ae60' },
-            'Bocce curling': { icon: 'circle', color: '#34495e' },
-            'Tiri liberi basket': { icon: 'sports_basketball', color: '#d35400' }
+            'Velocità': { icon: 'directions_run', gradient: 'from-[#fde047] to-[#f97316]', imageUrl: 'https://images.unsplash.com/photo-1541252260730-0472e671563c?q=80&w=400&auto=format&fit=crop' },
+            'Maratonina': { icon: 'directions_walk', gradient: 'from-[#7dd3fc] to-[#0ea5e9]', imageUrl: 'https://images.unsplash.com/photo-1613242201831-419b1613524b?q=80&w=400&auto=format&fit=crop' },
+            'Staffetta': { icon: 'swap_horiz', gradient: 'from-[#6ee7b7] to-[#10b981]', imageUrl: 'https://images.unsplash.com/photo-1582962386129-61ae8c2b7404?q=80&w=400&auto=format&fit=crop' },
+            'Tiro al bersaglio - Nerf': { icon: 'my_location', gradient: 'from-[#f87171] to-[#ef4444]', imageUrl: 'https://images.unsplash.com/photo-1588195224955-527e4c25b14f?q=80&w=400&auto=format&fit=crop' },
+            'Lancio del vortex': { icon: 'rocket_launch', gradient: 'from-[#c084fc] to-[#a855f7]', imageUrl: 'https://i.imgur.com/2Y5dfgN.png' },
+            'Kan-jam frisbee': { icon: 'album', gradient: 'from-[#5eead4] to-[#14b8a6]', imageUrl: 'https://images.unsplash.com/photo-1605651202722-12b484a6e6cb?q=80&w=400&auto=format&fit=crop' },
+            'Salto in lungo': { icon: 'square_foot', gradient: 'from-[#fb923c] to-[#f97316]', imageUrl: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=400&auto=format&fit=crop' },
+            'Calci di rigore': { icon: 'sports_soccer', gradient: 'from-[#bef264] to-[#84cc16]', imageUrl: 'https://images.unsplash.com/photo-1551958214-2d5b2444c5ce?q=80&w=400&auto=format&fit=crop' },
+            'Bocce curling': { icon: 'circle', gradient: 'from-[#94a3b8] to-[#64748b]', imageUrl: 'https://images.unsplash.com/photo-1623834015091-c9179678393c?q=80&w=400&auto=format&fit=crop' },
+            'Tiri liberi basket': { icon: 'sports_basketball', gradient: 'from-[#fca5a5] to-[#f87171]', imageUrl: 'https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=400&auto=format&fit=crop' }
         };
         
         const ICONS = {
@@ -984,12 +1160,12 @@
         }
         
         function updateProgressBars() {
-            document.querySelectorAll('.progress-bar-container[data-start-time]').forEach(container => {
+            document.querySelectorAll('.progress-bar-container-v2').forEach(container => {
                 const date = container.dataset.date;
                 const startTime = container.dataset.startTime;
                 const endTime = container.dataset.endTime;
                 const progress = calculateProgress(date, startTime, endTime);
-                const bar = container.querySelector('.progress-bar');
+                const bar = container.querySelector('.progress-bar-v2');
                 if(bar) bar.style.width = `${progress}%`;
             });
         }
@@ -1135,14 +1311,21 @@
         }
 
         function setupEventListeners() {
+            // Navigazione principale
             navButtons.forEach(button => {
                 button.addEventListener('click', () => switchView(button.dataset.view));
             });
+            
+            // Header
             profileBtnHeader.addEventListener('click', showProfileModal);
             notificationsBtn.addEventListener('click', showNotificationsPanel);
             adminBtnHeader.addEventListener('click', () => switchView('admin-panel'));
             
+            // *** DELEGAZIONE EVENTI PER CONTENUTI DINAMICI ***
+            // Questo listener centrale gestisce i click su elementi che vengono
+            // creati dinamicamente, come i pulsanti nelle liste.
             contentArea.addEventListener('click', e => {
+                // Azioni Card Turno
                 const colleaguesBtn = e.target.closest('.view-colleagues-btn');
                 if (colleaguesBtn) {
                     e.stopPropagation();
@@ -1150,14 +1333,59 @@
                     return;
                 }
                 const card = e.target.closest('.card-main-wrapper');
-                if(card) card.closest('.shift-card').classList.toggle('expanded');
-
-                const seeMoreBtn = e.target.closest('.see-more-btn');
-                if(seeMoreBtn) switchView(seeMoreBtn.dataset.view);
+                if(card) {
+                    card.closest('.shift-card').classList.toggle('expanded');
+                    return;
+                }
                 
+                // Azioni Dashboard
+                const seeMoreBtn = e.target.closest('.see-more-btn');
+                if(seeMoreBtn) {
+                    switchView(seeMoreBtn.dataset.view);
+                    return;
+                }
                 const summaryCardWithAction = e.target.closest('.summary-card[data-action="details"]');
                 if (summaryCardWithAction) {
                     showEventDetailsModal(summaryCardWithAction.dataset.eventId);
+                    return;
+                }
+                
+                // Azioni Pannello Admin
+                const adminHeader = e.target.closest('.admin-accordion-header');
+                if (adminHeader) {
+                    adminHeader.parentElement.classList.toggle('active');
+                    return;
+                }
+                const editEventBtn = e.target.closest('.edit-event-btn');
+                if (editEventBtn) {
+                    showDashboardEventForm(editEventBtn.dataset.id);
+                    return;
+                }
+                const editShiftBtn = e.target.closest('.edit-shift-btn');
+                if (editShiftBtn) {
+                    showShiftForm(editShiftBtn.dataset.id);
+                    return;
+                }
+                const manageVolunteersBtn = e.target.closest('.manage-volunteers-btn');
+                if(manageVolunteersBtn) {
+                    showManageVolunteersModal(manageVolunteersBtn.dataset.id);
+                    return;
+                }
+                const editVolunteerBtn = e.target.closest('.edit-volunteer-btn');
+                if(editVolunteerBtn) {
+                    showVolunteerForm(editVolunteerBtn.dataset.id);
+                    return;
+                }
+
+                // Azioni Programma Gare
+                const editRaceEventBtn = e.target.closest('.edit-race-event-btn');
+                if (editRaceEventBtn) {
+                    showRaceEventForm(editRaceEventBtn.dataset.id);
+                    return;
+                }
+                const deleteRaceEventBtn = e.target.closest('.delete-race-event-btn');
+                if (deleteRaceEventBtn) {
+                    handleDeleteRaceEvent(deleteRaceEventBtn.dataset.id);
                     return;
                 }
             });
@@ -1361,7 +1589,7 @@
                     ${ongoingEvents.length > 0 ? `
                     <div class="dashboard-section">
                         <div class="dashboard-section-header"><h3 class="dashboard-section-title">Eventi in corso</h3><a href="#" class="see-more-btn" data-view="race-program">Vedi programma &rarr;</a></div>
-                        <div id="ongoing-events-list">${ongoingEvents.map(event => renderFullEventCard(event, true, false, false)).join('')}</div>
+                        <div id="ongoing-events-list" class="event-grid">${ongoingEvents.map(event => renderFullEventCard(event, true, false, false)).join('')}</div>
                     </div>` : ''}
                 </div>
             `;
@@ -1427,7 +1655,7 @@
             const isPast = shiftEnd < now;
             const isOngoing = now >= shiftStart && now <= shiftEnd;
             const baseColor = getCategoryColor(shift.categoria);
-            const lightColor = shadeColor(baseColor, -20);
+            const lightColor = shadeColor(baseColor, -40); // Aumentata intensità
             
             let progressBarHtml = '';
             if(isOngoing){
@@ -1448,7 +1676,7 @@
                                 <div class="time-value">${shift.ora_fine}</div>
                             </div>
                         </div>
-                        <div class="card-main-wrapper" style="background-color: ${lightColor}33; border-color: ${lightColor}66;">
+                        <div class="card-main-wrapper" style="background-color: ${baseColor}40; border-color: ${baseColor}80;">
                             <div class="card-main">
                                 <div class="shift-header-info">
                                     <h3 style="color: ${baseColor};">${shift.nome_turno}</h3>
@@ -1462,15 +1690,15 @@
                     <div class="shift-details">
                         <div class="shift-details-content">
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}26; color: ${baseColor};">${ICONS.CALENDAR}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.CALENDAR}</div>
                                 <div><p>Data</p><p>${shift.data_inizio}</p></div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}26; color: ${baseColor};">${ICONS.DESCRIPTION}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.DESCRIPTION}</div>
                                 <div><p>Descrizione</p><p>${shift.descrizione}</p></div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}26; color: ${baseColor};">${ICONS.LOCATION}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.LOCATION}</div>
                                 <div><p>Luogo</p><p>${shift.luogo}</p></div>
                             </div>
                         </div>
@@ -1503,7 +1731,7 @@
             });
 
             const renderEventList = (eventList, showAdminActions) => {
-                if(eventList.length === 0) return '<p>Nessun evento in questa categoria.</p>';
+                if(eventList.length === 0) return '<p style="padding-left: 1rem; opacity: 0.7;">Nessun evento in questa categoria.</p>';
                 const gridHtml = eventList
                     .sort((a,b) => {
                         try {
@@ -1525,50 +1753,65 @@
             
             if (isAdmin) {
                 renderPageActions([{ icon: 'add', handler: () => showRaceEventForm(), label: 'Crea Evento' }]);
-                contentArea.querySelectorAll('.edit-race-event-btn').forEach(btn => btn.addEventListener('click', () => showRaceEventForm(btn.dataset.id)));
-                contentArea.querySelectorAll('.delete-race-event-btn').forEach(btn => btn.addEventListener('click', () => handleDeleteRaceEvent(btn.dataset.id)));
             } else {
                 renderPageActions([]);
             }
         }
         
         function renderFullEventCard(event, isOngoing, isPast, showAdminActions) {
-            let pillColor = event.color || 'var(--general-event-color)';
-            let icon = event.icon || 'event';
             const isSportEvent = !!SPORT_DETAILS[event.eventName];
+            const details = isSportEvent 
+                ? SPORT_DETAILS[event.eventName] 
+                : { 
+                    icon: event.icon || 'event', 
+                    gradient: 'from-[#94a3b8] to-[#64748b]', // Default slate gradient
+                  };
             
-            if(isSportEvent) {
-                const sportDetail = SPORT_DETAILS[event.eventName];
-                icon = sportDetail.icon;
-                pillColor = sportDetail.color;
+            // Convert custom gradient format to CSS
+            const gradientMatch = details.gradient.match(/from-\[(#.{6})] to-\[(#.{6})]/);
+            let gradientStyle = 'background-color: #64748b;'; // Fallback
+            if (gradientMatch) {
+                gradientStyle = `background-image: linear-gradient(to bottom right, ${gradientMatch[1]}, ${gradientMatch[2]});`;
             }
 
             let progressBarHtml = '';
             if(isOngoing){
                 const eventDateStr = event.date?.includes('-') ? event.date.split('-').reverse().join('/') : event.date;
                 const progress = calculateProgress(eventDateStr, event.startTime, event.endTime);
-                progressBarHtml = `<div class="progress-bar-container" data-date="${eventDateStr}" data-start-time="${event.startTime}" data-end-time="${event.endTime}"><div class="progress-bar" style="width: ${progress}%; background-color: ${pillColor};"></div></div>`;
+                progressBarHtml = `<div class="progress-bar-v2" style="width: ${progress}%;"></div>`;
             }
+            
+            const iconHtml = `
+                <div class="card-icon-container">
+                    <span class="material-symbols-outlined">${details.icon}</span>
+                </div>`;
 
             return `
-            <div class="race-event-card ${isOngoing ? 'ongoing' : ''} ${isPast ? 'past' : ''}">
-                <div class="race-event-top-row">
-                    <span class="material-symbols-outlined race-event-icon" style="color: ${pillColor};">${icon}</span>
-                    <div class="race-event-pills">
-                        <span class="event-name-pill" style="background-color: ${pillColor};">${event.eventName || event.title}</span>
-                        ${event.level ? `<span class="event-level-pill">${event.level}</span>` : ''}
+            <div class="event-card-v2 ${isOngoing ? 'ongoing' : ''} ${isPast ? 'past' : ''}" style="${gradientStyle}">
+                <div class="card-content-wrapper">
+                    ${iconHtml}
+                    <div class="card-details">
+                        ${event.level ? `<span class="level-pill">${event.level}</span>` : ''}
+                        <div>
+                            <h3 class="event-title">${event.eventName || event.title}</h3>
+                            <p class="event-subtitle">${event.startTime} - ${event.endTime} @ ${event.location}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="progress-bar-container-v2" data-date="${event.date}" data-start-time="${event.startTime}" data-end-time="${event.endTime}">
+                                ${progressBarHtml}
+                            </div>
+                            ${showAdminActions && isSportEvent ? `
+                            <div class="card-actions">
+                                <button class="card-action-btn edit-race-event-btn" data-id="${event.id}" title="Modifica Evento">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
+                                </button>
+                                <button class="card-action-btn delete delete-race-event-btn" data-id="${event.id}" title="Elimina Evento">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg>
+                                </button>
+                            </div>` : ''}
+                        </div>
                     </div>
-                    ${showAdminActions && isSportEvent ? `
-                    <div class="race-event-actions">
-                        <button class="btn btn-primary btn-icon edit-race-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button>
-                        <button class="btn btn-danger btn-icon delete-race-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">delete</span></button>
-                    </div>` : ''}
                 </div>
-                <div class="race-event-details">
-                    <p class="event-time">${event.startTime} - ${event.endTime}</p>
-                    <p class="event-location">${event.location}</p>
-                </div>
-                ${progressBarHtml}
             </div>`;
         }
         
@@ -1582,12 +1825,6 @@
             `;
             
             renderAdminLists();
-            
-            document.getElementById('admin-panel-view').addEventListener('click', e => {
-                const header = e.target.closest('.admin-accordion-header');
-                if (!header) return;
-                header.parentElement.classList.toggle('active');
-            });
             
             renderPageActions([
                 { icon: 'group_add', handler: () => showVolunteerForm(), label: 'Aggiungi Volontario'},
@@ -1605,28 +1842,23 @@
                 ${renderShiftsAdminList()}`;
             document.getElementById('admin-volunteers-list').innerHTML = `
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                    <input type="search" id="volunteer-search" placeholder="Cerca volontario..." style="flex-grow: 1;">
+                    <input type="search" id="volunteer-search" placeholder="Cerca volontario..." style="flex-grow: 1; padding: 0.5rem 1rem; border-radius: 50px;">
                     <button id="manage-volunteer-categories-btn" class="btn btn-secondary"><span class="material-symbols-outlined">category</span>Categorie</button>
                 </div>
-                ${renderVolunteersAdminList()}`;
+                <div id="volunteers-list-container">${renderVolunteersAdminList()}</div>`;
             
             document.getElementById('manage-shift-categories-btn').addEventListener('click', showManageShiftCategoriesModal);
             document.getElementById('manage-volunteer-categories-btn').addEventListener('click', showManageVolunteerCategoriesModal);
             document.getElementById('volunteer-search').addEventListener('input', (e) => {
-                document.getElementById('admin-volunteers-list').innerHTML = renderVolunteersAdminList(e.target.value);
+                document.getElementById('volunteers-list-container').innerHTML = renderVolunteersAdminList(e.target.value);
             });
-
-            document.querySelectorAll('.edit-event-btn').forEach(btn => btn.addEventListener('click', (e) => showDashboardEventForm(e.currentTarget.dataset.id)));
-            document.querySelectorAll('.edit-shift-btn').forEach(btn => btn.addEventListener('click', (e) => showShiftForm(e.currentTarget.dataset.id)));
-            document.querySelectorAll('.edit-volunteer-btn').forEach(btn => btn.addEventListener('click', (e) => showVolunteerForm(e.currentTarget.dataset.id)));
-            document.querySelectorAll('.manage-volunteers-btn').forEach(btn => btn.addEventListener('click', (e) => showManageVolunteersModal(e.currentTarget.dataset.id)));
         }
         
         function renderEventsAdminList() {
             return AppState.dashboardEvents.map(event => `
                 <div class="admin-list-item">
                     <div class="item-info"><span class="material-symbols-outlined">${event.icon}</span><div><p class="item-title">${event.title}</p><p class="item-subtitle">${event.description}</p></div></div>
-                    <button class="btn btn-icon edit-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button>
+                    <div class="item-actions"><button class="btn btn-icon edit-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button></div>
                 </div>`).join('');
         }
         
@@ -1654,28 +1886,28 @@
         }
         
         function renderVolunteersAdminList(filter = '') {
-             const lowerCaseFilter = filter.toLowerCase();
-             const filteredVolunteers = AppState.volunteers.filter(v => `${v.nome} ${v.cognome}`.toLowerCase().includes(lowerCaseFilter));
+              const lowerCaseFilter = filter.toLowerCase();
+              const filteredVolunteers = AppState.volunteers.filter(v => `${v.nome} ${v.cognome}`.toLowerCase().includes(lowerCaseFilter));
 
-             const volunteersByCategory = filteredVolunteers.reduce((acc, v) => {
-                const category = v.category || 'Senza Categoria';
-                if (!acc[category]) acc[category] = [];
-                acc[category].push(v);
-                return acc;
-             }, {});
+              const volunteersByCategory = filteredVolunteers.reduce((acc, v) => {
+                  const category = v.category || 'Senza Categoria';
+                  if (!acc[category]) acc[category] = [];
+                  acc[category].push(v);
+                  return acc;
+              }, {});
 
-             const sortedCategories = Object.keys(volunteersByCategory).sort();
-             if (sortedCategories.length === 0) return '<p>Nessun volontario trovato.</p>';
+              const sortedCategories = Object.keys(volunteersByCategory).sort();
+              if (sortedCategories.length === 0) return '<p>Nessun volontario trovato.</p>';
 
-             return sortedCategories.map(category => {
-                let categoryHtml = `<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--secondary-accent-color);">${category}</h4>`;
-                categoryHtml += volunteersByCategory[category].map(v => `
-                    <div class="admin-list-item">
-                        <div class="item-info"><span class="material-symbols-outlined">person</span><div><p class="item-title">${v.cognome} ${v.nome}</p><p class="item-subtitle">${v.email}</p></div></div>
-                        <div class="item-actions"><button class="btn btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button></div>
-                    </div>`).join('');
-                return categoryHtml;
-             }).join('');
+              return sortedCategories.map(category => {
+                  let categoryHtml = `<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--secondary-accent-color);">${category}</h4>`;
+                  categoryHtml += volunteersByCategory[category].map(v => `
+                      <div class="admin-list-item">
+                          <div class="item-info"><span class="material-symbols-outlined">person</span><div><p class="item-title">${v.cognome} ${v.nome}</p><p class="item-subtitle">${v.email}</p></div></div>
+                          <div class="item-actions"><button class="btn btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button></div>
+                      </div>`).join('');
+                  return categoryHtml;
+              }).join('');
         }
 
         // ====================================================================
@@ -1879,15 +2111,15 @@
              const shiftToDelete = AppState.shifts.find(s => s.id === shiftId);
              if (!shiftToDelete) return;
              showConfirmationModal(`Sei sicuro di voler rimuovere il turno "${shiftToDelete.nome_turno}"? Verranno rimosse anche tutte le sue assegnazioni.`, async () => {
-                try {
-                    const q = query(assignmentsCol, where('id_turno', '==', shiftToDelete.id_turno));
-                    const assignmentsSnapshot = await getDocs(q);
-                    const batch = writeBatch(db);
-                    assignmentsSnapshot.forEach(doc => batch.delete(doc.ref));
-                    await batch.commit();
-                    await deleteDoc(doc(db, 'shifts', shiftId));
-                    showToast('Turno e assegnazioni rimossi.');
-                } catch (error) { showToast('Errore durante la rimozione.', 'error'); }
+                 try {
+                     const q = query(assignmentsCol, where('id_turno', '==', shiftToDelete.id_turno));
+                     const assignmentsSnapshot = await getDocs(q);
+                     const batch = writeBatch(db);
+                     assignmentsSnapshot.forEach(doc => batch.delete(doc.ref));
+                     await batch.commit();
+                     await deleteDoc(doc(db, 'shifts', shiftId));
+                     showToast('Turno e assegnazioni rimossi.');
+                 } catch (error) { showToast('Errore durante la rimozione.', 'error'); }
              });
         }
         function showManageVolunteersModal(shiftId) {
@@ -2236,3 +2468,4 @@
     </script>
 </body>
 </html>
+
