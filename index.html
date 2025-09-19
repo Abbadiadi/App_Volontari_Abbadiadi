@@ -9,13 +9,13 @@
     <meta name="theme-color" content="#0d1f2b"/>
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkdlc3Rpb25lIFZvbG9udGFyaSIsCiAgInNob3J0X25hbWUiOiAiVm9sb250YXJpIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZDFmMmIiLAogICJ0aGVtZV9jb2xvciI6ICIjMGQxZjJiIiwKICAiZGVzY3JpcHRpb24iOiAiQXBwIHBlciBsYSBnZXN0aW9uZSBkZWkgdm9sb250YXJpIGUgZGVpIHR1cm5pLiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImh0dHBzOi8vcGxhY2Vob2xkLmNvLzE5MngxOTIvMGQxZjJiL2ZmZmZmZj90ZXh0PUdWLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGQuY28vNTEyeDUxMi8wZDFmMmIvZmZmZmZmP3VybD1EVyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInRyeXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
     
-    <!-- Google Fonts: Lexend -->
+    <!-- Google Fonts: Roboto Flex, Serif, Mono (Material 3 Expressive) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700;8..144,800&family=Roboto+Mono:wght@400;700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,700&display=swap" rel="stylesheet">
     
-    <!-- Google Fonts: Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Google Fonts: Material Symbols (Rounded) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
         /*------------------------------------*\
@@ -23,7 +23,9 @@
         \*------------------------------------*/
         :root {
             /* FONT */
-            --font-family-main: 'Lexend', sans-serif;
+            --font-family-main: 'Roboto Flex', sans-serif;
+            --font-family-serif: 'Roboto Serif', serif;
+            --font-family-mono: 'Roboto Mono', monospace;
 
             /* Colori Tema Scuro (Blu Profondo) */
             --bg-color: #0d1f2b;
@@ -104,7 +106,8 @@
 
         .hidden { display: none !important; }
         
-        .material-symbols-outlined {
+        .material-symbols-rounded {
+          font-family: 'Material Symbols Rounded';
           font-variation-settings:
           'FILL' 0,
           'wght' 400,
@@ -141,26 +144,15 @@
         }
 
         header.app-header {
-            background-color: var(--card-bg-color);
-            padding: 1rem 1.5rem;
+            background-color: var(--bg-color);
+            padding: 0.75rem 1.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* MODIFICATO */
             align-items: center;
-            box-shadow: 0 2px 10px var(--shadow-color);
             z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
+            transition: background-color 0.3s;
         }
         
-        .header-main-title {
-            font-size: 1.6rem;
-            color: var(--heading-color);
-            font-weight: 800;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
         .header-icons {
             display: flex;
             align-items: center;
@@ -209,7 +201,6 @@
             border: 2px solid var(--card-bg-color);
         }
         
-        /* NUOVA NAVIGATION BAR */
         nav.top-nav {
             display: flex;
             justify-content: space-around;
@@ -228,28 +219,30 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0.2rem 0.5rem; /* Ridotto padding per compattezza */
+            padding: 0.2rem 0.5rem;
             transition: all 0.3s ease;
             flex-grow: 1;
             gap: 0.2rem;
             border-radius: 50px;
-            max-width: 90px; /* Ridotta larghezza massima */
+            max-width: 90px;
         }
-        .nav-button .material-symbols-outlined { 
+        .nav-button .material-symbols-rounded { 
             font-size: 24px; 
             transition: font-variation-settings 0.3s;
         }
-        .nav-button-label { font-size: 0.7rem; font-weight: 600; } /* Testo più piccolo */
+        .nav-button-label { font-size: 0.7rem; font-weight: 600; }
         .nav-button.active {
             background-color: var(--primary-accent-color);
             color: var(--bg-color);
+            box-shadow: 0 0 15px -2px var(--primary-accent-color);
         }
-        .nav-button.active .material-symbols-outlined {
+        .nav-button.active .material-symbols-rounded {
             font-variation-settings: 'FILL' 1;
         }
         body.light-theme .nav-button.active { 
             background-color: var(--secondary-accent-color);
             color: white;
+            box-shadow: 0 0 15px -2px var(--secondary-accent-color);
         }
 
 
@@ -261,88 +254,72 @@
             order: 1;
         }
         
-        /* NUOVO FAB (Floating Action Button) */
+        .page-title {
+            font-family: var(--font-family-serif);
+            font-size: 2rem;
+            color: var(--secondary-accent-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .page-description {
+            font-family: var(--font-family-serif);
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--primary-accent-color);
+        }
+        
         #fab-container {
             position: absolute;
-            bottom: 85px; 
-            right: 1.5rem;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 999;
-            display: flex;
-            flex-direction: column-reverse;
-            align-items: flex-end;
         }
-        .fab {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
+        
+        .fab-pill-container {
             background-color: var(--primary-accent-color);
             color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-        .fab:hover { transform: scale(1.05); }
-        .fab .material-symbols-outlined { font-size: 28px; }
-        
-        .fab-secondary-actions {
-            display: flex;
-            flex-direction: column-reverse;
-            align-items: flex-end;
-            margin-bottom: 1rem;
-            gap: 1rem;
-        }
-        .fab-secondary {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            background-color: var(--card-bg-color);
-            color: var(--text-color);
-            padding: 0.5rem 1rem 0.5rem 0.5rem;
             border-radius: 50px;
-            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .fab-pill-btn {
+            background: none;
+            border: none;
+            color: inherit;
             cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(10px);
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
         }
-        .fab-secondary .fab {
-            width: 40px;
-            height: 40px;
-            background-color: var(--secondary-accent-color);
-            color: white;
+        .fab-pill-btn:hover {
+            background-color: rgba(0,0,0,0.1);
         }
-        .fab-secondary .fab .material-symbols-outlined { font-size: 20px; pointer-events: none; }
         
-        #fab-container.open .fab-secondary {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        #fab-container.open .fab-secondary:nth-child(1) { transition-delay: 0.2s; }
-        #fab-container.open .fab-secondary:nth-child(2) { transition-delay: 0.1s; }
-        #fab-container.open .fab-secondary:nth-child(3) { transition-delay: 0s; }
-        
-        #fab-main .material-symbols-outlined { transition: transform 0.3s ease; }
-        #fab-container.open #fab-main .material-symbols-outlined { transform: rotate(135deg); }
-
-
         /*------------------------------------*\
           #DASHBOARD
         \*------------------------------------*/
         .dashboard-header {
             display: flex;
-            flex-wrap: wrap; /* Aggiunto per andare a capo su mobile */
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            gap: 1rem; /* Spazio tra gli elementi */
+            gap: 1rem;
         }
         .dashboard-header .welcome-text h2 {
             font-size: 2.2rem;
             margin: 0;
+            font-family: var(--font-family-serif);
         }
         .dashboard-header .welcome-text p {
             opacity: 0.8;
@@ -474,9 +451,9 @@
         .remember-me label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
         .remember-me input[type="checkbox"] { display: none; }
         .remember-me .checkbox-box { width: 18px; height: 18px; border: 2px solid var(--border-color); border-radius: 4px; display: inline-block; position: relative; transition: all 0.2s; }
-        .remember-me .checkbox-box .material-symbols-outlined { font-size: 18px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.2s ease; color: var(--bg-color); }
+        .remember-me .checkbox-box .material-symbols-rounded { font-size: 18px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.2s ease; color: var(--bg-color); }
         .remember-me input[type="checkbox"]:checked + label .checkbox-box { background-color: var(--primary-accent-color); border-color: var(--primary-accent-color); }
-        .remember-me input[type="checkbox"]:checked + label .checkbox-box .material-symbols-outlined { transform: translate(-50%, -50%) scale(1); }
+        .remember-me input[type="checkbox"]:checked + label .checkbox-box .material-symbols-rounded { transform: translate(-50%, -50%) scale(1); }
 
 
         /* STILE CARD TURNI (CONTRASTO AUMENTATO) */
@@ -610,26 +587,58 @@
         .btn-danger:hover { background-color: transparent; color: var(--danger-color); }
         .btn-block { width: 100%; margin-top: 1rem; }
         .btn-icon { padding: 0; width: 48px; height: 48px; min-height: 48px; }
-        .btn-icon .material-symbols-outlined { font-size: 24px; }
+        .btn-icon .material-symbols-rounded { font-size: 24px; }
 
         /*------------------------------------*\
-          #PANNELLO ADMIN - CORREZIONE PULSANTI
+          #PANNELLO ADMIN - NUOVO STILE
         \*------------------------------------*/
-        #admin-panel-view { display: flex; flex-direction: column; gap: 1rem; }
-        .admin-accordion-item { background: var(--card-bg-color); border-radius: 28px; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; }
-        body.light-theme .admin-accordion-item { border: 1px solid var(--border-color); }
-        .admin-accordion-header { padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .admin-accordion-header h2 { margin: 0; font-size: 1.5rem; }
-        .admin-accordion-header .material-symbols-outlined { transition: transform 0.3s ease; }
-        .admin-accordion-item.active .admin-accordion-header .material-symbols-outlined { transform: rotate(180deg); }
-        .admin-accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; padding: 0 1.5rem; }
-        .admin-accordion-item.active .admin-accordion-body { max-height: 2000px; padding: 0 1.5rem 1.5rem 1.5rem; }
-        
+        .admin-dashboard-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+        .admin-main-button {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+        .admin-main-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+            border-color: var(--secondary-accent-color);
+        }
+        .admin-main-button .icon-bg {
+            padding: 1rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-main-button .icon-bg .material-symbols-rounded {
+            font-size: 2.5rem;
+            color: white;
+        }
+        .admin-main-button .button-text h3 {
+            font-size: 1.5rem;
+            color: var(--heading-color);
+        }
+        .admin-main-button .button-text p {
+            opacity: 0.8;
+        }
+
         .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: 16px; transition: background-color 0.2s; }
         .admin-list-item:not(:last-child) { border-bottom: 1px solid var(--border-color); }
         .admin-list-item:hover { background-color: rgba(255,255,255,0.05); }
         .admin-list-item .item-info { display: flex; align-items: center; gap: 1rem; overflow: hidden; flex-grow: 1; }
-        .admin-list-item .item-info .material-symbols-outlined { color: var(--secondary-accent-color); }
+        .admin-list-item .item-info .material-symbols-rounded { color: var(--secondary-accent-color); }
         .admin-list-item .item-info p { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .admin-list-item .item-info .item-title { font-weight: 600; }
         .admin-list-item .item-info .item-subtitle { font-size: 0.9rem; opacity: 0.7; }
@@ -642,7 +651,7 @@
         .switch-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 32px; }
         .switch-slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .switch-container input:checked + .switch-slider { background-color: var(--primary-accent-color); }
-        .switch-container input:checked + .switch-slider:before { transform: translateX(20px); content: 'check'; font-family: 'Material Symbols Outlined'; font-size: 16px; color: var(--primary-accent-color); }
+        .switch-container input:checked + .switch-slider:before { transform: translateX(20px); content: 'check'; font-family: 'Material Symbols Rounded'; font-size: 16px; color: var(--primary-accent-color); }
 
         /*------------------------------------*\
           # NUOVO STILE CARD PROGRAMMA GARE (COMPATTATO)
@@ -650,7 +659,7 @@
         .event-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            gap: 1rem; /* compattato */
         }
 
         .race-program-section h3 {
@@ -701,7 +710,7 @@
             color: #1e293b;
         }
         
-        .event-card-v2 .card-icon-container .material-symbols-outlined {
+        .event-card-v2 .card-icon-container .material-symbols-rounded {
             font-size: 2rem; /* compattato */
             opacity: 0.8;
         }
@@ -818,7 +827,6 @@
         .toast.success { border-left: 5px solid var(--success-color); }
         .toast.error { border-left: 5px solid var(--danger-color); }
         
-        /* NUOVO STILE MODALE ASSEGNAZIONE VOLONTARI */
         #assignment-modal-content { display: flex; flex-direction: column; gap: 1rem; }
         #assignment-search { width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-color); margin-bottom: 1rem; }
         .assignment-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -829,12 +837,12 @@
         .volunteer-item:hover { background-color: rgba(255,255,255,0.05); }
         .volunteer-item p { margin: 0; }
         .volunteer-item .action-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: background-color 0.2s; }
-        .volunteer-item .action-btn .material-symbols-outlined { pointer-events: none; } /* Rende l'icona non cliccabile */
+        .volunteer-item .action-btn .material-symbols-rounded { pointer-events: none; } /* Rende l'icona non cliccabile */
         .volunteer-item .action-btn.assign { color: var(--success-color); }
         .volunteer-item .action-btn.unassign { color: var(--danger-color); }
         .volunteer-item .action-btn:hover { background-color: rgba(255,255,255,0.1); }
         
-        /* NUOVO STILE MODALE PROFILO */
+        /* RIPRISTINATO STILE MODALE PROFILO */
         #profile-modal-content { text-align: center; }
         #profile-avatar-container { position: relative; width: 80px; height: 80px; margin: 0 auto 1rem auto; }
         #profile-avatar { width: 80px; height: 80px; border-radius: 50%; background-color: var(--primary-accent-color); color: var(--bg-color); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; background-size: cover; background-position: center; }
@@ -843,14 +851,13 @@
         #profile-details-list { list-style: none; padding: 0; margin: 1.5rem 0; }
         #profile-details-list li { display: flex; align-items: center; gap: 1rem; padding: 0.8rem; border-bottom: 1px solid var(--border-color); }
         #profile-details-list li:last-child { border-bottom: none; }
-        #profile-details-list .material-symbols-outlined { color: var(--secondary-accent-color); }
+        #profile-details-list .material-symbols-rounded { color: var(--secondary-accent-color); }
         
         /* NUOVO STILE MODALE DETTAGLI EVENTO */
         #event-details-modal-body .detail-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; font-size: 1.1rem; background-color: rgba(0,0,0,0.1); padding: 0.8rem; border-radius: 12px; }
-        #event-details-modal-body .detail-item .detail-icon-bg { padding: 0.5rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
-        #event-details-modal-body .detail-item .detail-icon-bg svg { width: 24px; height: 24px; }
+        #event-details-modal-body .detail-item .detail-icon-bg { padding: 0.5rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 40px; height: 40px; }
+        #event-details-modal-body .detail-item .detail-icon-bg svg { width: 24px; height: 24px; } 
         
-        /* NUOVO STILE MODALE GESTIONE CATEGORIE */
         #manage-categories-modal-body { display: flex; flex-direction: column; gap: 1rem; }
         #categories-list-modal { max-height: 250px; overflow-y: auto; background-color: var(--bg-color); border-radius: 12px; padding: 0.5rem; }
         .category-item { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-radius: 8px; }
@@ -858,7 +865,6 @@
         #add-category-form { display: flex; gap: 0.5rem; }
         #add-category-form input { flex-grow: 1; }
 
-        /* NUOVO STILE MODALE "VEDI ALTRI" */
         #colleagues-list { display: flex; flex-direction: column; gap: 1rem; }
         .colleague-item { display: flex; align-items: center; gap: 1rem; background-color: var(--bg-color); padding: 0.8rem; border-radius: 12px; }
         .colleague-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--secondary-accent-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; background-size: cover; background-position: center; flex-shrink: 0; }
@@ -887,12 +893,12 @@
             #login-options { flex-direction: column; gap: 1rem; align-items: flex-start; }
 
             .event-card-v2 .card-content-wrapper {
-                flex-direction: row; /* MODIFICATO per compattare */
+                flex-direction: row; 
                 align-items: center;
                 gap: 1rem;
             }
-            .event-card-v2 .card-icon-container .material-symbols-outlined {
-                font-size: 2rem; /* a bit smaller on mobile */
+            .event-card-v2 .card-icon-container .material-symbols-rounded {
+                font-size: 2rem;
             }
             .event-card-v2 .event-title {
                 font-size: 1.1rem;
@@ -922,13 +928,13 @@
                     <p id="login-error">&nbsp;</p>
                     <button type="submit" class="btn btn-primary" id="login-button">
                         <span class="btn-text">Accedi</span>
-                        <span class="material-symbols-outlined btn-loader hidden">progress_activity</span>
+                        <span class="material-symbols-rounded btn-loader hidden">progress_activity</span>
                     </button>
                     <div id="login-options">
                         <label for="remember-me-checkbox" class="remember-me">
                             <input type="checkbox" id="remember-me-checkbox">
                             <span class="checkbox-box">
-                                <span class="material-symbols-outlined">check</span>
+                                <span class="material-symbols-rounded">check</span>
                             </span>
                             <span class="checkbox-label">Ricordami</span>
                         </label>
@@ -941,13 +947,12 @@
         <!-- VISTA APPLICAZIONE -->
         <div id="app-view" class="hidden">
             <header class="app-header">
-                <h1 class="header-main-title">Volontari Abbadiadi</h1>
                 <div class="header-icons">
-                    <span class="material-symbols-outlined icon-btn" id="notifications-btn">
+                    <span class="material-symbols-rounded icon-btn" id="admin-btn-header">admin_panel_settings</span>
+                    <span class="material-symbols-rounded icon-btn" id="notifications-btn">
                         notifications
                         <span class="notification-badge hidden"></span>
                     </span>
-                    <span class="material-symbols-outlined icon-btn" id="admin-btn-header">admin_panel_settings</span>
                     <div id="profile-btn-header"></div>
                 </div>
             </header>
@@ -960,15 +965,15 @@
 
             <nav class="top-nav">
                  <button class="nav-button active" data-view="dashboard">
-                    <span class="material-symbols-outlined">home</span>
+                    <span class="material-symbols-rounded">home</span>
                     <span class="nav-button-label">Dashboard</span>
                 </button>
                 <button class="nav-button" data-view="my-shifts">
-                    <span class="material-symbols-outlined">calendar_month</span>
+                    <span class="material-symbols-rounded">calendar_month</span>
                     <span class="nav-button-label">I Miei Turni</span>
                 </button>
                 <button class="nav-button" data-view="race-program">
-                    <span class="material-symbols-outlined">grid_view</span>
+                    <span class="material-symbols-rounded">grid_view</span>
                     <span class="nav-button-label">Programma</span>
                 </button>
             </nav>
@@ -1319,12 +1324,10 @@
             // Header
             profileBtnHeader.addEventListener('click', showProfileModal);
             notificationsBtn.addEventListener('click', showNotificationsPanel);
-            adminBtnHeader.addEventListener('click', () => switchView('admin-panel'));
+            adminBtnHeader.addEventListener('click', () => switchView('admin-dashboard'));
             
-            // *** DELEGAZIONE EVENTI PER CONTENUTI DINAMICI ***
-            // Questo listener centrale gestisce i click su elementi che vengono
-            // creati dinamicamente, come i pulsanti nelle liste.
-            contentArea.addEventListener('click', e => {
+            // Listener delegato per contenuti dinamici (inclusi i pulsanti admin)
+            document.body.addEventListener('click', e => {
                 // Azioni Card Turno
                 const colleaguesBtn = e.target.closest('.view-colleagues-btn');
                 if (colleaguesBtn) {
@@ -1350,64 +1353,53 @@
                     return;
                 }
                 
-                // Azioni Pannello Admin
-                const adminHeader = e.target.closest('.admin-accordion-header');
-                if (adminHeader) {
-                    adminHeader.parentElement.classList.toggle('active');
+                // Azioni Pannello Admin (Dashboard e liste)
+                const adminDashButton = e.target.closest('.admin-main-button');
+                if(adminDashButton) {
+                    e.preventDefault();
+                    switchView(adminDashButton.dataset.view);
                     return;
                 }
+                
                 const editEventBtn = e.target.closest('.edit-event-btn');
-                if (editEventBtn) {
-                    showDashboardEventForm(editEventBtn.dataset.id);
-                    return;
-                }
+                if (editEventBtn) { showDashboardEventForm(editEventBtn.dataset.id); return; }
                 const editShiftBtn = e.target.closest('.edit-shift-btn');
-                if (editShiftBtn) {
-                    showShiftForm(editShiftBtn.dataset.id);
-                    return;
-                }
+                if (editShiftBtn) { showShiftForm(editShiftBtn.dataset.id); return; }
                 const manageVolunteersBtn = e.target.closest('.manage-volunteers-btn');
-                if(manageVolunteersBtn) {
-                    showManageVolunteersModal(manageVolunteersBtn.dataset.id);
-                    return;
-                }
+                if(manageVolunteersBtn) { showManageVolunteersModal(manageVolunteersBtn.dataset.id); return; }
                 const editVolunteerBtn = e.target.closest('.edit-volunteer-btn');
-                if(editVolunteerBtn) {
-                    showVolunteerForm(editVolunteerBtn.dataset.id);
-                    return;
-                }
+                if(editVolunteerBtn) { showVolunteerForm(editVolunteerBtn.dataset.id); return; }
 
                 // Azioni Programma Gare
                 const editRaceEventBtn = e.target.closest('.edit-race-event-btn');
-                if (editRaceEventBtn) {
-                    showRaceEventForm(editRaceEventBtn.dataset.id);
-                    return;
-                }
+                if (editRaceEventBtn) { showRaceEventForm(editRaceEventBtn.dataset.id); return; }
                 const deleteRaceEventBtn = e.target.closest('.delete-race-event-btn');
-                if (deleteRaceEventBtn) {
-                    handleDeleteRaceEvent(deleteRaceEventBtn.dataset.id);
-                    return;
-                }
+                if (deleteRaceEventBtn) { handleDeleteRaceEvent(deleteRaceEventBtn.dataset.id); return; }
             });
         }
         
         function switchView(viewName) {
             AppState.currentView = viewName;
 
+            // Aggiorna solo i pulsanti di navigazione principali
+            const mainViews = ['dashboard', 'my-shifts', 'race-program'];
             navButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.view === viewName);
+                btn.classList.toggle('active', btn.dataset.view === viewName && mainViews.includes(viewName));
             });
             
-            adminBtnHeader.classList.toggle('active', viewName === 'admin-panel');
+            adminBtnHeader.classList.toggle('active', viewName.startsWith('admin-'));
             
             contentArea.innerHTML = '';
-            appView.appendChild(fabContainer);
+            fabContainer.innerHTML = ''; // Pulisce i FAB ad ogni cambio vista
             
             switch (viewName) {
                 case 'dashboard': renderDashboard(); break;
                 case 'my-shifts': renderMyShifts(); break;
                 case 'race-program': renderRaceProgram(); break;
-                case 'admin-panel': renderAdminPanel(); break;
+                case 'admin-dashboard': renderAdminDashboard(); break;
+                case 'admin-events': renderAdminEvents(); break;
+                case 'admin-shifts': renderAdminShifts(); break;
+                case 'admin-volunteers': renderAdminVolunteers(); break;
             }
             updateProgressBars();
         }
@@ -1425,23 +1417,23 @@
 
             onSnapshot(volunteersCol, (snapshot) => {
                 AppState.volunteers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => a.cognome.localeCompare(b.cognome));
-                if (['admin-panel', 'dashboard'].includes(AppState.currentView)) switchView(AppState.currentView);
+                if (AppState.currentView === 'admin-volunteers' || AppState.currentView === 'dashboard') switchView(AppState.currentView);
             });
             onSnapshot(shiftsCol, (snapshot) => {
                 AppState.shifts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                if (['my-shifts', 'dashboard', 'admin-panel'].includes(AppState.currentView)) switchView(AppState.currentView);
+                if (['my-shifts', 'dashboard', 'admin-shifts'].includes(AppState.currentView)) switchView(AppState.currentView);
             });
             onSnapshot(assignmentsCol, (snapshot) => {
                 AppState.assignments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                if (['my-shifts', 'dashboard', 'admin-panel'].includes(AppState.currentView)) switchView(AppState.currentView);
+                if (['my-shifts', 'dashboard', 'admin-shifts'].includes(AppState.currentView)) switchView(AppState.currentView);
             });
             onSnapshot(categoriesCol, (snapshot) => {
                 AppState.shiftCategories = snapshot.docs.map(doc => doc.id).sort();
-                if (AppState.currentView === 'admin-panel') switchView(AppState.currentView);
+                if (AppState.currentView === 'admin-shifts') switchView(AppState.currentView);
             });
             onSnapshot(volunteerCategoriesCol, (snapshot) => {
                 AppState.volunteerCategories = snapshot.docs.map(doc => doc.id).sort();
-                if (AppState.currentView === 'admin-panel') switchView(AppState.currentView);
+                if (AppState.currentView === 'admin-volunteers') switchView(AppState.currentView);
             });
             
             onSnapshot(raceEventsCol, (snapshot) => {
@@ -1452,7 +1444,7 @@
             onSnapshot(dashboardEventsCol, (snapshot) => {
                 AppState.dashboardEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 if (snapshot.docs.length === 0) { seedDashboardEvents(); }
-                if (['dashboard', 'admin-panel', 'race-program'].includes(AppState.currentView)) switchView(AppState.currentView);
+                if (['dashboard', 'admin-events', 'race-program'].includes(AppState.currentView)) switchView(AppState.currentView);
             });
         }
 
@@ -1471,6 +1463,7 @@
         }
 
         function renderDashboard() {
+            fabContainer.innerHTML = '';
             const now = new Date();
             
             const userAssignments = AppState.assignments.filter(a => a.email_volontario === AppState.currentUser.email);
@@ -1544,7 +1537,7 @@
                     return `
                         <div class="summary-card" data-action="details" data-event-id="${event.id}">
                             <div class="summary-card-header">
-                                <span class="material-symbols-outlined icon-wrapper" style="color: ${event.color || 'var(--primary-accent-color)'};">${event.icon}</span>
+                                <span class="material-symbols-rounded icon-wrapper" style="color: ${event.color || 'var(--primary-accent-color)'};">${event.icon}</span>
                                 ${dateBadge ? `<div class="summary-card-date">${dateBadge}</div>` : ''}
                             </div>
                             <div class="summary-card-content">
@@ -1568,13 +1561,13 @@
                         ${dashboardCards}
                         <div class="summary-card" id="weather-card">
                              <div class="summary-card-header">
-                                <span class="material-symbols-outlined icon-wrapper" style="color: var(--secondary-accent-color);">progress_activity</span>
+                                <span class="material-symbols-rounded icon-wrapper" style="color: var(--secondary-accent-color);">progress_activity</span>
                              </div>
                             <div class="summary-card-content"><div class="value">Carico...</div><div class="subtitle">Meteo a Pinerolo</div></div>
                         </div>
                         <div class="summary-card">
                             <div class="summary-card-header">
-                                <span class="material-symbols-outlined icon-wrapper" style="color: var(--success-color);">check_circle</span>
+                                <span class="material-symbols-rounded icon-wrapper" style="color: var(--success-color);">check_circle</span>
                             </div>
                             <div class="summary-card-content"><div class="value">${completedShifts} / ${myShifts.length}</div><div class="subtitle">Turni completati</div></div>
                         </div>
@@ -1594,7 +1587,6 @@
                 </div>
             `;
             
-            renderPageActions([]);
             fetchWeather();
         }
         
@@ -1632,6 +1624,7 @@
 
 
         function renderMyShifts() {
+            fabContainer.innerHTML = '';
             const userAssignments = AppState.assignments.filter(a => a.email_volontario === AppState.currentUser.email);
             const myShiftIds = new Set(userAssignments.map(a => a.id_turno));
             const myShifts = AppState.shifts.filter(s => myShiftIds.has(s.id));
@@ -1643,8 +1636,14 @@
                     return dateA - dateB;
                 } catch (e) { return 0; }
             });
-            contentArea.innerHTML = myShifts.length > 0 ? myShifts.map(shift => renderShiftCard(shift)).join('') : `<p>Non hai ancora turni assegnati.</p>`;
-            renderPageActions([]);
+
+            const listHtml = myShifts.length > 0 ? myShifts.map(shift => renderShiftCard(shift)).join('') : `<p>Non hai ancora turni assegnati.</p>`;
+            contentArea.innerHTML = `
+                <div class="page-description">
+                    <p>Qui trovi l'elenco di tutti i turni che ti sono stati assegnati. Tocca una card per vederne i dettagli e i colleghi.</p>
+                </div>
+                ${listHtml}
+            `;
         }
         
         function renderShiftCard(shift) {
@@ -1676,34 +1675,34 @@
                                 <div class="time-value">${shift.ora_fine}</div>
                             </div>
                         </div>
-                        <div class="card-main-wrapper" style="background-color: ${baseColor}40; border-color: ${baseColor}80;">
+                        <div class="card-main-wrapper" style="background-color: ${baseColor}55; border-color: ${baseColor}AA;">
                             <div class="card-main">
                                 <div class="shift-header-info">
                                     <h3 style="color: ${baseColor};">${shift.nome_turno}</h3>
                                     <p>${shift.categoria}</p>
                                     ${progressBarHtml}
                                 </div>
-                                <span class="material-symbols-outlined expand-arrow">expand_more</span>
+                                <span class="material-symbols-rounded expand-arrow">expand_more</span>
                             </div>
                         </div>
                     </div>
                     <div class="shift-details">
                         <div class="shift-details-content">
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.CALENDAR}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}50; color: ${baseColor};">${ICONS.CALENDAR}</div>
                                 <div><p>Data</p><p>${shift.data_inizio}</p></div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.DESCRIPTION}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}50; color: ${baseColor};">${ICONS.DESCRIPTION}</div>
                                 <div><p>Descrizione</p><p>${shift.descrizione}</p></div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-icon-bg" style="background-color: ${lightColor}33; color: ${baseColor};">${ICONS.LOCATION}</div>
+                                <div class="detail-icon-bg" style="background-color: ${lightColor}50; color: ${baseColor};">${ICONS.LOCATION}</div>
                                 <div><p>Luogo</p><p>${shift.luogo}</p></div>
                             </div>
                         </div>
                         <button class="btn view-colleagues-btn" data-shift-id="${shift.id}" style="background-color: var(--primary-accent-color); color: var(--bg-color); margin-top: 1rem; padding: 0.6rem 1.2rem; min-height: 40px;">
-                            <span class="material-symbols-outlined">group</span>
+                            <span class="material-symbols-rounded">group</span>
                             Vedi Altri
                         </button>
                     </div>
@@ -1711,6 +1710,7 @@
         }
         
         function renderRaceProgram() {
+            fabContainer.innerHTML = '';
             const isAdmin = AppState.currentUser.ruolo === 'Admin' || AppState.currentUser.ruolo === 'Responsabile';
             
             const now = new Date();
@@ -1747,14 +1747,16 @@
             };
 
             contentArea.innerHTML = `
-                <div class="race-program-section"><h3><span class="material-symbols-outlined" style="color: var(--ongoing-color);">play_circle</span>In Corso</h3>${renderEventList(events.ongoing, isAdmin)}</div>
-                <div class="race-program-section"><h3><span class="material-symbols-outlined">schedule</span>Prossimi Eventi</h3>${renderEventList(events.upcoming, isAdmin)}</div>
-                <div class="race-program-section"><h3><span class="material-symbols-outlined">done_all</span>Conclusi</h3>${renderEventList(events.past, isAdmin)}</div>`;
+                <div class="page-description">
+                    <p>Consulta il programma completo degli eventi sportivi e generali. Le card degli eventi in corso sono animate.</p>
+                </div>
+                <div class="race-program-section"><h3><span class="material-symbols-rounded" style="color: var(--ongoing-color);">play_circle</span>In Corso</h3>${renderEventList(events.ongoing, isAdmin)}</div>
+                <div class="race-program-section"><h3><span class="material-symbols-rounded">schedule</span>Prossimi Eventi</h3>${renderEventList(events.upcoming, isAdmin)}</div>
+                <div class="race-program-section"><h3><span class="material-symbols-rounded">done_all</span>Conclusi</h3>${renderEventList(events.past, isAdmin)}</div>
+            `;
             
             if (isAdmin) {
-                renderPageActions([{ icon: 'add', handler: () => showRaceEventForm(), label: 'Crea Evento' }]);
-            } else {
-                renderPageActions([]);
+                renderAdminFAB('race-program');
             }
         }
         
@@ -1783,7 +1785,7 @@
             
             const iconHtml = `
                 <div class="card-icon-container">
-                    <span class="material-symbols-outlined">${details.icon}</span>
+                    <span class="material-symbols-rounded">${details.icon}</span>
                 </div>`;
 
             return `
@@ -1815,50 +1817,64 @@
             </div>`;
         }
         
-        function renderAdminPanel() {
+        // ====================================================================
+        // NUOVE FUNZIONI PANNELLO ADMIN
+        // ====================================================================
+
+        function renderAdminDashboard() {
+            fabContainer.innerHTML = '';
             contentArea.innerHTML = `
-                <div id="admin-panel-view">
-                    <div class="admin-accordion-item" data-group="eventi"><div class="admin-accordion-header"><h2>Eventi Generali</h2><span class="material-symbols-outlined">expand_more</span></div><div class="admin-accordion-body" id="admin-events-list"></div></div>
-                    <div class="admin-accordion-item" data-group="turni"><div class="admin-accordion-header"><h2>Turni</h2><span class="material-symbols-outlined">expand_more</span></div><div class="admin-accordion-body" id="admin-shifts-list"></div></div>
-                    <div class="admin-accordion-item" data-group="volontari"><div class="admin-accordion-header"><h2>Volontari</h2><span class="material-symbols-outlined">expand_more</span></div><div class="admin-accordion-body" id="admin-volunteers-list"></div></div>
+                <h2 class="page-title">Pannello Admin</h2>
+                <div class="admin-dashboard-container">
+                    <a href="#" class="admin-main-button" data-view="admin-events">
+                        <div class="icon-bg" style="background-color: var(--general-event-color);"><span class="material-symbols-rounded">event</span></div>
+                        <div class="button-text"><h3>Gestisci Eventi</h3><p>Crea e modifica eventi generali e card per la dashboard.</p></div>
+                    </a>
+                    <a href="#" class="admin-main-button" data-view="admin-shifts">
+                        <div class="icon-bg" style="background-color: var(--gemini-blue);"><span class="material-symbols-rounded">assignment</span></div>
+                        <div class="button-text"><h3>Gestisci Turni</h3><p>Aggiungi turni, assegna volontari e gestisci le categorie.</p></div>
+                    </a>
+                    <a href="#" class="admin-main-button" data-view="admin-volunteers">
+                        <div class="icon-bg" style="background-color: var(--gemini-green);"><span class="material-symbols-rounded">group</span></div>
+                        <div class="button-text"><h3>Gestisci Volontari</h3><p>Visualizza, aggiungi o modifica i volontari iscritti.</p></div>
+                    </a>
                 </div>
             `;
-            
-            renderAdminLists();
-            
-            renderPageActions([
-                { icon: 'group_add', handler: () => showVolunteerForm(), label: 'Aggiungi Volontario'},
-                { icon: 'assignment_add', handler: () => showShiftForm(), label: 'Crea Turno'},
-                { icon: 'event', handler: () => showDashboardEventForm(), label: 'Crea Evento'},
-            ]);
         }
-        
-        function renderAdminLists() {
-            document.getElementById('admin-events-list').innerHTML = renderEventsAdminList();
-            document.getElementById('admin-shifts-list').innerHTML = `
-                <div style="text-align: right; margin-bottom: 1rem;">
-                    <button id="manage-shift-categories-btn" class="btn btn-secondary"><span class="material-symbols-outlined">category</span>Gestisci Categorie</button>
-                </div>
-                ${renderShiftsAdminList()}`;
-            document.getElementById('admin-volunteers-list').innerHTML = `
+
+        function renderAdminEvents() {
+            contentArea.innerHTML = `<h2 class="page-title">Eventi Generali</h2><div id="admin-events-list">${renderEventsAdminList()}</div>`;
+            renderAdminFAB('admin-events');
+        }
+
+        function renderAdminShifts() {
+             contentArea.innerHTML = `
+                <h2 class="page-title">Gestione Turni</h2>
+                ${renderShiftsAdminList()}
+            `;
+            renderAdminFAB('admin-shifts');
+        }
+
+        function renderAdminVolunteers() {
+             contentArea.innerHTML = `
+                <h2 class="page-title">Gestione Volontari</h2>
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                    <input type="search" id="volunteer-search" placeholder="Cerca volontario..." style="flex-grow: 1; padding: 0.5rem 1rem; border-radius: 50px;">
-                    <button id="manage-volunteer-categories-btn" class="btn btn-secondary"><span class="material-symbols-outlined">category</span>Categorie</button>
+                    <input type="search" id="volunteer-search" placeholder="Cerca volontario..." style="flex-grow: 1; padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid var(--border-color); background: var(--card-bg-color); color: var(--text-color);">
                 </div>
                 <div id="volunteers-list-container">${renderVolunteersAdminList()}</div>`;
             
-            document.getElementById('manage-shift-categories-btn').addEventListener('click', showManageShiftCategoriesModal);
-            document.getElementById('manage-volunteer-categories-btn').addEventListener('click', showManageVolunteerCategoriesModal);
             document.getElementById('volunteer-search').addEventListener('input', (e) => {
                 document.getElementById('volunteers-list-container').innerHTML = renderVolunteersAdminList(e.target.value);
             });
+            renderAdminFAB('admin-volunteers');
         }
-        
+
         function renderEventsAdminList() {
+            if (AppState.dashboardEvents.length === 0) return '<p>Nessun evento creato.</p>';
             return AppState.dashboardEvents.map(event => `
                 <div class="admin-list-item">
-                    <div class="item-info"><span class="material-symbols-outlined">${event.icon}</span><div><p class="item-title">${event.title}</p><p class="item-subtitle">${event.description}</p></div></div>
-                    <div class="item-actions"><button class="btn btn-icon edit-event-btn" data-id="${event.id}"><span class="material-symbols-outlined">edit</span></button></div>
+                    <div class="item-info"><span class="material-symbols-rounded">${event.icon}</span><div><p class="item-title">${event.title}</p><p class="item-subtitle">${event.description}</p></div></div>
+                    <div class="item-actions"><button class="btn btn-icon edit-event-btn" data-id="${event.id}"><span class="material-symbols-rounded">edit</span></button></div>
                 </div>`).join('');
         }
         
@@ -1875,10 +1891,10 @@
                 let categoryHtml = `<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--secondary-accent-color);">${category}</h4>`;
                 categoryHtml += shiftsByCategory[category].sort((a,b) => a.nome_turno.localeCompare(b.nome_turno)).map(shift => `
                     <div class="admin-list-item">
-                         <div class="item-info"><span class="material-symbols-outlined" style="color: ${getCategoryColor(shift.categoria)}">assignment</span><div><p class="item-title">${shift.nome_turno}</p><p class="item-subtitle">${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p></div></div>
+                         <div class="item-info"><span class="material-symbols-rounded" style="color: ${getCategoryColor(shift.categoria)}">assignment</span><div><p class="item-title">${shift.nome_turno}</p><p class="item-subtitle">${shift.data_inizio} | ${shift.ora_inizio} - ${shift.ora_fine}</p></div></div>
                         <div class="item-actions">
-                             <button class="btn btn-icon manage-volunteers-btn" data-id="${shift.id}" title="Gestisci Volontari"><span class="material-symbols-outlined">group</span></button>
-                             <button class="btn btn-icon edit-shift-btn" data-id="${shift.id}" title="Modifica Turno"><span class="material-symbols-outlined">edit</span></button>
+                             <button class="btn btn-icon manage-volunteers-btn" data-id="${shift.id}" title="Gestisci Volontari"><span class="material-symbols-rounded">group</span></button>
+                             <button class="btn btn-icon edit-shift-btn" data-id="${shift.id}" title="Modifica Turno"><span class="material-symbols-rounded">edit</span></button>
                         </div>
                     </div>`).join('');
                 return categoryHtml;
@@ -1903,8 +1919,8 @@
                   let categoryHtml = `<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--secondary-accent-color);">${category}</h4>`;
                   categoryHtml += volunteersByCategory[category].map(v => `
                       <div class="admin-list-item">
-                          <div class="item-info"><span class="material-symbols-outlined">person</span><div><p class="item-title">${v.cognome} ${v.nome}</p><p class="item-subtitle">${v.email}</p></div></div>
-                          <div class="item-actions"><button class="btn btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-outlined">edit</span></button></div>
+                          <div class="item-info"><span class="material-symbols-rounded">person</span><div><p class="item-title">${v.cognome} ${v.nome}</p><p class="item-subtitle">${v.email}</p></div></div>
+                          <div class="item-actions"><button class="btn btn-icon edit-volunteer-btn" data-id="${v.id}"><span class="material-symbols-rounded">edit</span></button></div>
                       </div>`).join('');
                   return categoryHtml;
               }).join('');
@@ -1937,8 +1953,8 @@
         }
 
         function showManageShiftCategoriesModal() {
-            let listHtml = AppState.shiftCategories.length > 0 ? AppState.shiftCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger btn-icon delete-category-btn" data-id="${cat}"><span class="material-symbols-outlined">delete</span></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
-            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary btn-icon"><span class="material-symbols-outlined">add</span></button></form></div>`;
+            let listHtml = AppState.shiftCategories.length > 0 ? AppState.shiftCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger btn-icon delete-category-btn" data-id="${cat}"><span class="material-symbols-rounded">delete</span></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
+            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary btn-icon"><span class="material-symbols-rounded">add</span></button></form></div>`;
             renderModal('Gestisci Categorie Turni', contentHtml, () => {
                 document.getElementById('add-category-form').addEventListener('submit', (e) => handleAddCategory(e, 'shift'));
                 document.querySelectorAll('.delete-category-btn').forEach(btn => btn.addEventListener('click', (e) => handleDeleteCategory(e.target.closest('button').dataset.id, 'shift')));
@@ -1946,8 +1962,8 @@
         }
         
         function showManageVolunteerCategoriesModal() {
-            let listHtml = AppState.volunteerCategories.length > 0 ? AppState.volunteerCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger btn-icon delete-category-btn" data-id="${cat}"><span class="material-symbols-outlined">delete</span></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
-            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary btn-icon"><span class="material-symbols-outlined">add</span></button></form></div>`;
+            let listHtml = AppState.volunteerCategories.length > 0 ? AppState.volunteerCategories.map(cat => `<div class="category-item"><span>${cat}</span><button class="btn btn-danger btn-icon delete-category-btn" data-id="${cat}"><span class="material-symbols-rounded">delete</span></button></div>`).join('') : `<p>Nessuna categoria creata.</p>`;
+            const contentHtml = `<div id="manage-categories-modal-body"><div id="categories-list-modal">${listHtml}</div><form id="add-category-form"><input type="text" id="new-category-name" placeholder="Nome nuova categoria" required><button type="submit" class="btn btn-secondary btn-icon"><span class="material-symbols-rounded">add</span></button></form></div>`;
             renderModal('Gestisci Categorie Volontari', contentHtml, () => {
                 document.getElementById('add-category-form').addEventListener('submit', (e) => handleAddCategory(e, 'volunteer'));
                 document.querySelectorAll('.delete-category-btn').forEach(btn => btn.addEventListener('click', (e) => handleDeleteCategory(e.target.closest('button').dataset.id, 'volunteer')));
@@ -1986,14 +2002,14 @@
                     <div id="profile-avatar-container">
                         <div id="profile-avatar"></div>
                         <label for="avatar-file-input" id="upload-avatar-btn">
-                            <span class="material-symbols-outlined">edit</span>
+                            <span class="material-symbols-rounded">edit</span>
                         </label>
                         <input type="file" id="avatar-file-input" accept="image/*">
                     </div>
                     <h2>${nome} ${cognome}</h2>
                     <ul id="profile-details-list">
-                        <li><span class="material-symbols-outlined">mail</span><span>${email}</span></li>
-                        <li><span class="material-symbols-outlined">phone</span><span>${telefono || 'Non specificato'}</span></li>
+                        <li><span class="material-symbols-rounded">mail</span><span>${email}</span></li>
+                        <li><span class="material-symbols-rounded">phone</span><span>${telefono || 'Non specificato'}</span></li>
                     </ul>
                     <div class="form-group">
                         <label for="theme-select">Tema App</label>
@@ -2156,13 +2172,13 @@
                     availableList.innerHTML = available.map(v => `
                         <div class="volunteer-item" data-email="${v.email}">
                             <p>${v.nome} ${v.cognome}</p>
-                            <button class="action-btn assign" title="Assegna"><span class="material-symbols-outlined">add_circle</span></button>
+                            <button class="action-btn assign" title="Assegna"><span class="material-symbols-rounded">add_circle</span></button>
                         </div>`).join('');
                     
                     assignedList.innerHTML = assigned.map(v => `
                         <div class="volunteer-item" data-email="${v.email}">
                             <p>${v.nome} ${v.cognome}</p>
-                            <button class="action-btn unassign" title="Rimuovi"><span class="material-symbols-outlined">remove_circle</span></button>
+                            <button class="action-btn unassign" title="Rimuovi"><span class="material-symbols-rounded">remove_circle</span></button>
                         </div>`).join('');
                 };
 
@@ -2243,7 +2259,7 @@
             const notificationsHtml = AppState.notifications.length > 0 ? '<ul id="notification-list">' + AppState.notifications.map(n => {
                 const isUnread = !n.readBy.includes(AppState.currentUser.email);
                 const date = n.timestamp?.toDate().toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) || '';
-                return `<li class="notification-item ${isUnread ? 'unread' : ''}" data-id="${n.id}"><div class="notification-content"><p>${n.message}</p><div class="meta">Da: ${n.sender} &bull; ${date}</div></div><span class="material-symbols-outlined delete-notification-btn">delete</span></li>`;
+                return `<li class="notification-item ${isUnread ? 'unread' : ''}" data-id="${n.id}"><div class="notification-content"><p>${n.message}</p><div class="meta">Da: ${n.sender} &bull; ${date}</div></div><span class="material-symbols-rounded delete-notification-btn">delete</span></li>`;
             }).join('') + '</ul>' : '<p style="padding: 1rem; text-align: center;">Nessuna notifica.</p>';
             const adminActionsHtml = isAdmin ? `<div class="notification-panel-actions"><button id="send-new-notification-btn" class="btn btn-primary">Invia Nuova</button><button id="clear-all-notifications-btn" class="btn btn-danger">Pulisci Tutte</button></div>` : '';
             renderModal('Notifiche', notificationsHtml + adminActionsHtml, () => {
@@ -2329,37 +2345,37 @@
         // FUNZIONI SPECIFICHE ADMIN & FAB
         // ====================================================================
         
-        function renderPageActions(actions = []) {
-            fabContainer.innerHTML = '';
-            if (actions.length === 0) return;
+        function renderAdminFAB(page) {
+            let buttonsHtml = '';
+            switch(page) {
+                case 'admin-events':
+                    buttonsHtml = `<button class="fab-pill-btn" title="Nuovo Evento"><span class="material-symbols-rounded">add</span></button>`;
+                    break;
+                case 'admin-shifts':
+                    buttonsHtml = `<button class="fab-pill-btn" title="Nuovo Turno"><span class="material-symbols-rounded">add</span></button><button class="fab-pill-btn" title="Gestisci Categorie"><span class="material-symbols-rounded">category</span></button>`;
+                    break;
+                case 'admin-volunteers':
+                    buttonsHtml = `<button class="fab-pill-btn" title="Nuovo Volontario"><span class="material-symbols-rounded">add</span></button><button class="fab-pill-btn" title="Gestisci Categorie"><span class="material-symbols-rounded">category</span></button>`;
+                    break;
+                case 'race-program':
+                     buttonsHtml = `<button class="fab-pill-btn" title="Nuovo Evento Sportivo"><span class="material-symbols-rounded">add</span></button>`;
+                     break;
+            }
 
-            if (actions.length === 1) {
-                const action = actions[0];
-                const fab = document.createElement('button');
-                fab.className = 'fab';
-                fab.innerHTML = `<span class="material-symbols-outlined">${action.icon}</span>`;
-                fab.addEventListener('click', action.handler);
-                fabContainer.appendChild(fab);
-            } else {
-                const secondaryActionsHtml = actions.map(action => `
-                    <div class="fab-secondary">
-                        <span>${action.label}</span>
-                        <button class="fab" data-action="${action.icon}"><span class="material-symbols-outlined">${action.icon}</span></button>
-                    </div>
-                `).join('');
+            fabContainer.innerHTML = `<div class="fab-pill-container">${buttonsHtml}</div>`;
 
-                fabContainer.innerHTML = `
-                    <div class="fab-secondary-actions">${secondaryActionsHtml}</div>
-                    <button class="fab" id="fab-main"><span class="material-symbols-outlined">add</span></button>
-                `;
-                
-                document.getElementById('fab-main').addEventListener('click', () => fabContainer.classList.toggle('open'));
-                fabContainer.querySelectorAll('.fab-secondary .fab').forEach((btn, index) => {
-                    btn.addEventListener('click', () => {
-                        actions[index].handler();
-                        fabContainer.classList.remove('open');
-                    });
-                });
+            // Aggiunta event listeners
+            const buttons = fabContainer.querySelectorAll('.fab-pill-btn');
+            if (page === 'admin-events') {
+                buttons[0]?.addEventListener('click', () => showDashboardEventForm());
+            } else if (page === 'admin-shifts') {
+                buttons[0]?.addEventListener('click', () => showShiftForm());
+                buttons[1]?.addEventListener('click', showManageShiftCategoriesModal);
+            } else if (page === 'admin-volunteers') {
+                buttons[0]?.addEventListener('click', () => showVolunteerForm());
+                buttons[1]?.addEventListener('click', showManageVolunteerCategoriesModal);
+            } else if (page === 'race-program') {
+                buttons[0]?.addEventListener('click', () => showRaceEventForm());
             }
         }
         
